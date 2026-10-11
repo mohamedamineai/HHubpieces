@@ -14,6 +14,8 @@ import com.hubpieces.repository.RoleRepository;
 import com.hubpieces.repository.UtilisateurRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.hubpieces.model.StatutUtilisateur;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -40,17 +42,18 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public AuthResponse register(RegisterRequest request) {
-        if (request.getRole() == null) {
-            return new AuthResponse(false, "Veuillez choisir un rÙle", null, null, null, null, null);
+        if (request.getRole() == null || request.getRole() == RoleNom.ADMIN) {
+            return new AuthResponse(false, "Veuillez choisir un r√¥le", null, null, null, null, null);
         }
 
         if (utilisateurRepository.existsByEmail(request.getEmail())) {
-            return new AuthResponse(false, "Cet email est dÈj‡ utilisÈ", null, null, null, null, null);
+            return new AuthResponse(false, "Cet email est d√©j√† utilis√©", null, null, null, null, null);
         }
 
         Role role = roleRepository.findByNom(request.getRole())
-                .orElseThrow(() -> new IllegalStateException("RÙle introuvable : " + request.getRole()));
+                .orElseThrow(() -> new IllegalStateException("R√¥le introuvable : " + request.getRole()));
 
         Utilisateur utilisateur = new Utilisateur(
                 request.getNom(),
@@ -84,13 +87,27 @@ public class AuthService {
             profilExpertCaoRepository.save(profil);
         }
 
-        return new AuthResponse(true, "Inscription rÈussie", saved.getId(), saved.getNom(), saved.getPrenom(), saved.getEmail(), request.getRole().name());
+        return new AuthResponse(true, "Inscription r√©ussie", saved.getId(), saved.getNom(), saved.getPrenom(), saved.getEmail(), request.getRole().name());
+    }
+
+    @Transactional(readOnly = true)
+    public AuthResponse currentUser(Long userId, String sessionRole) {
+        if (userId == null) throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.UNAUTHORIZED, "Connexion requise");
+        Utilisateur user = utilisateurRepository.findById(userId).orElseThrow(() ->
+                new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED, "Session invalide"));
+        if (user.getStatut() != StatutUtilisateur.ACTIF || user.getRoles().stream()
+                .noneMatch(role -> role.getNom().name().equals(sessionRole))) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED,
+                    "Votre compte ou vos droits ont chang√©. Reconnectez-vous.");
+        }
+        return new AuthResponse(true, "Session active", user.getId(), user.getNom(), user.getPrenom(), user.getEmail(), sessionRole);
     }
 
     public AuthResponse login(LoginRequest request) {
         Optional<Utilisateur> opt = utilisateurRepository.findByEmail(request.getEmail());
 
-        if (opt.isEmpty() || !passwordEncoder.matches(request.getMotDePasse(), opt.get().getMotDePasse())) {
+        if (opt.isEmpty() || opt.get().getStatut() != StatutUtilisateur.ACTIF || !passwordEncoder.matches(request.getMotDePasse(), opt.get().getMotDePasse())) {
             return new AuthResponse(false, "Email ou mot de passe incorrect", null, null, null, null, null);
         }
 
@@ -100,6 +117,6 @@ public class AuthService {
                 .map(r -> r.getNom().name())
                 .orElse("DEMANDEUR");
 
-        return new AuthResponse(true, "Connexion rÈussie", utilisateur.getId(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), role);
+        return new AuthResponse(true, "Connexion r√©ussie", utilisateur.getId(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), role);
     }
 }

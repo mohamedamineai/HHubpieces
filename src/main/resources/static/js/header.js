@@ -13,10 +13,10 @@ const NAV_CONFIG = {
     DEMANDEUR: {
         dashboard: "dashboard-demandeur.html",
         links: [
-            { href: "dashboard-demandeur.html#mes-demandes", icon: "fa-list", label: "mes demandes" },
-            { href: "dashboard-demandeur.html#nouvelle-demande", icon: "fa-plus", label: "nouvelle demande" },
+            { href: "mes-demandes.html", icon: "fa-list", label: "mes demandes" },
+            { href: "mes-demandes.html?nouvelle=1", icon: "fa-plus", label: "nouvelle demande" },
             { href: "index.html#catalogue", icon: "fa-cube", label: "catalogue stl" },
-            { href: "dashboard-demandeur.html#messages", icon: "fa-envelope", label: "messages" }
+            { href: "swagger-ui.html", icon: "fa-book", label: "documentation API" }
         ]
     },
     MAKER: {
@@ -81,6 +81,10 @@ function buildGuestActions() {
     `;
 }
 
+function escapeUserText(value) {
+    return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
+}
+
 function buildUserActions(user) {
     const initiale = (user.prenom ? user.prenom.charAt(0) : "U").toUpperCase();
     const roleLabel = ROLE_LABELS[user.role] || user.role;
@@ -89,14 +93,14 @@ function buildUserActions(user) {
     return `
         <div class="user-menu-wrapper">
             <button class="user-menu-trigger" id="userMenuTrigger" type="button">
-                <span class="user-avatar-small">${initiale}</span>
-                <span class="user-menu-name">${user.prenom || ""}</span>
+                <span class="user-avatar-small">${escapeUserText(initiale)}</span>
+                <span class="user-menu-name">${escapeUserText(user.prenom)}</span>
                 <i class="fas fa-chevron-down ms-1 small"></i>
             </button>
             <div class="dropdown-glass" id="userDropdown">
                 <div class="dropdown-header">
-                    <strong>${user.prenom || ""} ${user.nom || ""}</strong>
-                    <span class="role-badge-nav">${roleLabel}</span>
+                    <strong>${escapeUserText(user.prenom)} ${escapeUserText(user.nom)}</strong>
+                    <span class="role-badge-nav">${escapeUserText(roleLabel)}</span>
                 </div>
                 <a href="${dashboardUrl}" class="dropdown-item-glass">
                     <i class="fas fa-gauge me-2"></i>mon tableau de bord
@@ -158,8 +162,14 @@ async function renderHeader() {
 
         document.getElementById("logoutBtn").addEventListener("click", async (e) => {
             e.preventDefault();
-            await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" });
-            window.location.href = "index.html";
+            try {
+                await HubApi.post('/api/auth/logout');
+                window.location.href = 'index.html';
+            } catch (error) {
+                const button = document.getElementById('logoutBtn');
+                button.textContent = 'Échec de déconnexion — réessayer';
+                button.setAttribute('role', 'alert');
+            }
         });
     }
 
