@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inscription — hubpieces</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/auth.css" rel="stylesheet">
+</head>
+<body class="auth-body">
+<div class="auth-wrapper">
+
+    <div class="auth-left">
+        <div class="auth-card-glass">
+            <img src="images/logo_hub.jpeg" alt="logo" class="auth-logo">
+            <h1 class="auth-card-title">Creer un compte</h1>
+            <p class="auth-card-subtitle">Rejoignez la communaute hubpieces</p>
+
+            <div id="authMsg" class="auth-msg"></div>
+
+            <div class="role-tabs">
+                <div class="role-tab active" data-role="DEMANDEUR">Demandeur</div>
+                <div class="role-tab" data-role="MAKER">Maker</div>
+                <div class="role-tab" data-role="EXPERT_CAO">Expert CAO</div>
+            </div>
+
+            <form id="registerForm">
+                <input type="hidden" name="role" id="roleInput" value="DEMANDEUR">
+
+                <div class="row g-2">
+                    <div class="col-6 auth-input-group">
+                        <label>Nom</label>
+                        <input class="auth-input" type="text" name="nom" required>
+                    </div>
+                    <div class="col-6 auth-input-group">
+                        <label>Prenom</label>
+                        <input class="auth-input" type="text" name="prenom" required>
+                    </div>
+                </div>
+
+                <div class="auth-input-group">
+                    <label>Email</label>
+                    <input class="auth-input" type="email" name="email" required>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-6 auth-input-group">
+                        <label>Telephone</label>
+                        <input class="auth-input" type="text" name="telephone">
+                    </div>
+                    <div class="col-6 auth-input-group">
+                        <label>Ville</label>
+                        <input class="auth-input" type="text" name="ville">
+                    </div>
+                </div>
+
+                <div class="auth-input-group">
+                    <label>Code postal</label>
+                    <input class="auth-input" type="text" name="codePostal">
+                </div>
+
+                <div class="role-fields" data-for="MAKER">
+                    <div class="auth-input-group">
+                        <label>Rayon d'action (km)</label>
+                        <input class="auth-input" type="number" name="rayonActionKm" placeholder="20">
+                    </div>
+                    <div class="auth-input-group">
+                        <label>Materiaux disponibles</label>
+                        <input class="auth-input" type="text" name="materiauxDisponibles" placeholder="PLA, ABS, PETG">
+                    </div>
+                    <div class="auth-input-group">
+                        <label>Description de votre imprimante</label>
+                        <input class="auth-input" type="text" name="descriptionImprimante">
+                    </div>
+                </div>
+
+                <div class="role-fields" data-for="EXPERT_CAO">
+                    <div class="auth-input-group">
+                        <label>Logiciels maitrises</label>
+                        <input class="auth-input" type="text" name="logicielsMaitrise" placeholder="Fusion 360, Blender">
+                    </div>
+                    <div class="auth-input-group">
+                        <label>Portfolio (URL)</label>
+                        <input class="auth-input" type="text" name="portfolioUrl">
+                    </div>
+                    <div class="auth-input-group">
+                        <label>Description</label>
+                        <input class="auth-input" type="text" name="descriptionExpert">
+                    </div>
+                </div>
+
+                <div class="auth-input-group">
+                    <label>Mot de passe</label>
+                    <input class="auth-input" type="password" name="motDePasse" required>
+                </div>
+                <div class="auth-input-group">
+                    <label>Confirmer le mot de passe</label>
+                    <input class="auth-input" type="password" name="confirmMotDePasse" required>
+                </div>
+
+                <button type="submit" class="btn-neon">Creer mon compte</button>
+            </form>
+
+            <p class="auth-switch">Deja inscrit ? <a href="login.html">Se connecter</a></p>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <span class="neon-title">After...</span>
+        <model-viewer
+            src="images/auth_blob.glb"
+            alt="objet 3d hubpieces"
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="20deg"
+            camera-controls
+            disable-zoom
+            shadow-intensity="1"
+            exposure="1.1"
+            class="auth-3d-model">
+        </model-viewer>
+    </div>
+
+</div>
+<script src="js/auth.js"></script>
+</body>
+</html>

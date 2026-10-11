@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hubpieces - reparation par impression 3d</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/header.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ==================== navbar dynamique (injectee par header.js selon le role) ==================== -->
+<div id="navbar-placeholder"></div>
+
+<!-- ==================== hero section ==================== -->
+<section id="accueil" class="hero-section">
+    <div class="hero-bg-animation"></div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center py-5">
+
+            <div class="col-lg-6 hero-text" data-aos="fade-right">
+                <div class="badge-eco mb-3">
+                    <i class="fas fa-recycle me-2"></i>economie circulaire
+                </div>
+                <h1 class="hero-title">
+                    reparez vos objets grace a
+                    <span class="text-gradient">l'impression 3d</span>
+                </h1>
+                <p class="hero-subtitle">
+                    ne jetez plus vos appareils a cause d'une seule piece cassee.
+                    hubpieces connecte les demandeurs avec des makers locaux
+                    equipes d'imprimantes 3d.
+                </p>
+                <div class="d-flex gap-3 flex-wrap mt-4">
+                    <a href="register.html" class="btn btn-hero-primary">
+                        <i class="fas fa-plus me-2"></i>soumettre une demande
+                    </a>
+                    <a href="#catalogue" class="btn btn-hero-secondary">
+                        <i class="fas fa-search me-2"></i>catalogue stl
+                    </a>
+                </div>
+
+                <div class="hero-stats mt-5">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="150">0</span>
+                        <span class="stat-label">makers actifs</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="430">0</span>
+                        <span class="stat-label">pieces creees</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="89">0</span>
+                        <span class="stat-label">fichiers stl</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center" data-aos="fade-left">
+                <div class="hero-3d-container">
+                    <model-viewer
+                        src="images/printer_logo.glb"
+                        alt="hubpieces 3d logo"
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="30deg"
+                        camera-controls
+                        shadow-intensity="1"
+                        class="hero-model-viewer"
+                        id="heromodel">
+                    </model-viewer>
+
+                    <div class="floating-logo-3d">
+                        <div class="hand-hint" id="handhint">
+                            <i class="fas fa-hand-pointer"></i>
+                        </div>
+                        <model-viewer
+                                src="images/logo_hub_3d.glb"
+                                alt="logo 3d hubpieces"
+                                camera-controls
+                                disable-zoom
+                                interaction-prompt="none"
+                                shadow-intensity="0.3"
+                                class="logo-3d-small"
+                                id="logofloat">
+                        </model-viewer>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== comment ca marche ==================== -->
+<section class="how-section py-5" data-aos="fade-up">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="section-badge">processus</span>
+            <h2 class="section-title">comment fonctionne hubpieces ?</h2>
+            <p class="section-subtitle">4 acteurs, une solution simple et locale</p>
+        </div>
+        <div class="row g-4">
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="actor-card actor-demandeur">
+                    <div class="actor-icon-wrap">
+                        <i class="fas fa-user actor-icon"></i>
+                    </div>
+                    <h5 class="actor-title">demandeur</h5>
+                    <p class="actor-desc">soumettez votre demande avec photos et dimensions de la piece cassee.</p>
+                    <ul class="actor-list">
+                        <li><i class="fas fa-check-circle me-2"></i>upload photos</li>
+                        <li><i class="fas fa-check-circle me-2"></i>recherche makers</li>
+                        <li><i class="fas fa-check-circle me-2"></i>paiement securise</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="actor-card actor-maker">
+                    <div class="actor-icon-wrap">
+                        <i class="fas fa-print actor-icon"></i>
+                    </div>
+                    <h5 class="actor-title">maker</h5>
+                    <p class="actor-desc">imprimez la piece localement et proposez votre prix et delai.</p>
+                    <ul class="actor-list">
+                        <li><i class="fas fa-check-circle me-2"></i>consulter demandes</li>
+                        <li><i class="fas fa-check-circle me-2"></i>proposer prix</li>
+                        <li><i class="fas fa-check-circle me-2"></i>livraison locale</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="actor-card actor-expert">
+                    <div class="actor-icon-wrap">
+                        <i class="fas fa-drafting-compass actor-icon"></i>
+                    </div>
+                    <h5 class="actor-title">expert cao</h5>
+                    <p class="actor-desc">modelisez en 3d les pieces inexistantes et uploadez les fichiers stl.</p>
+                    <ul class="actor-list">
+                        <li><i class="fas fa-check-circle me-2"></i>modelisation 3d</li>
+                        <li><i class="fas fa-check-circle me-2"></i>upload stl</li>
+                        <li><i class="fas fa-check-circle me-2"></i>remuneration 8%</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="actor-card actor-admin">
+                    <div class="actor-icon-wrap">
+                        <i class="fas fa-shield-alt actor-icon"></i>
+                    </div>
+                    <h5 class="actor-title">administrateur</h5>
+                    <p class="actor-desc">gere la plateforme, valide les inscriptions et modere le catalogue.</p>
+                    <ul class="actor-list">
+                        <li><i class="fas fa-check-circle me-2"></i>validation comptes</li>
+                        <li><i class="fas fa-check-circle me-2"></i>gestion litiges</li>
+                        <li><i class="fas fa-check-circle me-2"></i>moderation stl</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== section makers ==================== -->
+<section id="makers" class="makers-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">communaute</span>
+            <h2 class="section-title">nos makers</h2>
+            <p class="section-subtitle">des passionnes qui impriment vos pieces localement</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="maker-card">
+                    <div class="maker-card-header">
+                        <img src="images/maker1.jpeg" alt="maker 1" class="maker-avatar">
+                        <div class="maker-badge-level">maker expert</div>
+                    </div>
+                    <div class="maker-card-body">
+                        <h5 class="maker-name">ahmed b.</h5>
+                        <p class="maker-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>tetouan, maroc
+                        </p>
+                        <div class="maker-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="maker-rating">4.9 (47 avis)</span>
+                        </div>
+                        <div class="maker-tags mt-2">
+                            <span class="tag-material">pla</span>
+                            <span class="tag-material">abs</span>
+                            <span class="tag-material">petg</span>
+                        </div>
+                        <div class="maker-work mt-3">
+                            <img src="images/printed1.jpeg" alt="piece imprimee" class="maker-work-img">
+                            <p class="maker-work-caption">poignee lave-linge samsung</p>
+                        </div>
+                        <a href="#" class="btn btn-maker-contact mt-3">
+                            <i class="fas fa-envelope me-2"></i>contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="maker-card">
+                    <div class="maker-card-header">
+                        <img src="images/maker2.jpeg" alt="maker 2" class="maker-avatar">
+                        <div class="maker-badge-level maker-confirme">maker confirme</div>
+                    </div>
+                    <div class="maker-card-body">
+                        <h5 class="maker-name">youssef m.</h5>
+                        <p class="maker-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>tanger, maroc
+                        </p>
+                        <div class="maker-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="maker-rating">4.3 (23 avis)</span>
+                        </div>
+                        <div class="maker-tags mt-2">
+                            <span class="tag-material">pla</span>
+                            <span class="tag-material">tpu</span>
+                        </div>
+                        <div class="maker-work mt-3">
+                            <img src="images/printed2.jpeg" alt="piece imprimee" class="maker-work-img">
+                            <p class="maker-work-caption">support telephone voiture</p>
+                        </div>
+                        <a href="#" class="btn btn-maker-contact mt-3">
+                            <i class="fas fa-envelope me-2"></i>contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="maker-card">
+                    <div class="maker-card-header">
+                        <img src="images/maker3.jpeg" alt="maker 3" class="maker-avatar">
+                        <div class="maker-badge-level">maker expert</div>
+                    </div>
+                    <div class="maker-card-body">
+                        <h5 class="maker-name">sara k.</h5>
+                        <p class="maker-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>rabat, maroc
+                        </p>
+                        <div class="maker-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="maker-rating">4.7 (38 avis)</span>
+                        </div>
+                        <div class="maker-tags mt-2">
+                            <span class="tag-material">pla</span>
+                            <span class="tag-material">petg</span>
+                            <span class="tag-material">resin</span>
+                        </div>
+                        <div class="maker-work mt-3">
+                            <img src="images/printed3.jpeg" alt="piece imprimee" class="maker-work-img">
+                            <p class="maker-work-caption">engrenage machine a cafe</p>
+                        </div>
+                        <a href="#" class="btn btn-maker-contact mt-3">
+                            <i class="fas fa-envelope me-2"></i>contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== section experts cao ==================== -->
+<section id="experts" class="experts-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">modelisation 3d</span>
+            <h2 class="section-title">nos experts cao</h2>
+            <p class="section-subtitle">des modelisateurs 3d qui donnent vie a vos pieces</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="expert-card">
+                    <div class="expert-model-container">
+                        <model-viewer
+                            src="images/model1.glb"
+                            alt="modele 3d expert"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="0.5"
+                            class="expert-model-viewer"
+                            style="background: transparent;">
+                        </model-viewer>
+                    </div>
+                    <div class="expert-card-body">
+                        <h5 class="expert-name">karim a.</h5>
+                        <p class="expert-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>casablanca
+                        </p>
+                        <div class="expert-tools">
+                            <span class="tool-badge">fusion 360</span>
+                            <span class="tool-badge">blender</span>
+                        </div>
+                        <div class="expert-stars mt-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.8 (29 modeles)</span>
+                        </div>
+                        <a href="#" class="btn btn-expert-contact mt-3">
+                            <i class="fas fa-cube me-2"></i>voir portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="expert-card">
+                    <div class="expert-model-container">
+                        <model-viewer
+                            src="images/logo_hub_3d.glb"
+                            alt="modele 3d expert"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="0.5"
+                            class="expert-model-viewer"
+                            style="background: transparent;">
+                        </model-viewer>
+                    </div>
+                    <div class="expert-card-body">
+                        <h5 class="expert-name">nadia r.</h5>
+                        <p class="expert-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>marrakech
+                        </p>
+                        <div class="expert-tools">
+                            <span class="tool-badge">solidworks</span>
+                            <span class="tool-badge">autocad</span>
+                        </div>
+                        <div class="expert-stars mt-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.2 (15 modeles)</span>
+                        </div>
+                        <a href="#" class="btn btn-expert-contact mt-3">
+                            <i class="fas fa-cube me-2"></i>voir portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="expert-card">
+                    <div class="expert-model-container">
+                        <model-viewer
+                            src="images/model3.glb"
+                            alt="modele 3d expert"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="0.5"
+                            class="expert-model-viewer"
+                            style="background: transparent;">
+                        </model-viewer>
+                    </div>
+                    <div class="expert-card-body">
+                        <h5 class="expert-name">omar t.</h5>
+                        <p class="expert-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>fes
+                        </p>
+                        <div class="expert-tools">
+                            <span class="tool-badge">blender</span>
+                            <span class="tool-badge">freecad</span>
+                        </div>
+                        <div class="expert-stars mt-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.6 (41 modeles)</span>
+                        </div>
+                        <a href="#" class="btn btn-expert-contact mt-3">
+                            <i class="fas fa-cube me-2"></i>voir portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== section avis ==================== -->
+<section id="avis" class="avis-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">temoignages</span>
+            <h2 class="section-title">ce que disent nos utilisateurs</h2>
+            <p class="section-subtitle">la regle des 7 jours garantit des avis authentiques</p>
+        </div>
+
+        <div id="aviscarousel" class="carousel slide" data-bs-ride="carousel" data-aos="fade-up">
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="avis-card">
+                                <div class="avis-stars mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="avis-text">
+                                    "ma machine a laver est reparee en 48h pour seulement 8 euros.
+                                    le maker etait professionnel et la piece s'adapte parfaitement.
+                                    je recommande hubpieces a tout le monde !"
+                                </p>
+                                <div class="avis-author">
+                                    <div class="avis-avatar">m</div>
+                                    <div>
+                                        <strong>mohamed a.</strong>
+                                        <span class="avis-role">demandeur - tetouan</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="avis-card">
+                                <div class="avis-stars mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="avis-text">
+                                    "en tant que maker, j'ai pu gagner un revenu supplementaire
+                                    tout en aidant des gens de mon quartier. la plateforme est
+                                    intuitive et le paiement securise me rassure."
+                                </p>
+                                <div class="avis-author">
+                                    <div class="avis-avatar">a</div>
+                                    <div>
+                                        <strong>ahmed b.</strong>
+                                        <span class="avis-role">maker expert - tanger</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="avis-card">
+                                <div class="avis-stars mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <p class="avis-text">
+                                    "j'ai modelise plus de 40 pieces sur hubpieces. la validation
+                                    par les experts cao garantit la qualite. c'est une vraie
+                                    economie collaborative qui fonctionne !"
+                                </p>
+                                <div class="avis-author">
+                                    <div class="avis-avatar">k</div>
+                                    <div>
+                                        <strong>karim a.</strong>
+                                        <span class="avis-role">expert cao - casablanca</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn" data-bs-target="#aviscarousel" data-bs-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn" data-bs-target="#aviscarousel" data-bs-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="carousel-indicators carousel-dots">
+                <button type="button" data-bs-target="#aviscarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#aviscarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#aviscarousel" data-bs-slide-to="2"></button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==================== footer ==================== -->
+<footer class="footer-section">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-lg-4 mb-4">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <img src="images/logo_hub.jpeg" alt="logo" class="footer-logo">
+                    <span class="brand-hub">hub</span><span class="brand-pieces">pieces</span>
+                </div>
+                <p class="footer-desc">
+                    plateforme de reparation par impression 3d.
+                    lutte contre l'obsolescence programmee.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-4">
+                <h6 class="footer-title">navigation</h6>
+                <ul class="footer-links">
+                    <li><a href="#accueil">accueil</a></li>
+                    <li><a href="#catalogue">catalogue stl</a></li>
+                    <li><a href="#makers">makers</a></li>
+                    <li><a href="#experts">experts cao</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4 mb-4">
+                <h6 class="footer-title">contact</h6>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope me-2"></i>contact@hubpieces.ma</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i>ensa tetouan, maroc</li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4 mb-4">
+                <h6 class="footer-title">stack technique</h6>
+                <div class="tech-badges">
+                    <span class="tech-badge">spring boot</span>
+                    <span class="tech-badge">mysql</span>
+                    <span class="tech-badge">bootstrap 5</span>
+                    <span class="tech-badge">rest api</span>
+                    <span class="tech-badge">three.js</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>2026 hubpieces - ensa tetouan - frameworks web 2025/2026</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="js/main.js"></script>
+<script src="js/header.js"></script>
+
+</body>
+<div class="watermark-bg">
+    <img src="images/logo_hub.png" alt="watermark" class="watermark-img" id="watermark"></div>
+</html>

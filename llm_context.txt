@@ -1,0 +1,4253 @@
+﻿PROJECT CONTEXT FOR AN LLM
+Root: C:\Users\aitja\IdeaProjects\hubpieces
+Generated: 2026-10-05 16:21:29
+
+=== PROJECT STRUCTURE ===
+DIR  .mvn
+DIR  .mvn\wrapper
+DIR  src
+DIR  src\main
+DIR  src\main\java
+DIR  src\main\java\com
+DIR  src\main\java\com\hubpieces
+DIR  src\main\java\com\hubpieces\config
+DIR  src\main\java\com\hubpieces\controller
+DIR  src\main\java\com\hubpieces\dto
+DIR  src\main\java\com\hubpieces\model
+DIR  src\main\java\com\hubpieces\repository
+DIR  src\main\java\com\hubpieces\security
+DIR  src\main\java\com\hubpieces\service
+DIR  src\main\resources
+DIR  src\main\resources\static
+DIR  src\main\resources\static\css
+DIR  src\main\resources\static\DB
+DIR  src\main\resources\static\images
+DIR  src\main\resources\static\js
+DIR  src\main\resources\templates
+DIR  src\test
+DIR  src\test\java
+DIR  src\test\java\com
+DIR  src\test\java\com\hubpieces
+FILE .mvn\wrapper\maven-wrapper.properties
+FILE exporter-contexte-llm.bat
+FILE HELP.md
+FILE mvnw
+FILE mvnw.cmd
+FILE pom.xml
+FILE src\main\java\com\hubpieces\config\SecurityConfig.java
+FILE src\main\java\com\hubpieces\HubpiecesApplication.java
+FILE src\main\java\com\hubpieces\model\Avis.java
+FILE src\main\java\com\hubpieces\model\BadgeMaker.java
+FILE src\main\java\com\hubpieces\model\Demande.java
+FILE src\main\java\com\hubpieces\model\EtatDemande.java
+FILE src\main\java\com\hubpieces\model\EtatLitige.java
+FILE src\main\java\com\hubpieces\model\EtatOffre.java
+FILE src\main\java\com\hubpieces\model\EtatPaiement.java
+FILE src\main\java\com\hubpieces\model\EtatValidation.java
+FILE src\main\java\com\hubpieces\model\FichierStl.java
+FILE src\main\java\com\hubpieces\model\Litige.java
+FILE src\main\java\com\hubpieces\model\Message.java
+FILE src\main\java\com\hubpieces\model\ModeLivraison.java
+FILE src\main\java\com\hubpieces\model\Notification.java
+FILE src\main\java\com\hubpieces\model\OffreMaker.java
+FILE src\main\java\com\hubpieces\model\PhotoDemande.java
+FILE src\main\java\com\hubpieces\model\ProfilExpertCao.java
+FILE src\main\java\com\hubpieces\model\ProfilMaker.java
+FILE src\main\java\com\hubpieces\model\Role.java
+FILE src\main\java\com\hubpieces\model\RoleNom.java
+FILE src\main\java\com\hubpieces\model\StatutUtilisateur.java
+FILE src\main\java\com\hubpieces\model\Transaction.java
+FILE src\main\java\com\hubpieces\model\TypeNotification.java
+FILE src\main\java\com\hubpieces\model\Utilisateur.java
+FILE src\main\resources\application.properties
+FILE src\main\resources\data.sql
+FILE src\main\resources\static\css\style.css
+FILE src\main\resources\static\DB\hubpieces_db.sql
+FILE src\main\resources\static\index.html
+FILE src\main\resources\static\js\main.js
+FILE src\test\java\com\hubpieces\HubpiecesApplicationTests.java
+
+=== FILE CONTENTS ===
+
+----- BEGIN FILE: .mvn\wrapper\maven-wrapper.properties -----
+wrapperVersion=3.3.4
+distributionType=only-script
+distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.16/apache-maven-3.9.16-bin.zip
+
+----- END FILE: .mvn\wrapper\maven-wrapper.properties -----
+
+----- BEGIN FILE: exporter-contexte-llm.bat -----
+@echo off
+setlocal
+
+set "PROJECT_DIR=%~dp0"
+
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
+  "$ErrorActionPreference = 'Stop';" ^
+  "$root = (Resolve-Path -LiteralPath '%PROJECT_DIR%').Path.TrimEnd('\', '/');" ^
+  "$output = Join-Path $root 'llm_context.txt';" ^
+  "$excludedDirs = @('.git', '.idea', 'target', 'node_modules', 'build', 'dist', 'out', '.gradle', 'coverage', '.next', 'vendor');" ^
+  "$extensions = @('.java', '.kt', '.xml', '.properties', '.yml', '.yaml', '.json', '.sql', '.html', '.htm', '.css', '.js', '.ts', '.tsx', '.jsx', '.md', '.txt', '.gradle', '.kts', '.bat', '.cmd', '.sh', '.py', '.go', '.cs', '.php', '.vue', '.svelte', '.toml', '.ini', '.conf', '.properties');" ^
+  "$files = Get-ChildItem -LiteralPath $root -File -Recurse | Where-Object { $relative = $_.FullName.Substring($root.Length).TrimStart('\', '/'); $parts = $relative -split '[\\/]'; ($relative -ne 'llm_context.txt') -and ($parts | Where-Object { $excludedDirs -contains $_ }).Count -eq 0 -and ($extensions -contains $_.Extension.ToLowerInvariant() -or $_.Name -in @('Dockerfile', 'Makefile', 'mvnw', 'mvnw.cmd', 'Procfile')) -and $_.Name -notmatch '(?i)^(\.env|.*secret.*|.*credential.*|.*password.*|.*private.*key.*)' -and $_.Extension.ToLowerInvariant() -notin @('.pem', '.p12', '.pfx', '.key'); } | Sort-Object FullName;" ^
+  "$directories = Get-ChildItem -LiteralPath $root -Directory -Recurse | Where-Object { $relative = $_.FullName.Substring($root.Length).TrimStart('\', '/'); $parts = $relative -split '[\\/]'; ($parts | Where-Object { $excludedDirs -contains $_ }).Count -eq 0 } | Sort-Object FullName;" ^
+  "$lines = [System.Collections.Generic.List[string]]::new();" ^
+  "$lines.Add('PROJECT CONTEXT FOR AN LLM'); $lines.Add(('Root: ' + $root)); $lines.Add(('Generated: ' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')));" ^
+  "$lines.Add(''); $lines.Add('=== PROJECT STRUCTURE ===');" ^
+  "foreach ($item in $directories) { $lines.Add(('DIR  ' + $item.FullName.Substring($root.Length).TrimStart('\', '/'))); }" ^
+  "foreach ($item in $files) { $lines.Add(('FILE ' + $item.FullName.Substring($root.Length).TrimStart('\', '/'))); }" ^
+  "$lines.Add(''); $lines.Add('=== FILE CONTENTS ===');" ^
+  "foreach ($item in $files) { $relative = $item.FullName.Substring($root.Length).TrimStart('\', '/'); $lines.Add(''); $lines.Add(('----- BEGIN FILE: ' + $relative + ' -----')); $lines.Add([IO.File]::ReadAllText($item.FullName)); $lines.Add(('----- END FILE: ' + $relative + ' -----')); }" ^
+  "[IO.File]::WriteAllLines($output, $lines, [Text.UTF8Encoding]::new($true));" ^
+  "Write-Host ('Context exported to: ' + $output);"
+
+if errorlevel 1 (
+    echo Export failed.
+    exit /b 1
+)
+
+echo Review llm_context.txt and remove any sensitive information before sharing it.
+endlocal
+
+----- END FILE: exporter-contexte-llm.bat -----
+
+----- BEGIN FILE: HELP.md -----
+# Getting Started
+
+### Reference Documentation
+
+For further reference, please consider the following sections:
+
+* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/4.0.8/maven-plugin)
+* [Create an OCI image](https://docs.spring.io/spring-boot/4.0.8/maven-plugin/build-image.html)
+* [Spring Data JPA](https://docs.spring.io/spring-boot/4.0.8/reference/data/sql.html#data.sql.jpa-and-spring-data)
+* [Spring Security](https://docs.spring.io/spring-boot/4.0.8/reference/web/spring-security.html)
+* [Spring Web](https://docs.spring.io/spring-boot/4.0.8/reference/web/servlet.html)
+
+### Guides
+
+The following guides illustrate how to use some features concretely:
+
+* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
+* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
+* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
+* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
+* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
+* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
+* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
+* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+
+### Maven Parent overrides
+
+Due to Maven's design, elements are inherited from the parent POM to the project POM.
+While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the
+parent.
+To prevent this, the project POM contains empty overrides for these elements.
+If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
+
+
+----- END FILE: HELP.md -----
+
+----- BEGIN FILE: mvnw -----
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+# ----------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------
+# Apache Maven Wrapper startup batch script, version 3.3.4
+#
+# Optional ENV vars
+# -----------------
+#   JAVA_HOME - location of a JDK home dir, required when download maven via java source
+#   MVNW_REPOURL - repo url base for downloading maven distribution
+#   MVNW_USERNAME/MVNW_PASSWORD - user and password for downloading maven
+#   MVNW_VERBOSE - true: enable verbose log; debug: trace the mvnw script; others: silence the output
+# ----------------------------------------------------------------------------
+
+set -euf
+[ "${MVNW_VERBOSE-}" != debug ] || set -x
+
+# OS specific support.
+native_path() { printf %s\\n "$1"; }
+case "$(uname)" in
+CYGWIN* | MINGW*)
+  [ -z "${JAVA_HOME-}" ] || JAVA_HOME="$(cygpath --unix "$JAVA_HOME")"
+  native_path() { cygpath --path --windows "$1"; }
+  ;;
+esac
+
+# set JAVACMD and JAVACCMD
+set_java_home() {
+  # For Cygwin and MinGW, ensure paths are in Unix format before anything is touched
+  if [ -n "${JAVA_HOME-}" ]; then
+    if [ -x "$JAVA_HOME/jre/sh/java" ]; then
+      # IBM's JDK on AIX uses strange locations for the executables
+      JAVACMD="$JAVA_HOME/jre/sh/java"
+      JAVACCMD="$JAVA_HOME/jre/sh/javac"
+    else
+      JAVACMD="$JAVA_HOME/bin/java"
+      JAVACCMD="$JAVA_HOME/bin/javac"
+
+      if [ ! -x "$JAVACMD" ] || [ ! -x "$JAVACCMD" ]; then
+        echo "The JAVA_HOME environment variable is not defined correctly, so mvnw cannot run." >&2
+        echo "JAVA_HOME is set to \"$JAVA_HOME\", but \"\$JAVA_HOME/bin/java\" or \"\$JAVA_HOME/bin/javac\" does not exist." >&2
+        return 1
+      fi
+    fi
+  else
+    JAVACMD="$(
+      'set' +e
+      'unset' -f command 2>/dev/null
+      'command' -v java
+    )" || :
+    JAVACCMD="$(
+      'set' +e
+      'unset' -f command 2>/dev/null
+      'command' -v javac
+    )" || :
+
+    if [ ! -x "${JAVACMD-}" ] || [ ! -x "${JAVACCMD-}" ]; then
+      echo "The java/javac command does not exist in PATH nor is JAVA_HOME set, so mvnw cannot run." >&2
+      return 1
+    fi
+  fi
+}
+
+# hash string like Java String::hashCode
+hash_string() {
+  str="${1:-}" h=0
+  while [ -n "$str" ]; do
+    char="${str%"${str#?}"}"
+    h=$(((h * 31 + $(LC_CTYPE=C printf %d "'$char")) % 4294967296))
+    str="${str#?}"
+  done
+  printf %x\\n $h
+}
+
+verbose() { :; }
+[ "${MVNW_VERBOSE-}" != true ] || verbose() { printf %s\\n "${1-}"; }
+
+die() {
+  printf %s\\n "$1" >&2
+  exit 1
+}
+
+trim() {
+  # MWRAPPER-139:
+  #   Trims trailing and leading whitespace, carriage returns, tabs, and linefeeds.
+  #   Needed for removing poorly interpreted newline sequences when running in more
+  #   exotic environments such as mingw bash on Windows.
+  printf "%s" "${1}" | tr -d '[:space:]'
+}
+
+scriptDir="$(dirname "$0")"
+scriptName="$(basename "$0")"
+
+# parse distributionUrl and optional distributionSha256Sum, requires .mvn/wrapper/maven-wrapper.properties
+while IFS="=" read -r key value; do
+  case "${key-}" in
+  distributionUrl) distributionUrl=$(trim "${value-}") ;;
+  distributionSha256Sum) distributionSha256Sum=$(trim "${value-}") ;;
+  esac
+done <"$scriptDir/.mvn/wrapper/maven-wrapper.properties"
+[ -n "${distributionUrl-}" ] || die "cannot read distributionUrl property in $scriptDir/.mvn/wrapper/maven-wrapper.properties"
+
+case "${distributionUrl##*/}" in
+maven-mvnd-*bin.*)
+  MVN_CMD=mvnd.sh _MVNW_REPO_PATTERN=/maven/mvnd/
+  case "${PROCESSOR_ARCHITECTURE-}${PROCESSOR_ARCHITEW6432-}:$(uname -a)" in
+  *AMD64:CYGWIN* | *AMD64:MINGW*) distributionPlatform=windows-amd64 ;;
+  :Darwin*x86_64) distributionPlatform=darwin-amd64 ;;
+  :Darwin*arm64) distributionPlatform=darwin-aarch64 ;;
+  :Linux*x86_64*) distributionPlatform=linux-amd64 ;;
+  *)
+    echo "Cannot detect native platform for mvnd on $(uname)-$(uname -m), use pure java version" >&2
+    distributionPlatform=linux-amd64
+    ;;
+  esac
+  distributionUrl="${distributionUrl%-bin.*}-$distributionPlatform.zip"
+  ;;
+maven-mvnd-*) MVN_CMD=mvnd.sh _MVNW_REPO_PATTERN=/maven/mvnd/ ;;
+*) MVN_CMD="mvn${scriptName#mvnw}" _MVNW_REPO_PATTERN=/org/apache/maven/ ;;
+esac
+
+# apply MVNW_REPOURL and calculate MAVEN_HOME
+# maven home pattern: ~/.m2/wrapper/dists/{apache-maven-<version>,maven-mvnd-<version>-<platform>}/<hash>
+[ -z "${MVNW_REPOURL-}" ] || distributionUrl="$MVNW_REPOURL$_MVNW_REPO_PATTERN${distributionUrl#*"$_MVNW_REPO_PATTERN"}"
+distributionUrlName="${distributionUrl##*/}"
+distributionUrlNameMain="${distributionUrlName%.*}"
+distributionUrlNameMain="${distributionUrlNameMain%-bin}"
+MAVEN_USER_HOME="${MAVEN_USER_HOME:-${HOME}/.m2}"
+MAVEN_HOME="${MAVEN_USER_HOME}/wrapper/dists/${distributionUrlNameMain-}/$(hash_string "$distributionUrl")"
+
+exec_maven() {
+  unset MVNW_VERBOSE MVNW_USERNAME MVNW_PASSWORD MVNW_REPOURL || :
+  exec "$MAVEN_HOME/bin/$MVN_CMD" "$@" || die "cannot exec $MAVEN_HOME/bin/$MVN_CMD"
+}
+
+if [ -d "$MAVEN_HOME" ]; then
+  verbose "found existing MAVEN_HOME at $MAVEN_HOME"
+  exec_maven "$@"
+fi
+
+case "${distributionUrl-}" in
+*?-bin.zip | *?maven-mvnd-?*-?*.zip) ;;
+*) die "distributionUrl is not valid, must match *-bin.zip or maven-mvnd-*.zip, but found '${distributionUrl-}'" ;;
+esac
+
+# prepare tmp dir
+if TMP_DOWNLOAD_DIR="$(mktemp -d)" && [ -d "$TMP_DOWNLOAD_DIR" ]; then
+  clean() { rm -rf -- "$TMP_DOWNLOAD_DIR"; }
+  trap clean HUP INT TERM EXIT
+else
+  die "cannot create temp dir"
+fi
+
+mkdir -p -- "${MAVEN_HOME%/*}"
+
+# Download and Install Apache Maven
+verbose "Couldn't find MAVEN_HOME, downloading and installing it ..."
+verbose "Downloading from: $distributionUrl"
+verbose "Downloading to: $TMP_DOWNLOAD_DIR/$distributionUrlName"
+
+# select .zip or .tar.gz
+if ! command -v unzip >/dev/null; then
+  distributionUrl="${distributionUrl%.zip}.tar.gz"
+  distributionUrlName="${distributionUrl##*/}"
+fi
+
+# verbose opt
+__MVNW_QUIET_WGET=--quiet __MVNW_QUIET_CURL=--silent __MVNW_QUIET_UNZIP=-q __MVNW_QUIET_TAR=''
+[ "${MVNW_VERBOSE-}" != true ] || __MVNW_QUIET_WGET='' __MVNW_QUIET_CURL='' __MVNW_QUIET_UNZIP='' __MVNW_QUIET_TAR=v
+
+# normalize http auth
+case "${MVNW_PASSWORD:+has-password}" in
+'') MVNW_USERNAME='' MVNW_PASSWORD='' ;;
+has-password) [ -n "${MVNW_USERNAME-}" ] || MVNW_USERNAME='' MVNW_PASSWORD='' ;;
+esac
+
+if [ -z "${MVNW_USERNAME-}" ] && command -v wget >/dev/null; then
+  verbose "Found wget ... using wget"
+  wget ${__MVNW_QUIET_WGET:+"$__MVNW_QUIET_WGET"} "$distributionUrl" -O "$TMP_DOWNLOAD_DIR/$distributionUrlName" || die "wget: Failed to fetch $distributionUrl"
+elif [ -z "${MVNW_USERNAME-}" ] && command -v curl >/dev/null; then
+  verbose "Found curl ... using curl"
+  curl ${__MVNW_QUIET_CURL:+"$__MVNW_QUIET_CURL"} -f -L -o "$TMP_DOWNLOAD_DIR/$distributionUrlName" "$distributionUrl" || die "curl: Failed to fetch $distributionUrl"
+elif set_java_home; then
+  verbose "Falling back to use Java to download"
+  javaSource="$TMP_DOWNLOAD_DIR/Downloader.java"
+  targetZip="$TMP_DOWNLOAD_DIR/$distributionUrlName"
+  cat >"$javaSource" <<-END
+	public class Downloader extends java.net.Authenticator
+	{
+	  protected java.net.PasswordAuthentication getPasswordAuthentication()
+	  {
+	    return new java.net.PasswordAuthentication( System.getenv( "MVNW_USERNAME" ), System.getenv( "MVNW_PASSWORD" ).toCharArray() );
+	  }
+	  public static void main( String[] args ) throws Exception
+	  {
+	    setDefault( new Downloader() );
+	    java.nio.file.Files.copy( java.net.URI.create( args[0] ).toURL().openStream(), java.nio.file.Paths.get( args[1] ).toAbsolutePath().normalize() );
+	  }
+	}
+	END
+  # For Cygwin/MinGW, switch paths to Windows format before running javac and java
+  verbose " - Compiling Downloader.java ..."
+  "$(native_path "$JAVACCMD")" "$(native_path "$javaSource")" || die "Failed to compile Downloader.java"
+  verbose " - Running Downloader.java ..."
+  "$(native_path "$JAVACMD")" -cp "$(native_path "$TMP_DOWNLOAD_DIR")" Downloader "$distributionUrl" "$(native_path "$targetZip")"
+fi
+
+# If specified, validate the SHA-256 sum of the Maven distribution zip file
+if [ -n "${distributionSha256Sum-}" ]; then
+  distributionSha256Result=false
+  if [ "$MVN_CMD" = mvnd.sh ]; then
+    echo "Checksum validation is not supported for maven-mvnd." >&2
+    echo "Please disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties." >&2
+    exit 1
+  elif command -v sha256sum >/dev/null; then
+    if echo "$distributionSha256Sum  $TMP_DOWNLOAD_DIR/$distributionUrlName" | sha256sum -c - >/dev/null 2>&1; then
+      distributionSha256Result=true
+    fi
+  elif command -v shasum >/dev/null; then
+    if echo "$distributionSha256Sum  $TMP_DOWNLOAD_DIR/$distributionUrlName" | shasum -a 256 -c >/dev/null 2>&1; then
+      distributionSha256Result=true
+    fi
+  else
+    echo "Checksum validation was requested but neither 'sha256sum' or 'shasum' are available." >&2
+    echo "Please install either command, or disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties." >&2
+    exit 1
+  fi
+  if [ $distributionSha256Result = false ]; then
+    echo "Error: Failed to validate Maven distribution SHA-256, your Maven distribution might be compromised." >&2
+    echo "If you updated your Maven version, you need to update the specified distributionSha256Sum property." >&2
+    exit 1
+  fi
+fi
+
+# unzip and move
+if command -v unzip >/dev/null; then
+  unzip ${__MVNW_QUIET_UNZIP:+"$__MVNW_QUIET_UNZIP"} "$TMP_DOWNLOAD_DIR/$distributionUrlName" -d "$TMP_DOWNLOAD_DIR" || die "failed to unzip"
+else
+  tar xzf${__MVNW_QUIET_TAR:+"$__MVNW_QUIET_TAR"} "$TMP_DOWNLOAD_DIR/$distributionUrlName" -C "$TMP_DOWNLOAD_DIR" || die "failed to untar"
+fi
+
+# Find the actual extracted directory name (handles snapshots where filename != directory name)
+actualDistributionDir=""
+
+# First try the expected directory name (for regular distributions)
+if [ -d "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain" ]; then
+  if [ -f "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain/bin/$MVN_CMD" ]; then
+    actualDistributionDir="$distributionUrlNameMain"
+  fi
+fi
+
+# If not found, search for any directory with the Maven executable (for snapshots)
+if [ -z "$actualDistributionDir" ]; then
+  # enable globbing to iterate over items
+  set +f
+  for dir in "$TMP_DOWNLOAD_DIR"/*; do
+    if [ -d "$dir" ]; then
+      if [ -f "$dir/bin/$MVN_CMD" ]; then
+        actualDistributionDir="$(basename "$dir")"
+        break
+      fi
+    fi
+  done
+  set -f
+fi
+
+if [ -z "$actualDistributionDir" ]; then
+  verbose "Contents of $TMP_DOWNLOAD_DIR:"
+  verbose "$(ls -la "$TMP_DOWNLOAD_DIR")"
+  die "Could not find Maven distribution directory in extracted archive"
+fi
+
+verbose "Found extracted Maven distribution directory: $actualDistributionDir"
+printf %s\\n "$distributionUrl" >"$TMP_DOWNLOAD_DIR/$actualDistributionDir/mvnw.url"
+mv -- "$TMP_DOWNLOAD_DIR/$actualDistributionDir" "$MAVEN_HOME" || [ -d "$MAVEN_HOME" ] || die "fail to move MAVEN_HOME"
+
+clean || :
+exec_maven "$@"
+
+----- END FILE: mvnw -----
+
+----- BEGIN FILE: mvnw.cmd -----
+<# : batch portion
+@REM ----------------------------------------------------------------------------
+@REM Licensed to the Apache Software Foundation (ASF) under one
+@REM or more contributor license agreements.  See the NOTICE file
+@REM distributed with this work for additional information
+@REM regarding copyright ownership.  The ASF licenses this file
+@REM to you under the Apache License, Version 2.0 (the
+@REM "License"); you may not use this file except in compliance
+@REM with the License.  You may obtain a copy of the License at
+@REM
+@REM    http://www.apache.org/licenses/LICENSE-2.0
+@REM
+@REM Unless required by applicable law or agreed to in writing,
+@REM software distributed under the License is distributed on an
+@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+@REM KIND, either express or implied.  See the License for the
+@REM specific language governing permissions and limitations
+@REM under the License.
+@REM ----------------------------------------------------------------------------
+
+@REM ----------------------------------------------------------------------------
+@REM Apache Maven Wrapper startup batch script, version 3.3.4
+@REM
+@REM Optional ENV vars
+@REM   MVNW_REPOURL - repo url base for downloading maven distribution
+@REM   MVNW_USERNAME/MVNW_PASSWORD - user and password for downloading maven
+@REM   MVNW_VERBOSE - true: enable verbose log; others: silence the output
+@REM ----------------------------------------------------------------------------
+
+@IF "%__MVNW_ARG0_NAME__%"=="" (SET __MVNW_ARG0_NAME__=%~nx0)
+@SET __MVNW_CMD__=
+@SET __MVNW_ERROR__=
+@SET __MVNW_PSMODULEP_SAVE=%PSModulePath%
+@SET PSModulePath=
+@FOR /F "usebackq tokens=1* delims==" %%A IN (`powershell -noprofile "& {$scriptDir='%~dp0'; $script='%__MVNW_ARG0_NAME__%'; icm -ScriptBlock ([Scriptblock]::Create((Get-Content -Raw '%~f0'))) -NoNewScope}"`) DO @(
+  IF "%%A"=="MVN_CMD" (set __MVNW_CMD__=%%B) ELSE IF "%%B"=="" (echo %%A) ELSE (echo %%A=%%B)
+)
+@SET PSModulePath=%__MVNW_PSMODULEP_SAVE%
+@SET __MVNW_PSMODULEP_SAVE=
+@SET __MVNW_ARG0_NAME__=
+@SET MVNW_USERNAME=
+@SET MVNW_PASSWORD=
+@IF NOT "%__MVNW_CMD__%"=="" ("%__MVNW_CMD__%" %*)
+@echo Cannot start maven from wrapper >&2 && exit /b 1
+@GOTO :EOF
+: end batch / begin powershell #>
+
+$ErrorActionPreference = "Stop"
+if ($env:MVNW_VERBOSE -eq "true") {
+  $VerbosePreference = "Continue"
+}
+
+# calculate distributionUrl, requires .mvn/wrapper/maven-wrapper.properties
+$distributionUrl = (Get-Content -Raw "$scriptDir/.mvn/wrapper/maven-wrapper.properties" | ConvertFrom-StringData).distributionUrl
+if (!$distributionUrl) {
+  Write-Error "cannot read distributionUrl property in $scriptDir/.mvn/wrapper/maven-wrapper.properties"
+}
+
+switch -wildcard -casesensitive ( $($distributionUrl -replace '^.*/','') ) {
+  "maven-mvnd-*" {
+    $USE_MVND = $true
+    $distributionUrl = $distributionUrl -replace '-bin\.[^.]*$',"-windows-amd64.zip"
+    $MVN_CMD = "mvnd.cmd"
+    break
+  }
+  default {
+    $USE_MVND = $false
+    $MVN_CMD = $script -replace '^mvnw','mvn'
+    break
+  }
+}
+
+# apply MVNW_REPOURL and calculate MAVEN_HOME
+# maven home pattern: ~/.m2/wrapper/dists/{apache-maven-<version>,maven-mvnd-<version>-<platform>}/<hash>
+if ($env:MVNW_REPOURL) {
+  $MVNW_REPO_PATTERN = if ($USE_MVND -eq $False) { "/org/apache/maven/" } else { "/maven/mvnd/" }
+  $distributionUrl = "$env:MVNW_REPOURL$MVNW_REPO_PATTERN$($distributionUrl -replace "^.*$MVNW_REPO_PATTERN",'')"
+}
+$distributionUrlName = $distributionUrl -replace '^.*/',''
+$distributionUrlNameMain = $distributionUrlName -replace '\.[^.]*$','' -replace '-bin$',''
+
+$MAVEN_M2_PATH = "$HOME/.m2"
+if ($env:MAVEN_USER_HOME) {
+  $MAVEN_M2_PATH = "$env:MAVEN_USER_HOME"
+}
+
+if (-not (Test-Path -Path $MAVEN_M2_PATH)) {
+    New-Item -Path $MAVEN_M2_PATH -ItemType Directory | Out-Null
+}
+
+$MAVEN_WRAPPER_DISTS = $null
+if ((Get-Item $MAVEN_M2_PATH).Target[0] -eq $null) {
+  $MAVEN_WRAPPER_DISTS = "$MAVEN_M2_PATH/wrapper/dists"
+} else {
+  $MAVEN_WRAPPER_DISTS = (Get-Item $MAVEN_M2_PATH).Target[0] + "/wrapper/dists"
+}
+
+$MAVEN_HOME_PARENT = "$MAVEN_WRAPPER_DISTS/$distributionUrlNameMain"
+$MAVEN_HOME_NAME = ([System.Security.Cryptography.SHA256]::Create().ComputeHash([byte[]][char[]]$distributionUrl) | ForEach-Object {$_.ToString("x2")}) -join ''
+$MAVEN_HOME = "$MAVEN_HOME_PARENT/$MAVEN_HOME_NAME"
+
+if (Test-Path -Path "$MAVEN_HOME" -PathType Container) {
+  Write-Verbose "found existing MAVEN_HOME at $MAVEN_HOME"
+  Write-Output "MVN_CMD=$MAVEN_HOME/bin/$MVN_CMD"
+  exit $?
+}
+
+if (! $distributionUrlNameMain -or ($distributionUrlName -eq $distributionUrlNameMain)) {
+  Write-Error "distributionUrl is not valid, must end with *-bin.zip, but found $distributionUrl"
+}
+
+# prepare tmp dir
+$TMP_DOWNLOAD_DIR_HOLDER = New-TemporaryFile
+$TMP_DOWNLOAD_DIR = New-Item -Itemtype Directory -Path "$TMP_DOWNLOAD_DIR_HOLDER.dir"
+$TMP_DOWNLOAD_DIR_HOLDER.Delete() | Out-Null
+trap {
+  if ($TMP_DOWNLOAD_DIR.Exists) {
+    try { Remove-Item $TMP_DOWNLOAD_DIR -Recurse -Force | Out-Null }
+    catch { Write-Warning "Cannot remove $TMP_DOWNLOAD_DIR" }
+  }
+}
+
+New-Item -Itemtype Directory -Path "$MAVEN_HOME_PARENT" -Force | Out-Null
+
+# Download and Install Apache Maven
+Write-Verbose "Couldn't find MAVEN_HOME, downloading and installing it ..."
+Write-Verbose "Downloading from: $distributionUrl"
+Write-Verbose "Downloading to: $TMP_DOWNLOAD_DIR/$distributionUrlName"
+
+$webclient = New-Object System.Net.WebClient
+if ($env:MVNW_USERNAME -and $env:MVNW_PASSWORD) {
+  $webclient.Credentials = New-Object System.Net.NetworkCredential($env:MVNW_USERNAME, $env:MVNW_PASSWORD)
+}
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$webclient.DownloadFile($distributionUrl, "$TMP_DOWNLOAD_DIR/$distributionUrlName") | Out-Null
+
+# If specified, validate the SHA-256 sum of the Maven distribution zip file
+$distributionSha256Sum = (Get-Content -Raw "$scriptDir/.mvn/wrapper/maven-wrapper.properties" | ConvertFrom-StringData).distributionSha256Sum
+if ($distributionSha256Sum) {
+  if ($USE_MVND) {
+    Write-Error "Checksum validation is not supported for maven-mvnd. `nPlease disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties."
+  }
+  Import-Module $PSHOME\Modules\Microsoft.PowerShell.Utility -Function Get-FileHash
+  if ((Get-FileHash "$TMP_DOWNLOAD_DIR/$distributionUrlName" -Algorithm SHA256).Hash.ToLower() -ne $distributionSha256Sum) {
+    Write-Error "Error: Failed to validate Maven distribution SHA-256, your Maven distribution might be compromised. If you updated your Maven version, you need to update the specified distributionSha256Sum property."
+  }
+}
+
+# unzip and move
+Expand-Archive "$TMP_DOWNLOAD_DIR/$distributionUrlName" -DestinationPath "$TMP_DOWNLOAD_DIR" | Out-Null
+
+# Find the actual extracted directory name (handles snapshots where filename != directory name)
+$actualDistributionDir = ""
+
+# First try the expected directory name (for regular distributions)
+$expectedPath = Join-Path "$TMP_DOWNLOAD_DIR" "$distributionUrlNameMain"
+$expectedMvnPath = Join-Path "$expectedPath" "bin/$MVN_CMD"
+if ((Test-Path -Path $expectedPath -PathType Container) -and (Test-Path -Path $expectedMvnPath -PathType Leaf)) {
+  $actualDistributionDir = $distributionUrlNameMain
+}
+
+# If not found, search for any directory with the Maven executable (for snapshots)
+if (!$actualDistributionDir) {
+  Get-ChildItem -Path "$TMP_DOWNLOAD_DIR" -Directory | ForEach-Object {
+    $testPath = Join-Path $_.FullName "bin/$MVN_CMD"
+    if (Test-Path -Path $testPath -PathType Leaf) {
+      $actualDistributionDir = $_.Name
+    }
+  }
+}
+
+if (!$actualDistributionDir) {
+  Write-Error "Could not find Maven distribution directory in extracted archive"
+}
+
+Write-Verbose "Found extracted Maven distribution directory: $actualDistributionDir"
+Rename-Item -Path "$TMP_DOWNLOAD_DIR/$actualDistributionDir" -NewName $MAVEN_HOME_NAME | Out-Null
+try {
+  Move-Item -Path "$TMP_DOWNLOAD_DIR/$MAVEN_HOME_NAME" -Destination $MAVEN_HOME_PARENT | Out-Null
+} catch {
+  if (! (Test-Path -Path "$MAVEN_HOME" -PathType Container)) {
+    Write-Error "fail to move MAVEN_HOME"
+  }
+} finally {
+  try { Remove-Item $TMP_DOWNLOAD_DIR -Recurse -Force | Out-Null }
+  catch { Write-Warning "Cannot remove $TMP_DOWNLOAD_DIR" }
+}
+
+Write-Output "MVN_CMD=$MAVEN_HOME/bin/$MVN_CMD"
+
+----- END FILE: mvnw.cmd -----
+
+----- BEGIN FILE: pom.xml -----
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.8</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.hubpieces</groupId>
+    <artifactId>hubpieces</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>hubpieces</name>
+    <description>hubpieces</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
+----- END FILE: pom.xml -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\config\SecurityConfig.java -----
+package com.hubpieces.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
+                )
+                .csrf(csrf -> csrf.disable());
+        return http.build();
+    }
+}
+----- END FILE: src\main\java\com\hubpieces\config\SecurityConfig.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\HubpiecesApplication.java -----
+package com.hubpieces;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HubpiecesApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(HubpiecesApplication.class, args);
+    }
+
+}
+
+----- END FILE: src\main\java\com\hubpieces\HubpiecesApplication.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\Avis.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "avis")
+public class Avis {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transaction_id", nullable = false)
+    private Transaction transaction;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auteur_id", nullable = false)
+    private Utilisateur auteur;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "destinataire_id", nullable = false)
+    private Utilisateur destinataire;
+
+    @Column(name = "note", nullable = false)
+    private Integer note;
+
+    @Column(name = "commentaire", nullable = false, columnDefinition = "TEXT")
+    private String commentaire;
+
+    @Column(name = "publie")
+    private Boolean publie = false;
+
+    @Column(name = "date_creation")
+    private LocalDateTime dateCreation = LocalDateTime.now();
+
+    @Column(name = "date_publication")
+    private LocalDateTime datePublication;
+
+    public Avis() {}
+
+    public Avis(Transaction transaction, Utilisateur auteur, Utilisateur destinataire, Integer note, String commentaire) {
+        this.transaction = transaction;
+        this.auteur = auteur;
+        this.destinataire = destinataire;
+        this.note = note;
+        this.commentaire = commentaire;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Transaction getTransaction() { return transaction; }
+    public void setTransaction(Transaction transaction) { this.transaction = transaction; }
+
+    public Utilisateur getAuteur() { return auteur; }
+    public void setAuteur(Utilisateur auteur) { this.auteur = auteur; }
+
+    public Utilisateur getDestinataire() { return destinataire; }
+    public void setDestinataire(Utilisateur destinataire) { this.destinataire = destinataire; }
+
+    public Integer getNote() { return note; }
+    public void setNote(Integer note) { this.note = note; }
+
+    public String getCommentaire() { return commentaire; }
+    public void setCommentaire(String commentaire) { this.commentaire = commentaire; }
+
+    public Boolean getPublie() { return publie; }
+    public void setPublie(Boolean publie) { this.publie = publie; }
+
+    public LocalDateTime getDateCreation() { return dateCreation; }
+    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
+
+    public LocalDateTime getDatePublication() { return datePublication; }
+    public void setDatePublication(LocalDateTime datePublication) { this.datePublication = datePublication; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\Avis.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\BadgeMaker.java -----
+package com.hubpieces.model;
+
+public enum BadgeMaker {
+    DEBUTANT,
+    CONFIRME,
+    EXPERT
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\BadgeMaker.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\Demande.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "demande")
+public class Demande {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "titre", nullable = false, length = 200)
+    private String titre;
+
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "marque", length = 100)
+    private String marque;
+
+    @Column(name = "modele_appareil", length = 100)
+    private String modeleAppareil;
+
+    @Column(name = "materiau_souhaite", length = 50)
+    private String materiauSouhaite;
+
+    @Column(name = "budget_max")
+    private Double budgetMax;
+
+    @Column(name = "ville", length = 100)
+    private String ville;
+
+    @Column(name = "code_postal", length = 10)
+    private String codePostal;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etat")
+    private EtatDemande etat = EtatDemande.NOUVELLE;
+
+    @Column(name = "date_creation")
+    private LocalDateTime dateCreation = LocalDateTime.now();
+
+    @Column(name = "date_modification")
+    private LocalDateTime dateModification = LocalDateTime.now();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "demandeur_id", nullable = false)
+    private Utilisateur demandeur;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fichier_stl_id")
+    private FichierStl fichierStl;
+
+    public Demande() {}
+
+    public Demande(String titre, String description, Utilisateur demandeur) {
+        this.titre = titre;
+        this.description = description;
+        this.demandeur = demandeur;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.dateModification = LocalDateTime.now();
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getTitre() { return titre; }
+    public void setTitre(String titre) { this.titre = titre; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getMarque() { return marque; }
+    public void setMarque(String marque) { this.marque = marque; }
+
+    public String getModeleAppareil() { return modeleAppareil; }
+    public void setModeleAppareil(String modeleAppareil) { this.modeleAppareil = modeleAppareil; }
+
+    public String getMateriauSouhaite() { return materiauSouhaite; }
+    public void setMateriauSouhaite(String materiauSouhaite) { this.materiauSouhaite = materiauSouhaite; }
+
+    public Double getBudgetMax() { return budgetMax; }
+    public void setBudgetMax(Double budgetMax) { this.budgetMax = budgetMax; }
+
+    public String getVille() { return ville; }
+    public void setVille(String ville) { this.ville = ville; }
+
+    public String getCodePostal() { return codePostal; }
+    public void setCodePostal(String codePostal) { this.codePostal = codePostal; }
+
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
+
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
+
+    public EtatDemande getEtat() { return etat; }
+    public void setEtat(EtatDemande etat) { this.etat = etat; }
+
+    public LocalDateTime getDateCreation() { return dateCreation; }
+    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
+
+    public LocalDateTime getDateModification() { return dateModification; }
+    public void setDateModification(LocalDateTime dateModification) { this.dateModification = dateModification; }
+
+    public Utilisateur getDemandeur() { return demandeur; }
+    public void setDemandeur(Utilisateur demandeur) { this.demandeur = demandeur; }
+
+    public FichierStl getFichierStl() { return fichierStl; }
+    public void setFichierStl(FichierStl fichierStl) { this.fichierStl = fichierStl; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\Demande.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\EtatDemande.java -----
+package com.hubpieces.model;
+
+public enum EtatDemande {
+    NOUVELLE,
+    MODELISATION_REQUISE,
+    RECHERCHE_MAKER,
+    ATTENTE_VALIDATION,
+    EN_COURS_IMPRESSION,
+    ANNULEE,
+    CLOTUREE
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\EtatDemande.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\EtatLitige.java -----
+package com.hubpieces.model;
+
+public enum EtatLitige {
+    OUVERT,
+    EN_COURS,
+    RESOLU,
+    FERME
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\EtatLitige.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\EtatOffre.java -----
+package com.hubpieces.model;
+
+public enum EtatOffre {
+    EN_ATTENTE,
+    ACCEPTEE,
+    REFUSEE,
+    ANNULEE
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\EtatOffre.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\EtatPaiement.java -----
+package com.hubpieces.model;
+
+public enum EtatPaiement {
+    EN_ATTENTE,
+    PAYE,
+    EN_SEQUESTRE,
+    LIBERE,
+    REMBOURSE,
+    LITIGE
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\EtatPaiement.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\EtatValidation.java -----
+package com.hubpieces.model;
+
+public enum EtatValidation {
+    EN_ATTENTE,
+    VALIDE,
+    REJETE
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\EtatValidation.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\FichierStl.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "fichier_stl")
+public class FichierStl {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nom", nullable = false, length = 200)
+    private String nom;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "chemin_fichier", nullable = false, length = 255)
+    private String cheminFichier;
+
+    @Column(name = "taille_fichier")
+    private Long tailleFichier;
+
+    @Column(name = "categorie", length = 100)
+    private String categorie;
+
+    @Column(name = "tags", length = 255)
+    private String tags;
+
+    @Column(name = "marque", length = 100)
+    private String marque;
+
+    @Column(name = "modele_appareil", length = 100)
+    private String modeleAppareil;
+
+    @Column(name = "materiau_recommande", length = 50)
+    private String materiauRecommande;
+
+    @Column(name = "dimensions", length = 100)
+    private String dimensions;
+
+    @Column(name = "note_moyenne")
+    private Double noteMoyenne = 0.0;
+
+    @Column(name = "nombre_telechargements")
+    private Integer nombreTelechargements = 0;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etat_validation")
+    private EtatValidation etatValidation = EtatValidation.EN_ATTENTE;
+
+    @Column(name = "date_upload")
+    private LocalDateTime dateUpload = LocalDateTime.now();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uploadeur_id", nullable = false)
+    private Utilisateur uploadeur;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "valideur_id")
+    private Utilisateur valideur;
+
+    public FichierStl() {}
+
+    public FichierStl(String nom, String cheminFichier, Utilisateur uploadeur) {
+        this.nom = nom;
+        this.cheminFichier = cheminFichier;
+        this.uploadeur = uploadeur;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getNom() { return nom; }
+    public void setNom(String nom) { this.nom = nom; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getCheminFichier() { return cheminFichier; }
+    public void setCheminFichier(String cheminFichier) { this.cheminFichier = cheminFichier; }
+
+    public Long getTailleFichier() { return tailleFichier; }
+    public void setTailleFichier(Long tailleFichier) { this.tailleFichier = tailleFichier; }
+
+    public String getCategorie() { return categorie; }
+    public void setCategorie(String categorie) { this.categorie = categorie; }
+
+    public String getTags() { return tags; }
+    public void setTags(String tags) { this.tags = tags; }
+
+    public String getMarque() { return marque; }
+    public void setMarque(String marque) { this.marque = marque; }
+
+    public String getModeleAppareil() { return modeleAppareil; }
+    public void setModeleAppareil(String modeleAppareil) { this.modeleAppareil = modeleAppareil; }
+
+    public String getMateriauRecommande() { return materiauRecommande; }
+    public void setMateriauRecommande(String materiauRecommande) { this.materiauRecommande = materiauRecommande; }
+
+    public String getDimensions() { return dimensions; }
+    public void setDimensions(String dimensions) { this.dimensions = dimensions; }
+
+    public Double getNoteMoyenne() { return noteMoyenne; }
+    public void setNoteMoyenne(Double noteMoyenne) { this.noteMoyenne = noteMoyenne; }
+
+    public Integer getNombreTelechargements() { return nombreTelechargements; }
+    public void setNombreTelechargements(Integer nombreTelechargements) { this.nombreTelechargements = nombreTelechargements; }
+
+    public EtatValidation getEtatValidation() { return etatValidation; }
+    public void setEtatValidation(EtatValidation etatValidation) { this.etatValidation = etatValidation; }
+
+    public LocalDateTime getDateUpload() { return dateUpload; }
+    public void setDateUpload(LocalDateTime dateUpload) { this.dateUpload = dateUpload; }
+
+    public Utilisateur getUploadeur() { return uploadeur; }
+    public void setUploadeur(Utilisateur uploadeur) { this.uploadeur = uploadeur; }
+
+    public Utilisateur getValideur() { return valideur; }
+    public void setValideur(Utilisateur valideur) { this.valideur = valideur; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\FichierStl.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\Litige.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "litige")
+public class Litige {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transaction_id", nullable = false)
+    private Transaction transaction;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "demandeur_id", nullable = false)
+    private Utilisateur demandeur;
+
+    @Column(name = "raison", nullable = false, columnDefinition = "TEXT")
+    private String raison;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etat")
+    private EtatLitige etat = EtatLitige.OUVERT;
+
+    @Column(name = "decision", columnDefinition = "TEXT")
+    private String decision;
+
+    @Column(name = "date_ouverture")
+    private LocalDateTime dateOuverture = LocalDateTime.now();
+
+    @Column(name = "date_resolution")
+    private LocalDateTime dateResolution;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id")
+    private Utilisateur admin;
+
+    public Litige() {}
+
+    public Litige(Transaction transaction, Utilisateur demandeur, String raison) {
+        this.transaction = transaction;
+        this.demandeur = demandeur;
+        this.raison = raison;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Transaction getTransaction() { return transaction; }
+    public void setTransaction(Transaction transaction) { this.transaction = transaction; }
+
+    public Utilisateur getDemandeur() { return demandeur; }
+    public void setDemandeur(Utilisateur demandeur) { this.demandeur = demandeur; }
+
+    public String getRaison() { return raison; }
+    public void setRaison(String raison) { this.raison = raison; }
+
+    public EtatLitige getEtat() { return etat; }
+    public void setEtat(EtatLitige etat) { this.etat = etat; }
+
+    public String getDecision() { return decision; }
+    public void setDecision(String decision) { this.decision = decision; }
+
+    public LocalDateTime getDateOuverture() { return dateOuverture; }
+    public void setDateOuverture(LocalDateTime dateOuverture) { this.dateOuverture = dateOuverture; }
+
+    public LocalDateTime getDateResolution() { return dateResolution; }
+    public void setDateResolution(LocalDateTime dateResolution) { this.dateResolution = dateResolution; }
+
+    public Utilisateur getAdmin() { return admin; }
+    public void setAdmin(Utilisateur admin) { this.admin = admin; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\Litige.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\Message.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "message")
+public class Message {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "demande_id", nullable = false)
+    private Demande demande;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expediteur_id", nullable = false)
+    private Utilisateur expediteur;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "destinataire_id", nullable = false)
+    private Utilisateur destinataire;
+
+    @Column(name = "contenu", nullable = false, columnDefinition = "TEXT")
+    private String contenu;
+
+    @Column(name = "lu")
+    private Boolean lu = false;
+
+    @Column(name = "date_envoi")
+    private LocalDateTime dateEnvoi = LocalDateTime.now();
+
+    public Message() {}
+
+    public Message(Demande demande, Utilisateur expediteur, Utilisateur destinataire, String contenu) {
+        this.demande = demande;
+        this.expediteur = expediteur;
+        this.destinataire = destinataire;
+        this.contenu = contenu;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Demande getDemande() { return demande; }
+    public void setDemande(Demande demande) { this.demande = demande; }
+
+    public Utilisateur getExpediteur() { return expediteur; }
+    public void setExpediteur(Utilisateur expediteur) { this.expediteur = expediteur; }
+
+    public Utilisateur getDestinataire() { return destinataire; }
+    public void setDestinataire(Utilisateur destinataire) { this.destinataire = destinataire; }
+
+    public String getContenu() { return contenu; }
+    public void setContenu(String contenu) { this.contenu = contenu; }
+
+    public Boolean getLu() { return lu; }
+    public void setLu(Boolean lu) { this.lu = lu; }
+
+    public LocalDateTime getDateEnvoi() { return dateEnvoi; }
+    public void setDateEnvoi(LocalDateTime dateEnvoi) { this.dateEnvoi = dateEnvoi; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\Message.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\ModeLivraison.java -----
+package com.hubpieces.model;
+
+public enum ModeLivraison {
+    REMISE_EN_MAIN,
+    LIVRAISON_POSTALE
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\ModeLivraison.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\Notification.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "notification")
+public class Notification {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "utilisateur_id", nullable = false)
+    private Utilisateur utilisateur;
+
+    @Column(name = "titre", nullable = false, length = 200)
+    private String titre;
+
+    @Column(name = "message", nullable = false, columnDefinition = "TEXT")
+    private String message;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private TypeNotification type = TypeNotification.INFO;
+
+    @Column(name = "lu")
+    private Boolean lu = false;
+
+    @Column(name = "date_creation")
+    private LocalDateTime dateCreation = LocalDateTime.now();
+
+    public Notification() {}
+
+    public Notification(Utilisateur utilisateur, String titre, String message, TypeNotification type) {
+        this.utilisateur = utilisateur;
+        this.titre = titre;
+        this.message = message;
+        this.type = type;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Utilisateur getUtilisateur() { return utilisateur; }
+    public void setUtilisateur(Utilisateur utilisateur) { this.utilisateur = utilisateur; }
+
+    public String getTitre() { return titre; }
+    public void setTitre(String titre) { this.titre = titre; }
+
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
+
+    public TypeNotification getType() { return type; }
+    public void setType(TypeNotification type) { this.type = type; }
+
+    public Boolean getLu() { return lu; }
+    public void setLu(Boolean lu) { this.lu = lu; }
+
+    public LocalDateTime getDateCreation() { return dateCreation; }
+    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\Notification.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\OffreMaker.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "offre_maker")
+public class OffreMaker {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "demande_id", nullable = false)
+    private Demande demande;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "maker_id", nullable = false)
+    private Utilisateur maker;
+
+    @Column(name = "prix", nullable = false)
+    private Double prix;
+
+    @Column(name = "delai_jours", nullable = false)
+    private Integer delaiJours;
+
+    @Column(name = "message", columnDefinition = "TEXT")
+    private String message;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "mode_livraison")
+    private ModeLivraison modeLivraison = ModeLivraison.REMISE_EN_MAIN;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etat")
+    private EtatOffre etat = EtatOffre.EN_ATTENTE;
+
+    @Column(name = "date_creation")
+    private LocalDateTime dateCreation = LocalDateTime.now();
+
+    public OffreMaker() {}
+
+    public OffreMaker(Demande demande, Utilisateur maker, Double prix, Integer delaiJours) {
+        this.demande = demande;
+        this.maker = maker;
+        this.prix = prix;
+        this.delaiJours = delaiJours;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Demande getDemande() { return demande; }
+    public void setDemande(Demande demande) { this.demande = demande; }
+
+    public Utilisateur getMaker() { return maker; }
+    public void setMaker(Utilisateur maker) { this.maker = maker; }
+
+    public Double getPrix() { return prix; }
+    public void setPrix(Double prix) { this.prix = prix; }
+
+    public Integer getDelaiJours() { return delaiJours; }
+    public void setDelaiJours(Integer delaiJours) { this.delaiJours = delaiJours; }
+
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
+
+    public ModeLivraison getModeLivraison() { return modeLivraison; }
+    public void setModeLivraison(ModeLivraison modeLivraison) { this.modeLivraison = modeLivraison; }
+
+    public EtatOffre getEtat() { return etat; }
+    public void setEtat(EtatOffre etat) { this.etat = etat; }
+
+    public LocalDateTime getDateCreation() { return dateCreation; }
+    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\OffreMaker.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\PhotoDemande.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "photo_demande")
+public class PhotoDemande {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "demande_id", nullable = false)
+    private Demande demande;
+
+    @Column(name = "chemin_photo", nullable = false, length = 255)
+    private String cheminPhoto;
+
+    @Column(name = "date_upload")
+    private LocalDateTime dateUpload = LocalDateTime.now();
+
+    public PhotoDemande() {}
+
+    public PhotoDemande(Demande demande, String cheminPhoto) {
+        this.demande = demande;
+        this.cheminPhoto = cheminPhoto;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Demande getDemande() { return demande; }
+    public void setDemande(Demande demande) { this.demande = demande; }
+
+    public String getCheminPhoto() { return cheminPhoto; }
+    public void setCheminPhoto(String cheminPhoto) { this.cheminPhoto = cheminPhoto; }
+
+    public LocalDateTime getDateUpload() { return dateUpload; }
+    public void setDateUpload(LocalDateTime dateUpload) { this.dateUpload = dateUpload; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\PhotoDemande.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\ProfilExpertCao.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "profil_expert_cao")
+public class ProfilExpertCao {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "utilisateur_id", nullable = false, unique = true)
+    private Utilisateur utilisateur;
+
+    @Column(name = "logiciels_maitrise", length = 255)
+    private String logicielsMaitrise;
+
+    @Column(name = "portfolio_url", length = 255)
+    private String portfolioUrl;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    public ProfilExpertCao() {}
+
+    public ProfilExpertCao(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Utilisateur getUtilisateur() { return utilisateur; }
+    public void setUtilisateur(Utilisateur utilisateur) { this.utilisateur = utilisateur; }
+
+    public String getLogicielsMaitrise() { return logicielsMaitrise; }
+    public void setLogicielsMaitrise(String logicielsMaitrise) { this.logicielsMaitrise = logicielsMaitrise; }
+
+    public String getPortfolioUrl() { return portfolioUrl; }
+    public void setPortfolioUrl(String portfolioUrl) { this.portfolioUrl = portfolioUrl; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\ProfilExpertCao.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\ProfilMaker.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "profil_maker")
+public class ProfilMaker {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "utilisateur_id", nullable = false, unique = true)
+    private Utilisateur utilisateur;
+
+    @Column(name = "rayon_action_km")
+    private Integer rayonActionKm = 20;
+
+    @Column(name = "materiaux_disponibles", length = 255)
+    private String materiauxDisponibles;
+
+    @Column(name = "description_imprimante", columnDefinition = "TEXT")
+    private String descriptionImprimante;
+
+    @Column(name = "nombre_commandes_actives")
+    private Integer nombreCommandesActives = 0;
+
+    @Column(name = "nombre_avis_positifs")
+    private Integer nombreAvisPositifs = 0;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "badge")
+    private BadgeMaker badge = BadgeMaker.DEBUTANT;
+
+    public ProfilMaker() {}
+
+    public ProfilMaker(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Utilisateur getUtilisateur() { return utilisateur; }
+    public void setUtilisateur(Utilisateur utilisateur) { this.utilisateur = utilisateur; }
+
+    public Integer getRayonActionKm() { return rayonActionKm; }
+    public void setRayonActionKm(Integer rayonActionKm) { this.rayonActionKm = rayonActionKm; }
+
+    public String getMateriauxDisponibles() { return materiauxDisponibles; }
+    public void setMateriauxDisponibles(String materiauxDisponibles) { this.materiauxDisponibles = materiauxDisponibles; }
+
+    public String getDescriptionImprimante() { return descriptionImprimante; }
+    public void setDescriptionImprimante(String descriptionImprimante) { this.descriptionImprimante = descriptionImprimante; }
+
+    public Integer getNombreCommandesActives() { return nombreCommandesActives; }
+    public void setNombreCommandesActives(Integer nombreCommandesActives) { this.nombreCommandesActives = nombreCommandesActives; }
+
+    public Integer getNombreAvisPositifs() { return nombreAvisPositifs; }
+    public void setNombreAvisPositifs(Integer nombreAvisPositifs) { this.nombreAvisPositifs = nombreAvisPositifs; }
+
+    public BadgeMaker getBadge() { return badge; }
+    public void setBadge(BadgeMaker badge) { this.badge = badge; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\ProfilMaker.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\Role.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "role")
+public class Role {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nom", nullable = false)
+    private RoleNom nom;
+
+    public Role() {}
+
+    public Role(RoleNom nom) {
+        this.nom = nom;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public RoleNom getNom() { return nom; }
+    public void setNom(RoleNom nom) { this.nom = nom; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\Role.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\RoleNom.java -----
+package com.hubpieces.model;
+
+public enum RoleNom {
+    DEMANDEUR,
+    MAKER,
+    EXPERT_CAO,
+    ADMIN
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\RoleNom.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\StatutUtilisateur.java -----
+package com.hubpieces.model;
+
+public enum StatutUtilisateur {
+    ACTIF,
+    SUSPENDU,
+    EN_ATTENTE
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\StatutUtilisateur.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\Transaction.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "transaction")
+public class Transaction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offre_maker_id", nullable = false, unique = true)
+    private OffreMaker offreMaker;
+
+    @Column(name = "montant_total", nullable = false)
+    private Double montantTotal;
+
+    @Column(name = "commission_plateforme", nullable = false)
+    private Double commissionPlateforme;
+
+    @Column(name = "montant_maker", nullable = false)
+    private Double montantMaker;
+
+    @Column(name = "montant_expert_cao")
+    private Double montantExpertCao = 0.0;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etat_paiement")
+    private EtatPaiement etatPaiement = EtatPaiement.EN_ATTENTE;
+
+    @Column(name = "date_paiement")
+    private LocalDateTime datePaiement;
+
+    @Column(name = "date_liberation")
+    private LocalDateTime dateLiberaion;
+
+    @Column(name = "date_creation")
+    private LocalDateTime dateCreation = LocalDateTime.now();
+
+    public Transaction() {}
+
+    public Transaction(OffreMaker offreMaker, Double montantTotal) {
+        this.offreMaker = offreMaker;
+        this.montantTotal = montantTotal;
+        this.commissionPlateforme = montantTotal * 0.08;
+        this.montantMaker = montantTotal * 0.84;
+        this.montantExpertCao = montantTotal * 0.08;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public OffreMaker getOffreMaker() { return offreMaker; }
+    public void setOffreMaker(OffreMaker offreMaker) { this.offreMaker = offreMaker; }
+
+    public Double getMontantTotal() { return montantTotal; }
+    public void setMontantTotal(Double montantTotal) { this.montantTotal = montantTotal; }
+
+    public Double getCommissionPlateforme() { return commissionPlateforme; }
+    public void setCommissionPlateforme(Double commissionPlateforme) { this.commissionPlateforme = commissionPlateforme; }
+
+    public Double getMontantMaker() { return montantMaker; }
+    public void setMontantMaker(Double montantMaker) { this.montantMaker = montantMaker; }
+
+    public Double getMontantExpertCao() { return montantExpertCao; }
+    public void setMontantExpertCao(Double montantExpertCao) { this.montantExpertCao = montantExpertCao; }
+
+    public EtatPaiement getEtatPaiement() { return etatPaiement; }
+    public void setEtatPaiement(EtatPaiement etatPaiement) { this.etatPaiement = etatPaiement; }
+
+    public LocalDateTime getDatePaiement() { return datePaiement; }
+    public void setDatePaiement(LocalDateTime datePaiement) { this.datePaiement = datePaiement; }
+
+    public LocalDateTime getDateLiberaion() { return dateLiberaion; }
+    public void setDateLiberaion(LocalDateTime dateLiberaion) { this.dateLiberaion = dateLiberaion; }
+
+    public LocalDateTime getDateCreation() { return dateCreation; }
+    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\Transaction.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\TypeNotification.java -----
+package com.hubpieces.model;
+
+public enum TypeNotification {
+    INFO,
+    SUCCESS,
+    WARNING,
+    ERROR
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\TypeNotification.java -----
+
+----- BEGIN FILE: src\main\java\com\hubpieces\model\Utilisateur.java -----
+package com.hubpieces.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "utilisateur")
+public class Utilisateur {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nom", nullable = false, length = 100)
+    private String nom;
+
+    @Column(name = "prenom", nullable = false, length = 100)
+    private String prenom;
+
+    @Column(name = "email", nullable = false, unique = true, length = 150)
+    private String email;
+
+    @Column(name = "mot_de_passe", nullable = false, length = 255)
+    private String motDePasse;
+
+    @Column(name = "telephone", length = 20)
+    private String telephone;
+
+    @Column(name = "ville", length = 100)
+    private String ville;
+
+    @Column(name = "code_postal", length = 10)
+    private String codePostal;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
+    @Column(name = "note_moyenne")
+    private Double noteMoyenne = 0.0;
+
+    @Column(name = "nombre_avis")
+    private Integer nombreAvis = 0;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "statut")
+    private StatutUtilisateur statut = StatutUtilisateur.ACTIF;
+
+    @Column(name = "date_inscription")
+    private LocalDateTime dateInscription = LocalDateTime.now();
+
+    @Column(name = "photo_profil", length = 255)
+    private String photoProfil;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "utilisateur_role",
+        joinColumns = @JoinColumn(name = "utilisateur_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    public Utilisateur() {}
+
+    public Utilisateur(String nom, String prenom, String email, String motDePasse) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.motDePasse = motDePasse;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getNom() { return nom; }
+    public void setNom(String nom) { this.nom = nom; }
+
+    public String getPrenom() { return prenom; }
+    public void setPrenom(String prenom) { this.prenom = prenom; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getMotDePasse() { return motDePasse; }
+    public void setMotDePasse(String motDePasse) { this.motDePasse = motDePasse; }
+
+    public String getTelephone() { return telephone; }
+    public void setTelephone(String telephone) { this.telephone = telephone; }
+
+    public String getVille() { return ville; }
+    public void setVille(String ville) { this.ville = ville; }
+
+    public String getCodePostal() { return codePostal; }
+    public void setCodePostal(String codePostal) { this.codePostal = codePostal; }
+
+    public Double getLatitude() { return latitude; }
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
+
+    public Double getLongitude() { return longitude; }
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
+
+    public Double getNoteMoyenne() { return noteMoyenne; }
+    public void setNoteMoyenne(Double noteMoyenne) { this.noteMoyenne = noteMoyenne; }
+
+    public Integer getNombreAvis() { return nombreAvis; }
+    public void setNombreAvis(Integer nombreAvis) { this.nombreAvis = nombreAvis; }
+
+    public StatutUtilisateur getStatut() { return statut; }
+    public void setStatut(StatutUtilisateur statut) { this.statut = statut; }
+
+    public LocalDateTime getDateInscription() { return dateInscription; }
+    public void setDateInscription(LocalDateTime dateInscription) { this.dateInscription = dateInscription; }
+
+    public String getPhotoProfil() { return photoProfil; }
+    public void setPhotoProfil(String photoProfil) { this.photoProfil = photoProfil; }
+
+    public Set<Role> getRoles() { return roles; }
+    public void setRoles(Set<Role> roles) { this.roles = roles; }
+}
+
+----- END FILE: src\main\java\com\hubpieces\model\Utilisateur.java -----
+
+----- BEGIN FILE: src\main\resources\application.properties -----
+spring.application.name=hubpieces
+
+spring.datasource.url=jdbc:mysql://localhost:3306/hubpieces_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+spring.datasource.username=root
+spring.datasource.password=
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+spring.sql.init.mode=always
+spring.sql.init.continue-on-error=true
+
+server.port=8080
+
+spring.servlet.multipart.enabled=true
+spring.servlet.multipart.max-file-size=50MB
+spring.servlet.multipart.max-request-size=55MB
+
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.springframework.web=INFO
+
+----- END FILE: src\main\resources\application.properties -----
+
+----- BEGIN FILE: src\main\resources\data.sql -----
+INSERT IGNORE INTO role (id, nom) VALUES (1, 'DEMANDEUR');
+INSERT IGNORE INTO role (id, nom) VALUES (2, 'MAKER');
+INSERT IGNORE INTO role (id, nom) VALUES (3, 'EXPERT_CAO');
+INSERT IGNORE INTO role (id, nom) VALUES (4, 'ADMIN');
+
+----- END FILE: src\main\resources\data.sql -----
+
+----- BEGIN FILE: src\main\resources\static\css\style.css -----
+/* ==================== HUBPIÈCES — STYLE.CSS ==================== */
+
+:root {
+    --blue-dark:    #0d1b3e;
+    --blue-main:    #1a237e;
+    --blue-medium:  #283593;
+    --blue-light:   #3949ab;
+    --blue-soft:    #e8eaf6;
+    --orange-main:  #ff6b35;
+    --orange-light: #ff8c5a;
+    --orange-dark:  #e55a2b;
+    --white:        #ffffff;
+    --gray-light:   #f8f9fa;
+    --gray-text:    #6c757d;
+    --glass-bg:     rgba(255,255,255,0.08);
+    --glass-border: rgba(255,255,255,0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--blue-dark);
+    color: var(--white);
+    overflow-x: hidden;
+}
+
+/* ==================== NAVBAR GLASSMORPHISM ==================== */
+.navbar-glass {
+    background: rgba(13, 27, 62, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.navbar-glass.scrolled {
+    background: rgba(13, 27, 62, 0.95);
+    padding: 8px 0;
+}
+
+.nav-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--orange-main);
+}
+
+.brand-hub {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -1px;
+}
+
+.brand-pieces {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--orange-main);
+    letter-spacing: -1px;
+}
+
+/* Navbar Pills Glass */
+.nav-pills-glass {
+    background: rgba(255,255,255,0.07);
+    border-radius: 50px;
+    padding: 6px 10px;
+    border: 1px solid var(--glass-border);
+    gap: 4px;
+}
+
+.nav-pill-item {
+    color: rgba(255,255,255,0.75) !important;
+    border-radius: 50px !important;
+    padding: 6px 16px !important;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-pill-item:hover,
+.nav-pill-item.active {
+    background: var(--orange-main) !important;
+    color: var(--white) !important;
+}
+
+.btn-outline-glass {
+    border: 1px solid var(--glass-border);
+    color: var(--white);
+    border-radius: 50px;
+    padding: 7px 20px;
+    font-size: 0.88rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-glass:hover {
+    background: var(--glass-border);
+    color: var(--white);
+}
+
+.btn-orange-solid {
+    background: var(--orange-main);
+    color: var(--white);
+    border-radius: 50px;
+    padding: 7px 20px;
+    font-size: 0.88rem;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-orange-solid:hover {
+    background: var(--orange-dark);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero-section {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-main) 50%, var(--blue-medium) 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+    overflow: hidden;
+}
+
+.hero-bg-animation {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(255,107,53,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(26,35,126,0.4) 0%, transparent 50%),
+        radial-gradient(circle at 60% 80%, rgba(57,73,171,0.2) 0%, transparent 50%);
+    animation: bgPulse 8s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.badge-eco {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255,107,53,0.15);
+    border: 1px solid rgba(255,107,53,0.3);
+    color: var(--orange-main);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.hero-title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--white);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--orange-main), var(--orange-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+    max-width: 500px;
+}
+
+.btn-hero-primary {
+    background: var(--orange-main);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255,107,53,0.35);
+}
+
+.btn-hero-primary:hover {
+    background: var(--orange-dark);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(255,107,53,0.5);
+}
+
+.btn-hero-secondary {
+    background: var(--glass-bg);
+    color: var(--white);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.btn-hero-secondary:hover {
+    background: rgba(255,255,255,0.15);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+/* Stats */
+.hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--orange-main);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--glass-border);
+}
+
+/* Model Viewer Hero */
+.hero-3d-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
+
+.hero-model-viewer {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    --progress-bar-color: transparent;
+}
+
+/* ==================== LOGO 3D PETIT ==================== */
+.floating-logo-3d {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 70px;
+    height: 70px;
+    z-index: 10;
+    cursor: grab;
+}
+
+.logo-3d-small {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    --progress-bar-color: transparent;
+    border-radius: 50%;
+    border: 1px solid rgba(255,107,53,0.25);
+}
+
+/* Main hint */
+.hand-hint {
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    animation: handBounce 2s ease-in-out 3;
+    z-index: 20;
+}
+
+@keyframes handBounce {
+    0%, 100% { opacity: 0; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+}
+
+/* ==================== WATERMARK ==================== */
+.watermark-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.watermark-img {
+    position: absolute;
+    width: 350px;
+    opacity: 0.06;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: watermarkSlide 18s ease-in-out infinite;
+    filter: blur(1px) brightness(3);
+    mix-blend-mode: screen;
+}
+
+@keyframes watermarkSlide {
+    0%   { left: -15%; }
+    50%  { left: 85%; }
+    100% { left: -15%; }
+}
+.logo-3d-small {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+@keyframes infinityFloat {
+    0%   { transform: translateY(0px) rotate(0deg); }
+    25%  { transform: translateY(-15px) rotate(5deg); }
+    50%  { transform: translateY(0px) rotate(0deg); }
+    75%  { transform: translateY(15px) rotate(-5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* ==================== SECTIONS COMMUNES ==================== */
+.how-section {
+    background: linear-gradient(180deg, var(--blue-dark) 0%, #0a1628 100%);
+}
+
+.section-badge {
+    display: inline-block;
+    background: rgba(255,107,53,0.12);
+    border: 1px solid rgba(255,107,53,0.25);
+    color: var(--orange-main);
+    padding: 5px 16px;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.section-title {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    color: rgba(255,255,255,0.55);
+    font-size: 1rem;
+}
+
+/* ==================== ACTEURS CARDS ==================== */
+.actor-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.4s ease;
+    height: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.actor-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--orange-main);
+    box-shadow: 0 20px 50px rgba(255,107,53,0.15);
+}
+
+.actor-icon-wrap {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.actor-demandeur .actor-icon-wrap { background: rgba(26,35,126,0.5); border: 2px solid var(--blue-light); }
+.actor-maker .actor-icon-wrap     { background: rgba(255,107,53,0.15); border: 2px solid var(--orange-main); }
+.actor-expert .actor-icon-wrap    { background: rgba(40,53,147,0.5); border: 2px solid var(--blue-medium); }
+.actor-admin .actor-icon-wrap     { background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.2); }
+
+.actor-icon {
+    font-size: 1.8rem;
+    color: var(--orange-main);
+}
+
+.actor-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.actor-desc {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.actor-list {
+    list-style: none;
+    text-align: left;
+    padding: 0;
+}
+
+.actor-list li {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    padding: 4px 0;
+}
+
+.actor-list .fa-check-circle {
+    color: var(--orange-main);
+}
+
+/* ==================== MAKERS SECTION ==================== */
+.makers-section {
+    background: linear-gradient(180deg, #0a1628 0%, var(--blue-dark) 100%);
+}
+
+.maker-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    height: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.maker-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--orange-main);
+    box-shadow: 0 20px 50px rgba(255,107,53,0.15);
+}
+
+.maker-card-header {
+    position: relative;
+    background: linear-gradient(135deg, var(--blue-main), var(--blue-medium));
+    padding: 24px;
+    text-align: center;
+}
+
+.maker-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--orange-main);
+}
+
+.maker-badge-level {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--orange-main);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+}
+
+.maker-confirme {
+    background: var(--blue-light) !important;
+}
+
+.maker-card-body {
+    padding: 20px;
+}
+
+.maker-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+}
+
+.maker-location {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 8px;
+}
+
+.maker-location .fa-map-marker-alt {
+    color: var(--orange-main);
+}
+
+.maker-stars .fa-star,
+.maker-stars .fa-star-half-alt {
+    color: #ffd700;
+    font-size: 0.85rem;
+}
+
+.maker-stars .far.fa-star {
+    color: rgba(255,255,255,0.3);
+    font-size: 0.85rem;
+}
+
+.maker-rating {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+    margin-left: 4px;
+}
+
+.maker-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tag-material {
+    background: rgba(255,107,53,0.12);
+    border: 1px solid rgba(255,107,53,0.25);
+    color: var(--orange-main);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 50px;
+}
+
+.maker-work {
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+}
+
+.maker-work-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.4s ease;
+}
+
+.maker-card:hover .maker-work-img {
+    transform: scale(1.05);
+}
+
+.maker-work-caption {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 6px 0 0;
+    margin: 0;
+}
+
+.btn-maker-contact {
+    width: 100%;
+    background: var(--glass-bg);
+    border: 1px solid var(--orange-main);
+    color: var(--orange-main);
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-maker-contact:hover {
+    background: var(--orange-main);
+    color: var(--white);
+}
+
+/* ==================== EXPERTS CAO SECTION ==================== */
+.experts-section {
+    background: linear-gradient(180deg, var(--blue-dark) 0%, #0a1628 100%);
+}
+
+.expert-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    height: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.expert-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--blue-light);
+    box-shadow: 0 20px 50px rgba(57,73,171,0.25);
+}
+
+.expert-model-container {
+    background: linear-gradient(135deg, #0d1b3e, #1a237e);
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.expert-model-viewer {
+    width: 100%;
+    height: 100%;
+    --progress-bar-color: transparent;
+}
+
+.expert-card-body {
+    padding: 20px;
+}
+
+.expert-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+}
+
+.expert-location {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 10px;
+}
+
+.expert-tools {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tool-badge {
+    background: rgba(57,73,171,0.2);
+    border: 1px solid rgba(57,73,171,0.4);
+    color: #7986cb;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 50px;
+}
+
+.expert-stars {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+}
+
+.expert-stars .fa-star,
+.expert-stars .fa-star-half-alt {
+    color: #ffd700;
+    font-size: 0.82rem;
+}
+
+.expert-stars .far.fa-star {
+    color: rgba(255,255,255,0.3);
+}
+
+.btn-expert-contact {
+    width: 100%;
+    background: var(--glass-bg);
+    border: 1px solid var(--blue-light);
+    color: #7986cb;
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-expert-contact:hover {
+    background: var(--blue-light);
+    color: var(--white);
+}
+
+/* ==================== AVIS SECTION ==================== */
+.avis-section {
+    background: linear-gradient(180deg, #0a1628 0%, var(--blue-dark) 100%);
+}
+
+.avis-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.avis-stars .fa-star {
+    color: #ffd700;
+    font-size: 1.3rem;
+    margin: 0 2px;
+}
+
+.avis-text {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.8;
+    font-style: italic;
+    margin-bottom: 24px;
+}
+
+.avis-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+.avis-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--orange-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--white);
+}
+
+.avis-author strong {
+    display: block;
+    color: var(--white);
+    font-size: 0.95rem;
+}
+
+.avis-role {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.carousel-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.carousel-btn:hover {
+    background: var(--orange-main);
+    border-color: var(--orange-main);
+}
+
+.carousel-dots {
+    position: static !important;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.carousel-dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.carousel-dots button.active {
+    background: var(--orange-main);
+    width: 28px;
+    border-radius: 5px;
+}
+
+/* ==================== FOOTER ==================== */
+.footer-section {
+    background: #060e1f;
+    border-top: 1px solid var(--glass-border);
+}
+
+.footer-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.footer-desc {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    max-width: 280px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background: var(--orange-main);
+    border-color: var(--orange-main);
+    color: var(--white);
+}
+
+.footer-title {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li,
+.footer-links a {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    padding: 4px 0;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--orange-main);
+}
+
+.tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tech-badge {
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.2);
+    color: var(--orange-main);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--glass-border);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.35);
+    margin: 0;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .hero-3d-container { height: 300px; }
+    .hero-stats { gap: 16px; }
+    .stat-number { font-size: 1.5rem; }
+    .nav-pills-glass { display: none; }
+    .avis-card { padding: 24px; }
+}
+
+----- END FILE: src\main\resources\static\css\style.css -----
+
+----- BEGIN FILE: src\main\resources\static\DB\hubpieces_db.sql -----
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1
+-- Généré le : ven. 25 sep. 2026 à 19:52
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `hubpieces_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `avis`
+--
+
+CREATE TABLE `avis` (
+  `id` bigint(20) NOT NULL,
+  `transaction_id` bigint(20) NOT NULL,
+  `auteur_id` bigint(20) NOT NULL,
+  `destinataire_id` bigint(20) NOT NULL,
+  `note` int(11) NOT NULL CHECK (`note` between 1 and 5),
+  `commentaire` text NOT NULL,
+  `publie` tinyint(1) DEFAULT 0,
+  `date_creation` datetime DEFAULT current_timestamp(),
+  `date_publication` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `demande`
+--
+
+CREATE TABLE `demande` (
+  `id` bigint(20) NOT NULL,
+  `titre` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `marque` varchar(100) DEFAULT NULL,
+  `modele_appareil` varchar(100) DEFAULT NULL,
+  `materiau_souhaite` varchar(50) DEFAULT NULL,
+  `budget_max` double DEFAULT NULL,
+  `ville` varchar(100) DEFAULT NULL,
+  `code_postal` varchar(10) DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `etat` enum('NOUVELLE','MODELISATION_REQUISE','RECHERCHE_MAKER','ATTENTE_VALIDATION','EN_COURS_IMPRESSION','ANNULEE','CLOTUREE') DEFAULT 'NOUVELLE',
+  `date_creation` datetime DEFAULT current_timestamp(),
+  `date_modification` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `demandeur_id` bigint(20) NOT NULL,
+  `fichier_stl_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `fichier_stl`
+--
+
+CREATE TABLE `fichier_stl` (
+  `id` bigint(20) NOT NULL,
+  `nom` varchar(200) NOT NULL,
+  `description` text DEFAULT NULL,
+  `chemin_fichier` varchar(255) NOT NULL,
+  `taille_fichier` bigint(20) DEFAULT NULL,
+  `categorie` varchar(100) DEFAULT NULL,
+  `tags` varchar(255) DEFAULT NULL,
+  `marque` varchar(100) DEFAULT NULL,
+  `modele_appareil` varchar(100) DEFAULT NULL,
+  `materiau_recommande` varchar(50) DEFAULT NULL,
+  `dimensions` varchar(100) DEFAULT NULL,
+  `note_moyenne` double DEFAULT 0,
+  `nombre_telechargements` int(11) DEFAULT 0,
+  `etat_validation` enum('EN_ATTENTE','VALIDE','REJETE') DEFAULT 'EN_ATTENTE',
+  `date_upload` datetime DEFAULT current_timestamp(),
+  `uploadeur_id` bigint(20) NOT NULL,
+  `valideur_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `litige`
+--
+
+CREATE TABLE `litige` (
+  `id` bigint(20) NOT NULL,
+  `transaction_id` bigint(20) NOT NULL,
+  `demandeur_id` bigint(20) NOT NULL,
+  `raison` text NOT NULL,
+  `etat` enum('OUVERT','EN_COURS','RESOLU','FERME') DEFAULT 'OUVERT',
+  `decision` text DEFAULT NULL,
+  `date_ouverture` datetime DEFAULT current_timestamp(),
+  `date_resolution` datetime DEFAULT NULL,
+  `admin_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `message`
+--
+
+CREATE TABLE `message` (
+  `id` bigint(20) NOT NULL,
+  `demande_id` bigint(20) NOT NULL,
+  `expediteur_id` bigint(20) NOT NULL,
+  `destinataire_id` bigint(20) NOT NULL,
+  `contenu` text NOT NULL,
+  `lu` tinyint(1) DEFAULT 0,
+  `date_envoi` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `notification`
+--
+
+CREATE TABLE `notification` (
+  `id` bigint(20) NOT NULL,
+  `utilisateur_id` bigint(20) NOT NULL,
+  `titre` varchar(200) NOT NULL,
+  `message` text NOT NULL,
+  `type` enum('INFO','SUCCESS','WARNING','ERROR') DEFAULT 'INFO',
+  `lu` tinyint(1) DEFAULT 0,
+  `date_creation` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `offre_maker`
+--
+
+CREATE TABLE `offre_maker` (
+  `id` bigint(20) NOT NULL,
+  `demande_id` bigint(20) NOT NULL,
+  `maker_id` bigint(20) NOT NULL,
+  `prix` double NOT NULL,
+  `delai_jours` int(11) NOT NULL,
+  `message` text DEFAULT NULL,
+  `mode_livraison` enum('REMISE_EN_MAIN','LIVRAISON_POSTALE') DEFAULT 'REMISE_EN_MAIN',
+  `etat` enum('EN_ATTENTE','ACCEPTEE','REFUSEE','ANNULEE') DEFAULT 'EN_ATTENTE',
+  `date_creation` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `photo_demande`
+--
+
+CREATE TABLE `photo_demande` (
+  `id` bigint(20) NOT NULL,
+  `demande_id` bigint(20) NOT NULL,
+  `chemin_photo` varchar(255) NOT NULL,
+  `date_upload` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `profil_expert_cao`
+--
+
+CREATE TABLE `profil_expert_cao` (
+  `id` bigint(20) NOT NULL,
+  `utilisateur_id` bigint(20) NOT NULL,
+  `logiciels_maitrise` varchar(255) DEFAULT NULL,
+  `portfolio_url` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `profil_maker`
+--
+
+CREATE TABLE `profil_maker` (
+  `id` bigint(20) NOT NULL,
+  `utilisateur_id` bigint(20) NOT NULL,
+  `rayon_action_km` int(11) DEFAULT 20,
+  `materiaux_disponibles` varchar(255) DEFAULT NULL,
+  `description_imprimante` text DEFAULT NULL,
+  `nombre_commandes_actives` int(11) DEFAULT 0,
+  `nombre_avis_positifs` int(11) DEFAULT 0,
+  `badge` enum('DEBUTANT','CONFIRME','EXPERT') DEFAULT 'DEBUTANT'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `role`
+--
+
+CREATE TABLE `role` (
+  `id` bigint(20) NOT NULL,
+  `nom` enum('DEMANDEUR','MAKER','EXPERT_CAO','ADMIN') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `role`
+--
+
+INSERT INTO `role` (`id`, `nom`) VALUES
+(1, 'DEMANDEUR'),
+(2, 'MAKER'),
+(3, 'EXPERT_CAO'),
+(4, 'ADMIN');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `transaction`
+--
+
+CREATE TABLE `transaction` (
+  `id` bigint(20) NOT NULL,
+  `offre_maker_id` bigint(20) NOT NULL,
+  `montant_total` double NOT NULL,
+  `commission_plateforme` double NOT NULL,
+  `montant_maker` double NOT NULL,
+  `montant_expert_cao` double DEFAULT 0,
+  `etat_paiement` enum('EN_ATTENTE','PAYE','EN_SEQUESTRE','LIBERE','REMBOURSE','LITIGE') DEFAULT 'EN_ATTENTE',
+  `date_paiement` datetime DEFAULT NULL,
+  `date_liberation` datetime DEFAULT NULL,
+  `date_creation` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `utilisateur`
+--
+
+CREATE TABLE `utilisateur` (
+  `id` bigint(20) NOT NULL,
+  `nom` varchar(100) NOT NULL,
+  `prenom` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `mot_de_passe` varchar(255) NOT NULL,
+  `telephone` varchar(20) DEFAULT NULL,
+  `ville` varchar(100) DEFAULT NULL,
+  `code_postal` varchar(10) DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `note_moyenne` double DEFAULT 0,
+  `nombre_avis` int(11) DEFAULT 0,
+  `statut` enum('ACTIF','SUSPENDU','EN_ATTENTE') DEFAULT 'ACTIF',
+  `date_inscription` datetime DEFAULT current_timestamp(),
+  `photo_profil` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `utilisateur_role`
+--
+
+CREATE TABLE `utilisateur_role` (
+  `utilisateur_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `avis`
+--
+ALTER TABLE `avis`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaction_id` (`transaction_id`),
+  ADD KEY `auteur_id` (`auteur_id`),
+  ADD KEY `destinataire_id` (`destinataire_id`);
+
+--
+-- Index pour la table `demande`
+--
+ALTER TABLE `demande`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `demandeur_id` (`demandeur_id`),
+  ADD KEY `fichier_stl_id` (`fichier_stl_id`);
+
+--
+-- Index pour la table `fichier_stl`
+--
+ALTER TABLE `fichier_stl`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `uploadeur_id` (`uploadeur_id`),
+  ADD KEY `valideur_id` (`valideur_id`);
+
+--
+-- Index pour la table `litige`
+--
+ALTER TABLE `litige`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaction_id` (`transaction_id`),
+  ADD KEY `demandeur_id` (`demandeur_id`),
+  ADD KEY `admin_id` (`admin_id`);
+
+--
+-- Index pour la table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `demande_id` (`demande_id`),
+  ADD KEY `expediteur_id` (`expediteur_id`),
+  ADD KEY `destinataire_id` (`destinataire_id`);
+
+--
+-- Index pour la table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `utilisateur_id` (`utilisateur_id`);
+
+--
+-- Index pour la table `offre_maker`
+--
+ALTER TABLE `offre_maker`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `demande_id` (`demande_id`),
+  ADD KEY `maker_id` (`maker_id`);
+
+--
+-- Index pour la table `photo_demande`
+--
+ALTER TABLE `photo_demande`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `demande_id` (`demande_id`);
+
+--
+-- Index pour la table `profil_expert_cao`
+--
+ALTER TABLE `profil_expert_cao`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `utilisateur_id` (`utilisateur_id`);
+
+--
+-- Index pour la table `profil_maker`
+--
+ALTER TABLE `profil_maker`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `utilisateur_id` (`utilisateur_id`);
+
+--
+-- Index pour la table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `transaction`
+--
+ALTER TABLE `transaction`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `offre_maker_id` (`offre_maker_id`);
+
+--
+-- Index pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Index pour la table `utilisateur_role`
+--
+ALTER TABLE `utilisateur_role`
+  ADD PRIMARY KEY (`utilisateur_id`,`role_id`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `avis`
+--
+ALTER TABLE `avis`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `demande`
+--
+ALTER TABLE `demande`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `fichier_stl`
+--
+ALTER TABLE `fichier_stl`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `litige`
+--
+ALTER TABLE `litige`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `message`
+--
+ALTER TABLE `message`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `offre_maker`
+--
+ALTER TABLE `offre_maker`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `photo_demande`
+--
+ALTER TABLE `photo_demande`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `profil_expert_cao`
+--
+ALTER TABLE `profil_expert_cao`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `profil_maker`
+--
+ALTER TABLE `profil_maker`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `transaction`
+--
+ALTER TABLE `transaction`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `avis`
+--
+ALTER TABLE `avis`
+  ADD CONSTRAINT `avis_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`),
+  ADD CONSTRAINT `avis_ibfk_2` FOREIGN KEY (`auteur_id`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `avis_ibfk_3` FOREIGN KEY (`destinataire_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `demande`
+--
+ALTER TABLE `demande`
+  ADD CONSTRAINT `demande_ibfk_1` FOREIGN KEY (`demandeur_id`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `demande_ibfk_2` FOREIGN KEY (`fichier_stl_id`) REFERENCES `fichier_stl` (`id`);
+
+--
+-- Contraintes pour la table `fichier_stl`
+--
+ALTER TABLE `fichier_stl`
+  ADD CONSTRAINT `fichier_stl_ibfk_1` FOREIGN KEY (`uploadeur_id`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `fichier_stl_ibfk_2` FOREIGN KEY (`valideur_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `litige`
+--
+ALTER TABLE `litige`
+  ADD CONSTRAINT `litige_ibfk_1` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`),
+  ADD CONSTRAINT `litige_ibfk_2` FOREIGN KEY (`demandeur_id`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `litige_ibfk_3` FOREIGN KEY (`admin_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`demande_id`) REFERENCES `demande` (`id`),
+  ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`expediteur_id`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `message_ibfk_3` FOREIGN KEY (`destinataire_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `notification`
+--
+ALTER TABLE `notification`
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `offre_maker`
+--
+ALTER TABLE `offre_maker`
+  ADD CONSTRAINT `offre_maker_ibfk_1` FOREIGN KEY (`demande_id`) REFERENCES `demande` (`id`),
+  ADD CONSTRAINT `offre_maker_ibfk_2` FOREIGN KEY (`maker_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `photo_demande`
+--
+ALTER TABLE `photo_demande`
+  ADD CONSTRAINT `photo_demande_ibfk_1` FOREIGN KEY (`demande_id`) REFERENCES `demande` (`id`);
+
+--
+-- Contraintes pour la table `profil_expert_cao`
+--
+ALTER TABLE `profil_expert_cao`
+  ADD CONSTRAINT `profil_expert_cao_ibfk_1` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `profil_maker`
+--
+ALTER TABLE `profil_maker`
+  ADD CONSTRAINT `profil_maker_ibfk_1` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`);
+
+--
+-- Contraintes pour la table `transaction`
+--
+ALTER TABLE `transaction`
+  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`offre_maker_id`) REFERENCES `offre_maker` (`id`);
+
+--
+-- Contraintes pour la table `utilisateur_role`
+--
+ALTER TABLE `utilisateur_role`
+  ADD CONSTRAINT `utilisateur_role_ibfk_1` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateur` (`id`),
+  ADD CONSTRAINT `utilisateur_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+----- END FILE: src\main\resources\static\DB\hubpieces_db.sql -----
+
+----- BEGIN FILE: src\main\resources\static\index.html -----
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hubpièces — réparation par impression 3d</title>
+
+    <!-- bootstrap 5 cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- font awesome cdn -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- three.js cdn pour les modèles 3d -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- model viewer pour glb -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <!-- aos animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- css -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ==================== navbar glassmorphism ==================== -->
+<nav class="navbar navbar-expand-lg navbar-glass fixed-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <img src="images/logo_hub.jpeg" alt="hubpièces logo" class="nav-logo">
+            <span class="brand-hub">hub</span><span class="brand-pieces">pièces</span>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarnav">
+            <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarnav">
+            <ul class="navbar-nav nav-pills-glass mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link nav-pill-item active" href="#accueil">
+                        <i class="fas fa-home me-1"></i>accueil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-pill-item" href="#catalogue">
+                        <i class="fas fa-cube me-1"></i>catalogue stl
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-pill-item" href="#makers">
+                        <i class="fas fa-print me-1"></i>makers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-pill-item" href="#experts">
+                        <i class="fas fa-drafting-compass me-1"></i>experts cao
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-pill-item" href="#avis">
+                        <i class="fas fa-star me-1"></i>avis
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex gap-2 mt-2 mt-lg-0">
+                <a href="#" class="btn btn-outline-glass">connexion</a>
+                <a href="#" class="btn btn-orange-solid">inscription</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ==================== hero section ==================== -->
+<section id="accueil" class="hero-section">
+    <div class="hero-bg-animation"></div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center py-5">
+
+            <!-- texte hero -->
+            <div class="col-lg-6 hero-text" data-aos="fade-right">
+                <div class="badge-eco mb-3">
+                    <i class="fas fa-recycle me-2"></i>economie circulaire
+                </div>
+                <h1 class="hero-title">
+                    réparez vos objets grâce à
+                    <span class="text-gradient">l'impression 3d</span>
+                </h1>
+                <p class="hero-subtitle">
+                    ne jetez plus vos appareils à cause d'une seule pièce cassée.
+                    hubpièces connecte les demandeurs avec des makers locaux
+                    équipés d'imprimantes 3d.
+                </p>
+                <div class="d-flex gap-3 flex-wrap mt-4">
+                    <a href="#" class="btn btn-hero-primary">
+                        <i class="fas fa-plus me-2"></i>soumettre une demande
+                    </a>
+                    <a href="#catalogue" class="btn btn-hero-secondary">
+                        <i class="fas fa-search me-2"></i>catalogue stl
+                    </a>
+                </div>
+
+                <!-- stats -->
+                <div class="hero-stats mt-5">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="150">0</span>
+                        <span class="stat-label">makers actifs</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="430">0</span>
+                        <span class="stat-label">pièces créées</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="89">0</span>
+                        <span class="stat-label">fichiers stl</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- logo 3d animé -->
+            <div class="col-lg-6 text-center" data-aos="fade-left">
+                <div class="hero-3d-container">
+                    <!-- logo 3d avec model-viewer -->
+                    <model-viewer
+                        src="images/printer_logo.glb"
+                        alt="hubpièces 3d logo"
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="30deg"
+                        camera-controls
+                        shadow-intensity="1"
+                        class="hero-model-viewer"
+                        id="heromodel">
+                    </model-viewer>
+
+                    <!-- logo 3d flottant par dessus -->
+                    <!-- logo 3d petit - interactif -->
+                    <div class="floating-logo-3d">
+                        <div class="hand-hint" id="handhint">
+                            <i class="fas fa-hand-pointer"></i>
+                        </div>
+                        <model-viewer
+                                src="images/logo_hub_3d.glb"
+                                alt="logo 3d hubpièces"
+                                camera-controls
+                                disable-zoom
+                                interaction-prompt="none"
+                                shadow-intensity="0.3"
+                                class="logo-3d-small"
+                                id="logofloat">
+                        </model-viewer>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== comment ca marche ==================== -->
+<section class="how-section py-5" data-aos="fade-up">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="section-badge">processus</span>
+            <h2 class="section-title">comment fonctionne hubpièces ?</h2>
+            <p class="section-subtitle">4 acteurs, une solution simple et locale</p>
+        </div>
+        <div class="row g-4">
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="actor-card actor-demandeur">
+                    <div class="actor-icon-wrap">
+                        <i class="fas fa-user actor-icon"></i>
+                    </div>
+                    <h5 class="actor-title">demandeur</h5>
+                    <p class="actor-desc">soumettez votre demande avec photos et dimensions de la pièce cassée.</p>
+                    <ul class="actor-list">
+                        <li><i class="fas fa-check-circle me-2"></i>upload photos</li>
+                        <li><i class="fas fa-check-circle me-2"></i>recherche makers</li>
+                        <li><i class="fas fa-check-circle me-2"></i>paiement sécurisé</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="actor-card actor-maker">
+                    <div class="actor-icon-wrap">
+                        <i class="fas fa-print actor-icon"></i>
+                    </div>
+                    <h5 class="actor-title">maker</h5>
+                    <p class="actor-desc">imprimez la pièce localement et proposez votre prix et délai.</p>
+                    <ul class="actor-list">
+                        <li><i class="fas fa-check-circle me-2"></i>consulter demandes</li>
+                        <li><i class="fas fa-check-circle me-2"></i>proposer prix</li>
+                        <li><i class="fas fa-check-circle me-2"></i>livraison locale</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="actor-card actor-expert">
+                    <div class="actor-icon-wrap">
+                        <i class="fas fa-drafting-compass actor-icon"></i>
+                    </div>
+                    <h5 class="actor-title">expert cao</h5>
+                    <p class="actor-desc">modélisez en 3d les pièces inexistantes et uploadez les fichiers stl.</p>
+                    <ul class="actor-list">
+                        <li><i class="fas fa-check-circle me-2"></i>modélisation 3d</li>
+                        <li><i class="fas fa-check-circle me-2"></i>upload stl</li>
+                        <li><i class="fas fa-check-circle me-2"></i>rémunération 8%</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="actor-card actor-admin">
+                    <div class="actor-icon-wrap">
+                        <i class="fas fa-shield-alt actor-icon"></i>
+                    </div>
+                    <h5 class="actor-title">administrateur</h5>
+                    <p class="actor-desc">gère la plateforme, valide les inscriptions et modère le catalogue.</p>
+                    <ul class="actor-list">
+                        <li><i class="fas fa-check-circle me-2"></i>validation comptes</li>
+                        <li><i class="fas fa-check-circle me-2"></i>gestion litiges</li>
+                        <li><i class="fas fa-check-circle me-2"></i>modération stl</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== section makers ==================== -->
+<section id="makers" class="makers-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">communauté</span>
+            <h2 class="section-title">nos makers</h2>
+            <p class="section-subtitle">des passionnés qui impriment vos pièces localement</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="maker-card">
+                    <div class="maker-card-header">
+                        <img src="images/maker1.jpeg" alt="maker 1" class="maker-avatar">
+                        <div class="maker-badge-level">maker expert</div>
+                    </div>
+                    <div class="maker-card-body">
+                        <h5 class="maker-name">ahmed b.</h5>
+                        <p class="maker-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>tétouan, maroc
+                        </p>
+                        <div class="maker-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="maker-rating">4.9 (47 avis)</span>
+                        </div>
+                        <div class="maker-tags mt-2">
+                            <span class="tag-material">pla</span>
+                            <span class="tag-material">abs</span>
+                            <span class="tag-material">petg</span>
+                        </div>
+                        <!-- image pièce imprimée -->
+                        <div class="maker-work mt-3">
+                            <img src="images/printed1.jpeg" alt="pièce imprimée" class="maker-work-img">
+                            <p class="maker-work-caption">poignée lave-linge samsung</p>
+                        </div>
+                        <a href="#" class="btn btn-maker-contact mt-3">
+                            <i class="fas fa-envelope me-2"></i>contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="maker-card">
+                    <div class="maker-card-header">
+                        <img src="images/maker2.jpeg" alt="maker 2" class="maker-avatar">
+                        <div class="maker-badge-level maker-confirme">maker confirme</div>
+                    </div>
+                    <div class="maker-card-body">
+                        <h5 class="maker-name">youssef m.</h5>
+                        <p class="maker-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>tanger, maroc
+                        </p>
+                        <div class="maker-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="maker-rating">4.3 (23 avis)</span>
+                        </div>
+                        <div class="maker-tags mt-2">
+                            <span class="tag-material">pla</span>
+                            <span class="tag-material">tpu</span>
+                        </div>
+                        <div class="maker-work mt-3">
+                            <img src="images/printed2.jpeg" alt="pièce imprimée" class="maker-work-img">
+                            <p class="maker-work-caption">support téléphone voiture</p>
+                        </div>
+                        <a href="#" class="btn btn-maker-contact mt-3">
+                            <i class="fas fa-envelope me-2"></i>contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="maker-card">
+                    <div class="maker-card-header">
+                        <img src="images/maker3.jpeg" alt="maker 3" class="maker-avatar">
+                        <div class="maker-badge-level">maker expert</div>
+                    </div>
+                    <div class="maker-card-body">
+                        <h5 class="maker-name">sara k.</h5>
+                        <p class="maker-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>rabat, maroc
+                        </p>
+                        <div class="maker-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="maker-rating">4.7 (38 avis)</span>
+                        </div>
+                        <div class="maker-tags mt-2">
+                            <span class="tag-material">pla</span>
+                            <span class="tag-material">petg</span>
+                            <span class="tag-material">resin</span>
+                        </div>
+                        <div class="maker-work mt-3">
+                            <img src="images/printed3.jpeg" alt="pièce imprimée" class="maker-work-img">
+                            <p class="maker-work-caption">engrenage machine à café</p>
+                        </div>
+                        <a href="#" class="btn btn-maker-contact mt-3">
+                            <i class="fas fa-envelope me-2"></i>contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== section experts cao ==================== -->
+<section id="experts" class="experts-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">modélisation 3d</span>
+            <h2 class="section-title">nos experts cao</h2>
+            <p class="section-subtitle">des modélisateurs 3d qui donnent vie à vos pièces</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="expert-card">
+                    <div class="expert-model-container">
+                        <model-viewer
+                            src="images/model1.glb"
+                            alt="modèle 3d expert"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="0.5"
+                            class="expert-model-viewer"
+                            style="background: transparent;">
+                        </model-viewer>
+                    </div>
+                    <div class="expert-card-body">
+                        <h5 class="expert-name">karim a.</h5>
+                        <p class="expert-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>casablanca
+                        </p>
+                        <div class="expert-tools">
+                            <span class="tool-badge">fusion 360</span>
+                            <span class="tool-badge">blender</span>
+                        </div>
+                        <div class="expert-stars mt-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.8 (29 modèles)</span>
+                        </div>
+                        <a href="#" class="btn btn-expert-contact mt-3">
+                            <i class="fas fa-cube me-2"></i>voir portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="expert-card">
+                    <div class="expert-model-container">
+                        <model-viewer
+                            src="images/logo_hub_3d.glb"
+                            alt="modèle 3d expert"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="0.5"
+                            class="expert-model-viewer"
+                            style="background: transparent;">
+                        </model-viewer>
+                    </div>
+                    <div class="expert-card-body">
+                        <h5 class="expert-name">nadia r.</h5>
+                        <p class="expert-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>marrakech
+                        </p>
+                        <div class="expert-tools">
+                            <span class="tool-badge">solidworks</span>
+                            <span class="tool-badge">autocad</span>
+                        </div>
+                        <div class="expert-stars mt-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.2 (15 modèles)</span>
+                        </div>
+                        <a href="#" class="btn btn-expert-contact mt-3">
+                            <i class="fas fa-cube me-2"></i>voir portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="expert-card">
+                    <div class="expert-model-container">
+                        <model-viewer
+                            src="images/model3.glb"
+                            alt="modèle 3d expert"
+                            auto-rotate
+                            camera-controls
+                            shadow-intensity="0.5"
+                            class="expert-model-viewer"
+                            style="background: transparent;">
+                        </model-viewer>
+                    </div>
+                    <div class="expert-card-body">
+                        <h5 class="expert-name">omar t.</h5>
+                        <p class="expert-location">
+                            <i class="fas fa-map-marker-alt me-1"></i>fès
+                        </p>
+                        <div class="expert-tools">
+                            <span class="tool-badge">blender</span>
+                            <span class="tool-badge">freecad</span>
+                        </div>
+                        <div class="expert-stars mt-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.6 (41 modèles)</span>
+                        </div>
+                        <a href="#" class="btn btn-expert-contact mt-3">
+                            <i class="fas fa-cube me-2"></i>voir portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== section avis ==================== -->
+<section id="avis" class="avis-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="section-badge">témoignages</span>
+            <h2 class="section-title">ce que disent nos utilisateurs</h2>
+            <p class="section-subtitle">la règle des 7 jours garantit des avis authentiques</p>
+        </div>
+
+        <div id="aviscarousel" class="carousel slide" data-bs-ride="carousel" data-aos="fade-up">
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="avis-card">
+                                <div class="avis-stars mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="avis-text">
+                                    "ma machine à laver est réparée en 48h pour seulement 8 euros.
+                                    le maker était professionnel et la pièce s'adapte parfaitement.
+                                    je recommande hubpièces à tout le monde !"
+                                </p>
+                                <div class="avis-author">
+                                    <div class="avis-avatar">m</div>
+                                    <div>
+                                        <strong>mohamed a.</strong>
+                                        <span class="avis-role">demandeur — tétouan</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="avis-card">
+                                <div class="avis-stars mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="avis-text">
+                                    "en tant que maker, j'ai pu gagner un revenu supplémentaire
+                                    tout en aidant des gens de mon quartier. la plateforme est
+                                    intuitive et le paiement sécurisé me rassure."
+                                </p>
+                                <div class="avis-author">
+                                    <div class="avis-avatar">a</div>
+                                    <div>
+                                        <strong>ahmed b.</strong>
+                                        <span class="avis-role">maker expert — tanger</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="avis-card">
+                                <div class="avis-stars mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <p class="avis-text">
+                                    "j'ai modélisé plus de 40 pièces sur hubpièces. la validation
+                                    par les experts cao garantit la qualité. c'est une vraie
+                                    économie collaborative qui fonctionne !"
+                                </p>
+                                <div class="avis-author">
+                                    <div class="avis-avatar">k</div>
+                                    <div>
+                                        <strong>karim a.</strong>
+                                        <span class="avis-role">expert cao — casablanca</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn" data-bs-target="#aviscarousel" data-bs-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn" data-bs-target="#aviscarousel" data-bs-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="carousel-indicators carousel-dots">
+                <button type="button" data-bs-target="#aviscarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#aviscarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#aviscarousel" data-bs-slide-to="2"></button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==================== footer ==================== -->
+<footer class="footer-section">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-lg-4 mb-4">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <img src="images/logo_hub.jpeg" alt="logo" class="footer-logo">
+                    <span class="brand-hub">hub</span><span class="brand-pieces">pièces</span>
+                </div>
+                <p class="footer-desc">
+                    plateforme de réparation par impression 3d.
+                    lutte contre l'obsolescence programmée.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-4">
+                <h6 class="footer-title">navigation</h6>
+                <ul class="footer-links">
+                    <li><a href="#accueil">accueil</a></li>
+                    <li><a href="#catalogue">catalogue stl</a></li>
+                    <li><a href="#makers">makers</a></li>
+                    <li><a href="#experts">experts cao</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4 mb-4">
+                <h6 class="footer-title">contact</h6>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope me-2"></i>contact@hubpieces.ma</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i>ensa tétouan, maroc</li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4 mb-4">
+                <h6 class="footer-title">stack technique</h6>
+                <div class="tech-badges">
+                    <span class="tech-badge">spring boot</span>
+                    <span class="tech-badge">mysql</span>
+                    <span class="tech-badge">bootstrap 5</span>
+                    <span class="tech-badge">rest api</span>
+                    <span class="tech-badge">three.js</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>2026 hubpièces — ensa tetouan — frameworks web 2025/2026</p>
+        </div>
+    </div>
+</footer>
+
+<!-- bootstrap 5 js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- aos js -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- js -->
+<script src="js/main.js"></script>
+
+</body>
+<div class="watermark-bg">
+    <img src="images/logo_hub.png" alt="watermark" class="watermark-img" id="watermark"></div>
+</html>
+
+----- END FILE: src\main\resources\static\index.html -----
+
+----- BEGIN FILE: src\main\resources\static\js\main.js -----
+// ==================== HUBPIÈCES — MAIN.JS ====================
+
+// ==================== AOS INIT ====================
+document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 80
+    });
+
+    // Lancer toutes les fonctions
+    initNavbarScroll();
+    initCounters();
+    initActiveNav();
+});
+
+// ==================== NAVBAR SCROLL ====================
+function initNavbarScroll() {
+    const navbar = document.querySelector('.navbar-glass');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+}
+
+// ==================== COMPTEURS ANIMÉS ====================
+function initCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.getAttribute('data-target'));
+                animateCounter(el, target);
+                observer.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => observer.observe(counter));
+}
+
+function animateCounter(el, target) {
+    let current = 0;
+    const duration = 2000;
+    const step = target / (duration / 16);
+
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            el.textContent = target + '+';
+            clearInterval(timer);
+        } else {
+            el.textContent = Math.floor(current);
+        }
+    }, 16);
+}
+
+// ==================== ACTIVE NAV LINK ====================
+function initActiveNav() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-pill-item');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+----- END FILE: src\main\resources\static\js\main.js -----
+
+----- BEGIN FILE: src\test\java\com\hubpieces\HubpiecesApplicationTests.java -----
+package com.hubpieces;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class HubpiecesApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
+
+----- END FILE: src\test\java\com\hubpieces\HubpiecesApplicationTests.java -----

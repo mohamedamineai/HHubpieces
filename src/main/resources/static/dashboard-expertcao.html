@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace Expert CAO - hubpieces</title>
+<meta name="description" content="Tableau de bord expert CAO hubpieces - Modelisez des pieces 3D et partagez vos fichiers STL">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/style.css" rel="stylesheet">
+<link href="css/header.css" rel="stylesheet">
+<link href="css/dashboard.css" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+
+<!-- Floating Particles -->
+<div class="db-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- Watermark -->
+<div class="db-watermark">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+</div>
+
+<!-- Navbar -->
+<div id="navbar-placeholder"></div>
+
+<div class="dashboard-container">
+
+    <!-- ==================== WELCOME ==================== -->
+    <div class="dashboard-welcome">
+        <div class="dashboard-welcome-text">
+            <h1 id="welcomeTitle">Bienvenue, Expert CAO !</h1>
+            <p>Modelisez des pieces et partagez vos fichiers STL avec la communaute. Gagnez 8% sur chaque transaction.</p>
+        </div>
+        <span class="dashboard-role-pill"><i class="fas fa-drafting-compass me-1"></i>Expert CAO</span>
+    </div>
+
+    <!-- ==================== STATS STRIP ==================== -->
+    <div class="dashboard-stats-strip">
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon blue"><i class="fas fa-cube"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">23 <span class="stat-trend up"><i class="fas fa-arrow-up"></i> 3</span></div>
+                <span class="stat-mini-label">Modeles uploades</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon green"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">18</div>
+                <span class="stat-mini-label">Modeles valides</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon yellow"><i class="fas fa-hourglass-half"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">3</div>
+                <span class="stat-mini-label">En attente de validation</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon purple"><i class="fas fa-coins"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">156€ <span class="stat-trend up"><i class="fas fa-arrow-up"></i> 31%</span></div>
+                <span class="stat-mini-label">Commissions gagnees</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CHARTS ROW ==================== -->
+    <div class="dashboard-2col">
+
+        <!-- Bar Chart: Modeles par mois -->
+        <div class="dashboard-chart-panel">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-chart-bar"></i> Modeles uploades par mois</div>
+                    <div class="chart-panel-subtitle">6 derniers mois</div>
+                </div>
+            </div>
+            <div class="chart-bars">
+                <div class="chart-bar-col">
+                    <div class="chart-bar blue-bar" style="height:25%"><span class="chart-bar-value">2</span></div>
+                    <span class="chart-bar-label">Mai</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar blue-bar" style="height:40%"><span class="chart-bar-value">4</span></div>
+                    <span class="chart-bar-label">Juin</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar blue-bar" style="height:30%"><span class="chart-bar-value">3</span></div>
+                    <span class="chart-bar-label">Juil</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar blue-bar" style="height:55%"><span class="chart-bar-value">5</span></div>
+                    <span class="chart-bar-label">Aout</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar blue-bar" style="height:45%"><span class="chart-bar-value">4</span></div>
+                    <span class="chart-bar-label">Sept</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar purple-bar" style="height:65%"><span class="chart-bar-value">5</span></div>
+                    <span class="chart-bar-label">Oct</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donut: Repartition des modeles -->
+        <div class="dashboard-chart-panel">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-chart-pie"></i> Categories de modeles</div>
+                    <div class="chart-panel-subtitle">23 modeles au total</div>
+                </div>
+            </div>
+            <div class="chart-donut-container">
+                <div class="chart-donut">
+                    <svg width="150" height="150" viewBox="0 0 150 150">
+                        <circle cx="75" cy="75" r="58" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="20"/>
+                        <circle cx="75" cy="75" r="58" fill="none" stroke="#ff6b35" stroke-width="20"
+                                stroke-dasharray="145.8 364.4" stroke-dashoffset="0"
+                                transform="rotate(-90 75 75)" style="animation: dbDonutDraw 1.5s ease both;"/>
+                        <circle cx="75" cy="75" r="58" fill="none" stroke="#7986cb" stroke-width="20"
+                                stroke-dasharray="109.3 364.4" stroke-dashoffset="-145.8"
+                                transform="rotate(-90 75 75)" style="animation: dbDonutDraw 1.5s ease 0.2s both;"/>
+                        <circle cx="75" cy="75" r="58" fill="none" stroke="#4caf50" stroke-width="20"
+                                stroke-dasharray="72.9 364.4" stroke-dashoffset="-255.1"
+                                transform="rotate(-90 75 75)" style="animation: dbDonutDraw 1.5s ease 0.4s both;"/>
+                        <circle cx="75" cy="75" r="58" fill="none" stroke="#00bcd4" stroke-width="20"
+                                stroke-dasharray="36.4 364.4" stroke-dashoffset="-328.0"
+                                transform="rotate(-90 75 75)" style="animation: dbDonutDraw 1.5s ease 0.6s both;"/>
+                    </svg>
+                    <div class="chart-donut-inner" style="position:absolute;">
+                        <span class="chart-donut-value">23</span>
+                        <span class="chart-donut-label">modeles</span>
+                    </div>
+                </div>
+                <div class="chart-donut-legend">
+                    <div class="legend-item"><span class="legend-dot orange"></span>Electromenager (40%)</div>
+                    <div class="legend-item"><span class="legend-dot blue"></span>Automobile (30%)</div>
+                    <div class="legend-item"><span class="legend-dot green"></span>Mobilier (20%)</div>
+                    <div class="legend-item"><span class="legend-dot cyan"></span>Divers (10%)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes dbDonutDraw { from { stroke-dasharray: 0 364.4; } }
+    </style>
+
+    <!-- ==================== MES FICHIERS STL ==================== -->
+    <h2 class="dashboard-section-title" id="mes-fichiers"><i class="fas fa-folder-open"></i>Mes fichiers STL</h2>
+    <div class="dashboard-full-panel">
+        <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Nom du modele</th>
+                        <th>Categorie</th>
+                        <th>Logiciel</th>
+                        <th>Date upload</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Poignee lave-linge Samsung</strong></td>
+                        <td>Electromenager</td>
+                        <td>Fusion 360</td>
+                        <td>15 Sept 2026</td>
+                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> Valide</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Engrenage cafetiere Nespresso</strong></td>
+                        <td>Electromenager</td>
+                        <td>Blender</td>
+                        <td>28 Sept 2026</td>
+                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> Valide</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Support retroviseur Dacia</strong></td>
+                        <td>Automobile</td>
+                        <td>SolidWorks</td>
+                        <td>01 Oct 2026</td>
+                        <td><span class="table-status pending"><i class="fas fa-circle" style="font-size:6px"></i> En attente</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clip etagere Kallax</strong></td>
+                        <td>Mobilier</td>
+                        <td>FreeCAD</td>
+                        <td>03 Oct 2026</td>
+                        <td><span class="table-status pending"><i class="fas fa-circle" style="font-size:6px"></i> En attente</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cache USB pour TV LG</strong></td>
+                        <td>Electronique</td>
+                        <td>Fusion 360</td>
+                        <td>04 Oct 2026</td>
+                        <td><span class="table-status rejected"><i class="fas fa-circle" style="font-size:6px"></i> Rejete</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== 3D + UPLOAD/PORTFOLIO ==================== -->
+    <div class="dashboard-2col">
+
+        <!-- 3D Model -->
+        <div class="dashboard-3d-panel">
+            <div class="model-header">
+                <h4><i class="fas fa-cube"></i> Dernier modele uploade</h4>
+                <span class="model-tag">Interactif</span>
+            </div>
+            <model-viewer
+                src="images/logo_hub_3d.glb"
+                alt="dernier modele 3d uploade"
+                auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="25deg"
+                camera-controls
+                shadow-intensity="0.6"
+                class="dashboard-3d-viewer">
+            </model-viewer>
+            <div class="model-3d-footer">
+                <span>Clip etagere Kallax — en attente de validation</span>
+                <span class="model-interact-hint"><i class="fas fa-hand-pointer"></i> Glisser pour tourner</span>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="dashboard-chart-panel" id="upload">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-bolt"></i> Actions rapides</div>
+                    <div class="chart-panel-subtitle">Que souhaitez-vous faire ?</div>
+                </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                <div class="dashboard-card" style="animation:none;margin:0;">
+                    <div class="dashboard-card-icon" style="background:linear-gradient(135deg,rgba(57,73,171,0.2),rgba(121,134,203,0.1));">
+                        <i class="fas fa-cloud-upload-alt" style="color:var(--db-blue-light)"></i>
+                    </div>
+                    <h5>Uploader un modele STL</h5>
+                    <p>Ajoutez un nouveau fichier 3D au catalogue hubpieces.</p>
+                    <span class="dashboard-card-badge soon">Bientot disponible</span>
+                </div>
+                <div class="dashboard-card" style="animation:none;margin:0;" id="portfolio">
+                    <div class="dashboard-card-icon" style="background:linear-gradient(135deg,rgba(157,78,221,0.18),rgba(179,136,255,0.08));">
+                        <i class="fas fa-image" style="color:var(--db-purple)"></i>
+                    </div>
+                    <h5>Mon portfolio</h5>
+                    <p>Mettez a jour vos logiciels maitrises et votre portfolio de modeles.</p>
+                    <span class="dashboard-card-badge soon">Bientot disponible</span>
+                </div>
+                <div class="dashboard-card" style="animation:none;margin:0;" id="messages">
+                    <div class="dashboard-card-icon"><i class="fas fa-envelope"></i></div>
+                    <h5>Messages <span style="background:var(--db-red);color:#fff;font-size:0.65rem;padding:2px 7px;border-radius:50px;margin-left:6px;">1</span></h5>
+                    <p>Echangez avec les demandeurs et les makers.</p>
+                    <span class="dashboard-card-badge soon">Bientot disponible</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== COMPETENCES PROGRESS ==================== -->
+    <h2 class="dashboard-section-title"><i class="fas fa-tools"></i>Mes competences</h2>
+    <div class="dashboard-full-panel">
+        <div class="progress-list">
+            <div class="progress-item">
+                <div class="progress-item-header">
+                    <span class="progress-item-label">Fusion 360</span>
+                    <span class="progress-item-value">Expert</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" style="width:95%"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-item-header">
+                    <span class="progress-item-label">Blender</span>
+                    <span class="progress-item-value">Avance</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill blue" style="width:80%"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-item-header">
+                    <span class="progress-item-label">SolidWorks</span>
+                    <span class="progress-item-value">Intermediaire</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill purple" style="width:60%"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-item-header">
+                    <span class="progress-item-label">FreeCAD</span>
+                    <span class="progress-item-value">Debutant</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill green" style="width:35%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== QUICK ACTIONS ==================== -->
+    <h2 class="dashboard-section-title"><i class="fas fa-compass"></i>Navigation rapide</h2>
+    <div class="quick-actions">
+        <a href="index.html" class="quick-action-btn"><i class="fas fa-home"></i> Accueil</a>
+        <a href="#mes-fichiers" class="quick-action-btn"><i class="fas fa-folder"></i> Mes fichiers</a>
+        <a href="#upload" class="quick-action-btn"><i class="fas fa-upload"></i> Uploader STL</a>
+        <a href="#portfolio" class="quick-action-btn"><i class="fas fa-image"></i> Portfolio</a>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/header.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+    document.addEventListener("userLoaded", (e) => {
+        const user = e.detail;
+        if (user) {
+            document.getElementById("welcomeTitle").textContent = "Bienvenue, " + (user.prenom || "") + " !";
+        }
+    });
+</script>
+</body>
+</html>

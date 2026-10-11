@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion — hubpieces</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/auth.css" rel="stylesheet">
+</head>
+<body class="auth-body">
+<div class="auth-wrapper">
+
+    <div class="auth-left">
+        <div class="auth-card-glass">
+            <img src="images/logo_hub.jpeg" alt="logo" class="auth-logo">
+            <h1 class="auth-card-title">Bon retour</h1>
+            <p class="auth-card-subtitle">Connectez-vous a votre compte hubpieces</p>
+
+            <div id="authMsg" class="auth-msg"></div>
+
+            <form id="loginForm">
+                <div class="auth-input-group">
+                    <label>Email</label>
+                    <input class="auth-input" type="email" name="email" required>
+                </div>
+                <div class="auth-input-group">
+                    <label>Mot de passe</label>
+                    <input class="auth-input" type="password" name="motDePasse" required>
+                </div>
+                <button type="submit" class="btn-neon">Se connecter</button>
+            </form>
+
+            <p class="auth-switch">Pas encore de compte ? <a href="register.html">S'inscrire</a></p>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <span class="neon-title">Welcome back</span>
+        <model-viewer
+            src="images/auth_blob.glb"
+            alt="objet 3d hubpieces"
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="20deg"
+            camera-controls
+            disable-zoom
+            shadow-intensity="1"
+            exposure="1.1"
+            class="auth-3d-model">
+        </model-viewer>
+    </div>
+
+</div>
+<script src="js/auth.js"></script>
+</body>
+</html>

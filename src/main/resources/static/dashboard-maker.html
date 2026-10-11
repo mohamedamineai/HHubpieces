@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace Maker - hubpieces</title>
+<meta name="description" content="Tableau de bord maker hubpieces - Gerez vos impressions 3D et trouvez des demandes pres de chez vous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/style.css" rel="stylesheet">
+<link href="css/header.css" rel="stylesheet">
+<link href="css/dashboard.css" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+
+<!-- Floating Particles -->
+<div class="db-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- Watermark -->
+<div class="db-watermark">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+</div>
+
+<!-- Navbar -->
+<div id="navbar-placeholder"></div>
+
+<div class="dashboard-container">
+
+    <!-- ==================== WELCOME ==================== -->
+    <div class="dashboard-welcome">
+        <div class="dashboard-welcome-text">
+            <h1 id="welcomeTitle">Bienvenue, Maker !</h1>
+            <p>Trouvez des demandes a imprimer pres de chez vous et gerez vos commandes en cours.</p>
+        </div>
+        <span class="dashboard-role-pill"><i class="fas fa-print me-1"></i>Maker</span>
+    </div>
+
+    <!-- ==================== STATS STRIP ==================== -->
+    <div class="dashboard-stats-strip">
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon orange"><i class="fas fa-inbox"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">12 <span class="stat-trend up"><i class="fas fa-arrow-up"></i> 5</span></div>
+                <span class="stat-mini-label">Demandes disponibles</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon blue"><i class="fas fa-paper-plane"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">7</div>
+                <span class="stat-mini-label">Offres envoyees</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon green"><i class="fas fa-box"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">4</div>
+                <span class="stat-mini-label">Commandes actives</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon purple"><i class="fas fa-coins"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">342€ <span class="stat-trend up"><i class="fas fa-arrow-up"></i> 24%</span></div>
+                <span class="stat-mini-label">Revenus ce mois</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CHARTS ROW ==================== -->
+    <div class="dashboard-2col">
+
+        <!-- Bar Chart: Revenus par mois -->
+        <div class="dashboard-chart-panel">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-chart-bar"></i> Revenus mensuels</div>
+                    <div class="chart-panel-subtitle">En euros — 6 derniers mois</div>
+                </div>
+            </div>
+            <div class="chart-bars">
+                <div class="chart-bar-col">
+                    <div class="chart-bar green-bar" style="height:30%"><span class="chart-bar-value">85€</span></div>
+                    <span class="chart-bar-label">Mai</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar green-bar" style="height:55%"><span class="chart-bar-value">168€</span></div>
+                    <span class="chart-bar-label">Juin</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar green-bar" style="height:42%"><span class="chart-bar-value">124€</span></div>
+                    <span class="chart-bar-label">Juil</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar green-bar" style="height:68%"><span class="chart-bar-value">212€</span></div>
+                    <span class="chart-bar-label">Aout</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar green-bar" style="height:75%"><span class="chart-bar-value">276€</span></div>
+                    <span class="chart-bar-label">Sept</span>
+                </div>
+                <div class="chart-bar-col">
+                    <div class="chart-bar" style="height:88%"><span class="chart-bar-value">342€</span></div>
+                    <span class="chart-bar-label">Oct</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress: Performance -->
+        <div class="dashboard-chart-panel">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-bullseye"></i> Performance</div>
+                    <div class="chart-panel-subtitle">Vos indicateurs de performance</div>
+                </div>
+            </div>
+            <div class="progress-list">
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-label">Taux d'acceptation</span>
+                        <span class="progress-item-value">87%</span>
+                    </div>
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill green" style="width:87%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-label">Livraisons a temps</span>
+                        <span class="progress-item-value">93%</span>
+                    </div>
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill" style="width:93%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-label">Satisfaction clients</span>
+                        <span class="progress-item-value">4.8/5</span>
+                    </div>
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill purple" style="width:96%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-label">Objectif mensuel</span>
+                        <span class="progress-item-value">342/400€</span>
+                    </div>
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill blue" style="width:85%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== DEMANDES DISPONIBLES ==================== -->
+    <h2 class="dashboard-section-title" id="demandes-dispo"><i class="fas fa-search"></i>Demandes disponibles</h2>
+    <div class="dashboard-full-panel">
+        <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Piece demandee</th>
+                        <th>Demandeur</th>
+                        <th>Ville</th>
+                        <th>Materiau</th>
+                        <th>Urgence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Clip de fixation etagere IKEA</strong></td>
+                        <td>Nadia R.</td>
+                        <td>Tetouan</td>
+                        <td>PLA</td>
+                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> Normale</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bouton commande four</strong></td>
+                        <td>Karim L.</td>
+                        <td>Tanger</td>
+                        <td>ABS</td>
+                        <td><span class="table-status pending"><i class="fas fa-circle" style="font-size:6px"></i> Urgente</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cache prise electrique</strong></td>
+                        <td>Fatima Z.</td>
+                        <td>Tetouan</td>
+                        <td>PLA</td>
+                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> Normale</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Roulette de tiroir</strong></td>
+                        <td>Omar H.</td>
+                        <td>Martil</td>
+                        <td>PETG</td>
+                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> Normale</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== 3D + COMMANDES ==================== -->
+    <div class="dashboard-2col">
+
+        <!-- 3D Model -->
+        <div class="dashboard-3d-panel">
+            <div class="model-header">
+                <h4><i class="fas fa-cube"></i> Piece en cours d'impression</h4>
+                <span class="model-tag">Interactif</span>
+            </div>
+            <model-viewer
+                src="images/model3.glb"
+                alt="modele 3d piece en impression"
+                auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="25deg"
+                camera-controls
+                shadow-intensity="0.6"
+                class="dashboard-3d-viewer">
+            </model-viewer>
+            <div class="model-3d-footer">
+                <span>Clip etagere IKEA — impression en cours</span>
+                <span class="model-interact-hint"><i class="fas fa-hand-pointer"></i> Glisser pour tourner</span>
+            </div>
+        </div>
+
+        <!-- Mes offres & commandes -->
+        <div class="dashboard-chart-panel" id="mes-offres">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-handshake"></i> Mes offres et commandes</div>
+                    <div class="chart-panel-subtitle">Derniere activite</div>
+                </div>
+            </div>
+            <div class="activity-timeline">
+                <div class="activity-item">
+                    <div class="activity-dot green"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Commande livree</strong> — Support telephone livre a Mohamed A.</div>
+                        <div class="activity-time">Il y a 2 heures</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot orange"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Impression en cours</strong> — Clip etagere, ETA: 3h restantes</div>
+                        <div class="activity-time">Il y a 5 heures</div>
+                    </div>
+                </div>
+                <div class="activity-item" id="commandes">
+                    <div class="activity-dot blue"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Offre acceptee</strong> — Cache prise pour Fatima Z. a 6€</div>
+                        <div class="activity-time">Hier, 18:30</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot yellow"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Offre envoyee</strong> — Bouton four, 11€, delai 48h</div>
+                        <div class="activity-time">Hier, 14:00</div>
+                    </div>
+                </div>
+                <div class="activity-item" id="messages">
+                    <div class="activity-dot green"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Nouveau message</strong> — Nadia R. demande des precisions</div>
+                        <div class="activity-time">03 Oct 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==================== QUICK ACTIONS ==================== -->
+    <h2 class="dashboard-section-title"><i class="fas fa-bolt"></i>Actions rapides</h2>
+    <div class="quick-actions">
+        <a href="index.html" class="quick-action-btn"><i class="fas fa-home"></i> Accueil</a>
+        <a href="#demandes-dispo" class="quick-action-btn"><i class="fas fa-search"></i> Voir les demandes</a>
+        <a href="#mes-offres" class="quick-action-btn"><i class="fas fa-paper-plane"></i> Mes offres</a>
+        <a href="#commandes" class="quick-action-btn"><i class="fas fa-box"></i> Commandes actives</a>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/header.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+    document.addEventListener("userLoaded", (e) => {
+        const user = e.detail;
+        if (user) {
+            document.getElementById("welcomeTitle").textContent = "Bienvenue, " + (user.prenom || "") + " !";
+        }
+    });
+</script>
+</body>
+</html>
