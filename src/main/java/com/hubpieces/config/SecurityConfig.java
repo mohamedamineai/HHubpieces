@@ -1,5 +1,6 @@
 package com.hubpieces.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,13 +9,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
+    @ConditionalOnMissingBean(PasswordEncoder.class)
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -24,24 +25,33 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                new AntPathRequestMatcher("/"),
-                                new AntPathRequestMatcher("/index.html"),
-                                new AntPathRequestMatcher("/login.html"),
-                                new AntPathRequestMatcher("/register.html"),
-                                new AntPathRequestMatcher("/dashboard-demandeur.html"),
-                                new AntPathRequestMatcher("/dashboard-maker.html"),
-                                new AntPathRequestMatcher("/dashboard-expertcao.html"),
-                                new AntPathRequestMatcher("/dashboard-admin.html"),
-                                new AntPathRequestMatcher("/css/**"),
-                                new AntPathRequestMatcher("/js/**"),
-                                new AntPathRequestMatcher("/images/**"),
-                                new AntPathRequestMatcher("/uploads/**"),
-                                new AntPathRequestMatcher("/api/**"),
-                                new AntPathRequestMatcher("/swagger-ui/**"),
-                                new AntPathRequestMatcher("/swagger-ui.html"),
-                                new AntPathRequestMatcher("/v3/api-docs/**"),
-                                new AntPathRequestMatcher("/v3/api-docs.yaml"),
-                                new AntPathRequestMatcher("/webjars/**")
+                                "/",
+                                "/index.html",
+                                "/login.html",
+                                "/register.html",
+                                "/catalogue.html",
+                                "/creer-demande.html",
+                                "/mes-demandes.html",
+                                "/mes-offres.html",
+                                "/mes-modelisations.html",
+                                "/mes-messages.html",
+                                "/mon-profil.html",
+                                "/profil-public.html",
+                                "/gestion-admin.html",
+                                "/dashboard-demandeur.html",
+                                "/dashboard-maker.html",
+                                "/dashboard-expertcao.html",
+                                "/dashboard-admin.html",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/uploads/**",
+                                "/api/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/webjars/**"
                         ).permitAll()
                         .anyRequest().permitAll()
                 )

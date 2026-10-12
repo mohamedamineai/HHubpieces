@@ -42,15 +42,15 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         if (request.getRole() == null) {
-            return new AuthResponse(false, "Veuillez choisir un rôle", null, null, null, null, null);
+            return new AuthResponse(false, "Veuillez choisir un rÃ´le", null, null, null, null, null);
         }
 
         if (utilisateurRepository.existsByEmail(request.getEmail())) {
-            return new AuthResponse(false, "Cet email est déjà utilisé", null, null, null, null, null);
+            return new AuthResponse(false, "Cet email est dÃ©jÃ  utilisÃ©", null, null, null, null, null);
         }
 
         Role role = roleRepository.findByNom(request.getRole())
-                .orElseThrow(() -> new IllegalStateException("Rôle introuvable : " + request.getRole()));
+                .orElseThrow(() -> new IllegalStateException("RÃ´le introuvable : " + request.getRole()));
 
         Utilisateur utilisateur = new Utilisateur(
                 request.getNom(),
@@ -84,7 +84,7 @@ public class AuthService {
             profilExpertCaoRepository.save(profil);
         }
 
-        return new AuthResponse(true, "Inscription réussie", saved.getId(), saved.getNom(), saved.getPrenom(), saved.getEmail(), request.getRole().name());
+        return new AuthResponse(true, "Inscription rÃ©ussie", saved.getId(), saved.getNom(), saved.getPrenom(), saved.getEmail(), request.getRole().name());
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -100,6 +100,6 @@ public class AuthService {
                 .map(r -> r.getNom().name())
                 .orElse("DEMANDEUR");
 
-        return new AuthResponse(true, "Connexion réussie", utilisateur.getId(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), role);
+        return new AuthResponse(true, "Connexion rÃ©ussie", utilisateur.getId(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), role);
     }
 }

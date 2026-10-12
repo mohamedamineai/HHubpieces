@@ -1,15 +1,19 @@
 package com.hubpieces.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "profil_maker")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProfilMaker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "utilisateur_id", nullable = false, unique = true)
     private Utilisateur utilisateur;
