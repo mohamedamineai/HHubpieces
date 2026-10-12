@@ -66,13 +66,15 @@ function initRegisterForm() {
         }
         delete payload.confirmMotDePasse;
 
-        payload.rayonActionKm = payload.rayonActionKm ? Number(payload.rayonActionKm) : null;
+        if (payload.rayonActionKm) payload.rayonActionKm = parseInt(payload.rayonActionKm);
 
-        const submit = form.querySelector('[type="submit"]');
-        if (submit.disabled) return;
-        submit.disabled = true;
         try {
-            const data = await HubApi.post("/api/auth/register", payload);
+            const res = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
 
             if (data.success) {
                 showMessage(msgEl, "success", data.message + " - redirection...");
@@ -81,9 +83,7 @@ function initRegisterForm() {
                 showMessage(msgEl, "error", data.message);
             }
         } catch (err) {
-            showMessage(msgEl, "error", err.message || "Erreur serveur. Réessayez.");
-        } finally {
-            submit.disabled = false;
+            showMessage(msgEl, "error", "Erreur serveur. Reessayez.");
         }
     });
 }
@@ -98,11 +98,13 @@ function initLoginForm() {
         const formData = new FormData(form);
         const payload = Object.fromEntries(formData.entries());
 
-        const submit = form.querySelector('[type="submit"]');
-        if (submit.disabled) return;
-        submit.disabled = true;
         try {
-            const data = await HubApi.post("/api/auth/login", payload);
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
 
             if (data.success) {
                 showMessage(msgEl, "success", "Connexion reussie - redirection...");
@@ -111,9 +113,7 @@ function initLoginForm() {
                 showMessage(msgEl, "error", data.message);
             }
         } catch (err) {
-            showMessage(msgEl, "error", err.message || "Erreur serveur. Réessayez.");
-        } finally {
-            submit.disabled = false;
+            showMessage(msgEl, "error", "Erreur serveur. Reessayez.");
         }
     });
 }

@@ -5,13 +5,12 @@ import com.hubpieces.dto.LoginRequest;
 import com.hubpieces.dto.RegisterRequest;
 import com.hubpieces.service.AuthService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 
-@io.swagger.v3.oas.annotations.tags.Tag(name = "01 — Session")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -23,20 +22,18 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request, HttpSession session, HttpServletRequest httpRequest) {
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request, HttpSession session) {
         AuthResponse response = authService.register(request);
         if (response.isSuccess()) {
-            httpRequest.changeSessionId();
             storeSession(session, response);
         }
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request, HttpSession session, HttpServletRequest httpRequest) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request, HttpSession session) {
         AuthResponse response = authService.login(request);
         if (response.isSuccess()) {
-            httpRequest.changeSessionId();
             storeSession(session, response);
         }
         return ResponseEntity.ok(response);
@@ -50,14 +47,19 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<?> me(HttpSession session) {
-        try {
-            AuthResponse user = authService.currentUser((Long) session.getAttribute("userId"),
-                    (String) session.getAttribute("role"));
-            return ResponseEntity.ok(user);
-        } catch (org.springframework.web.server.ResponseStatusException error) {
-            session.invalidate();
-            throw error;
+        Object userId = session.getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(401).body(Map.of("message", "Non connecte"));
         }
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("userId", userId);
+        body.put("nom", session.getAttribute("nom"));
+        body.put("prenom", session.getAttribute("prenom"));
+        body.put("email", session.getAttribute("email"));
+        body.put("role", session.getAttribute("role"));
+
+        return ResponseEntity.ok(body);
     }
 
     private void storeSession(HttpSession session, AuthResponse response) {

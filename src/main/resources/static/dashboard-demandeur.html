@@ -1,24 +1,282 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Votre espace Hubpieces : demandes récentes et suivi de vos réparations.">
-<title>Mon tableau de bord · Hubpieces</title>
-<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/demandes.css"><link rel="stylesheet" href="css/espace-demandeur.css">
-<script defer src="js/api-client.js"></script><script defer src="js/dashboard-demandeur.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon espace - hubpieces</title>
+<meta name="description" content="Tableau de bord demandeur hubpieces - Suivez vos demandes de reparation par impression 3D">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/style.css" rel="stylesheet">
+<link href="css/header.css" rel="stylesheet">
+<link href="css/dashboard.css" rel="stylesheet">
 </head>
-<body>
-<header class="workspace-nav"><a href="index.html" class="brand"><img src="images/logo_hub.png" alt="">hub<span>pieces</span></a><nav aria-label="Navigation principale"><a href="mes-demandes.html">Mes demandes</a><a href="swagger-ui.html">Documentation API ↗</a><button id="logout" class="quiet">Déconnexion</button></nav></header>
-<main class="workspace">
-<div class="eyebrow">MON ESPACE / DEMANDEUR</div>
-<section class="intro"><div><h1 id="welcome">Votre espace réparation.<br><span>Chaque pièce compte.</span></h1><p>Retrouvez vos projets, suivez leur état et donnez une seconde vie à vos objets.</p><a class="primary-link" href="mes-demandes.html?nouvelle=1">+ Décrire une pièce à réparer</a></div><div class="hero-mark" aria-hidden="true"><img src="images/logo_hub.png" alt=""><span>RÉPARER. RÉUTILISER.</span></div></section>
-<section class="metrics" aria-label="Statistiques de mes demandes" aria-busy="true" id="metrics">
-<article><span class="metric-label">Toutes mes demandes</span><strong id="total">—</strong><small>Historique complet</small></article>
-<article><span class="metric-label">Nouvelles</span><strong id="newCount">—</strong><small>Avant engagement</small></article>
-<article><span class="metric-label">Clôturées</span><strong id="closedCount">—</strong><small>État enregistré en base</small></article>
-<article><span class="metric-label">Annulées</span><strong id="cancelledCount">—</strong><small>Conservées dans l’historique</small></article>
-</section>
-<div class="dashboard-columns"><section><div class="toolbar"><div><div class="eyebrow">ACTIVITÉ</div><h2>Vos dernières demandes</h2></div><a href="mes-demandes.html">Tout consulter →</a></div><p id="status" role="status" aria-live="polite">Chargement de votre espace…</p><button id="retry" class="quiet" hidden>Réessayer</button><div id="recent" class="recent-list"></div></section>
-<aside class="guide-card"><div class="eyebrow">VOTRE PREMIER PROJET</div><h2>Une bonne description,<br>un meilleur départ.</h2><ol><li><strong>Identifiez l’objet</strong><p>Précisez sa marque et son modèle si vous les connaissez.</p></li><li><strong>Décrivez la pièce</strong><p>Indiquez la panne, les dimensions et les contraintes d’usage.</p></li><li><strong>Retrouvez votre demande</strong><p>Consultez son détail ou annulez-la tant qu’elle est nouvelle.</p></li></ol><a href="mes-demandes.html?nouvelle=1">Commencer une demande →</a></aside></div>
-<aside class="scope-note">Cet espace affiche vos données réelles. Les offres makers, la modélisation, les paiements et la livraison ne sont pas encore pilotables depuis cette interface. Aucun chiffre de démonstration n’est ajouté.</aside>
-</main></body></html>
+<body class="dashboard-body">
+
+<!-- Floating Particles -->
+<div class="db-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+</div>
+
+<!-- Watermark -->
+<div class="db-watermark">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+</div>
+
+<!-- Navbar -->
+<div id="navbar-placeholder"></div>
+
+<div class="dashboard-container">
+
+    <!-- ==================== WELCOME ==================== -->
+    <div class="dashboard-welcome">
+        <div class="dashboard-welcome-text">
+            <h1 id="welcomeTitle">Bienvenue !</h1>
+            <p>Gerez vos demandes de reparation et suivez l'avancement de vos pieces en cours d'impression.</p>
+        </div>
+        <span class="dashboard-role-pill"><i class="fas fa-user me-1"></i>Demandeur</span>
+    </div>
+
+    <!-- ==================== STATS STRIP ==================== -->
+    <div class="dashboard-stats-strip">
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon orange"><i class="fas fa-clipboard-list"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">3</div>
+                <span class="stat-mini-label">Demandes soumises</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon green"><i class="fas fa-check-double"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">1</div>
+                <span class="stat-mini-label">Pieces recues</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon blue"><i class="fas fa-print"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">1</div>
+                <span class="stat-mini-label">En impression</span>
+            </div>
+        </div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-icon yellow"><i class="fas fa-clock"></i></div>
+            <div class="stat-mini-info">
+                <div class="stat-mini-number">1</div>
+                <span class="stat-mini-label">En attente de maker</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CHARTS ROW ==================== -->
+    <div class="dashboard-2col">
+
+        <!-- Progress: Suivi des demandes -->
+        <div class="dashboard-chart-panel">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-tasks"></i> Suivi de mes demandes</div>
+                    <div class="chart-panel-subtitle">Progression globale de vos reparations</div>
+                </div>
+            </div>
+            <div class="progress-list">
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-label">Poignee lave-linge Samsung</span>
+                        <span class="progress-item-value">100%</span>
+                    </div>
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill green" style="width:100%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-label">Support telephone voiture</span>
+                        <span class="progress-item-value">65%</span>
+                    </div>
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill" style="width:65%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-label">Engrenage cafetiere Nespresso</span>
+                        <span class="progress-item-value">20%</span>
+                    </div>
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill blue" style="width:20%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity timeline -->
+        <div class="dashboard-chart-panel">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-history"></i> Activite recente</div>
+                    <div class="chart-panel-subtitle">Derniers evenements sur vos demandes</div>
+                </div>
+            </div>
+            <div class="activity-timeline">
+                <div class="activity-item">
+                    <div class="activity-dot green"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Piece livree</strong> — Poignee lave-linge recue et validee</div>
+                        <div class="activity-time">Il y a 1 jour</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot orange"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Impression lancee</strong> — Ahmed B. imprime votre support telephone</div>
+                        <div class="activity-time">Il y a 3 jours</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot blue"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Offre acceptee</strong> — Youssef M. propose 12€ pour l'engrenage</div>
+                        <div class="activity-time">Il y a 5 jours</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot yellow"></div>
+                    <div class="activity-content">
+                        <div class="activity-text"><strong>Nouvelle demande</strong> — Engrenage cafetiere Nespresso soumis</div>
+                        <div class="activity-time">Il y a 1 semaine</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MES DEMANDES ==================== -->
+    <h2 class="dashboard-section-title" id="mes-demandes"><i class="fas fa-list"></i>Mes demandes</h2>
+    <div class="dashboard-full-panel">
+        <div class="dashboard-table-wrap">
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Piece</th>
+                        <th>Maker assigne</th>
+                        <th>Prix</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Poignee lave-linge Samsung</strong></td>
+                        <td>Ahmed B.</td>
+                        <td>8,00 €</td>
+                        <td>20 Sept 2026</td>
+                        <td><span class="table-status done"><i class="fas fa-circle" style="font-size:6px"></i> Livree</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Support telephone voiture</strong></td>
+                        <td>Ahmed B.</td>
+                        <td>15,00 €</td>
+                        <td>02 Oct 2026</td>
+                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> En impression</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Engrenage cafetiere Nespresso</strong></td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>04 Oct 2026</td>
+                        <td><span class="table-status pending"><i class="fas fa-circle" style="font-size:6px"></i> En attente</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== 3D + ACTIONS ==================== -->
+    <div class="dashboard-2col">
+
+        <!-- 3D Model viewer -->
+        <div class="dashboard-3d-panel">
+            <div class="model-header">
+                <h4><i class="fas fa-cube"></i> Apercu de votre piece</h4>
+                <span class="model-tag">Interactif</span>
+            </div>
+            <model-viewer
+                src="images/model2.glb"
+                alt="modele 3d de la piece demandee"
+                auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="25deg"
+                camera-controls
+                shadow-intensity="0.6"
+                class="dashboard-3d-viewer">
+            </model-viewer>
+            <div class="model-3d-footer">
+                <span>Support telephone — en impression</span>
+                <span class="model-interact-hint"><i class="fas fa-hand-pointer"></i> Glisser pour tourner</span>
+            </div>
+        </div>
+
+        <!-- Actions rapides -->
+        <div class="dashboard-chart-panel" id="nouvelle-demande">
+            <div class="chart-panel-header">
+                <div>
+                    <div class="chart-panel-title"><i class="fas fa-bolt"></i> Actions rapides</div>
+                    <div class="chart-panel-subtitle">Que souhaitez-vous faire ?</div>
+                </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                <div class="dashboard-card" style="animation:none;margin:0;">
+                    <div class="dashboard-card-icon"><i class="fas fa-plus-circle"></i></div>
+                    <h5>Nouvelle demande</h5>
+                    <p>Soumettez une nouvelle piece a reparer avec photos et description.</p>
+                    <span class="dashboard-card-badge soon">Bientot disponible</span>
+                </div>
+                <div class="dashboard-card" style="animation:none;margin:0;">
+                    <div class="dashboard-card-icon"><i class="fas fa-cube"></i></div>
+                    <h5>Catalogue STL</h5>
+                    <p>Parcourez les fichiers 3D valides par nos experts CAO.</p>
+                    <a href="index.html#catalogue" class="dashboard-card-badge active-badge">Voir le catalogue</a>
+                </div>
+                <div class="dashboard-card" style="animation:none;margin:0;" id="messages">
+                    <div class="dashboard-card-icon"><i class="fas fa-envelope"></i></div>
+                    <h5>Messages <span style="background:var(--db-red);color:#fff;font-size:0.65rem;padding:2px 7px;border-radius:50px;margin-left:6px;">2</span></h5>
+                    <p>Echangez avec les makers concernant vos demandes en cours.</p>
+                    <span class="dashboard-card-badge soon">Bientot disponible</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==================== QUICK ACTIONS BAR ==================== -->
+    <h2 class="dashboard-section-title"><i class="fas fa-compass"></i>Navigation rapide</h2>
+    <div class="quick-actions">
+        <a href="index.html" class="quick-action-btn"><i class="fas fa-home"></i> Accueil</a>
+        <a href="index.html#catalogue" class="quick-action-btn"><i class="fas fa-cube"></i> Catalogue STL</a>
+        <a href="index.html#makers" class="quick-action-btn"><i class="fas fa-print"></i> Trouver un maker</a>
+        <a href="#mes-demandes" class="quick-action-btn"><i class="fas fa-list"></i> Mes demandes</a>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/header.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+    document.addEventListener("userLoaded", (e) => {
+        const user = e.detail;
+        if (user) {
+            document.getElementById("welcomeTitle").textContent = "Bienvenue, " + (user.prenom || "") + " !";
+        }
+    });
+</script>
+</body>
+</html>

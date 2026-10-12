@@ -1,29 +1,18 @@
 package com.hubpieces.dto;
 
-import jakarta.validation.constraints.*;
-
 import com.hubpieces.model.RoleNom;
 
 public class RegisterRequest {
 
-    @NotBlank @Size(max = 100)
     private String nom;
-    @NotBlank @Size(max = 100)
     private String prenom;
-    @NotBlank @Email @Size(max = 150)
     private String email;
-    @NotBlank @Size(min = 8, max = 72)
     private String motDePasse;
-    @Size(max = 20)
     private String telephone;
-    @Size(max = 100)
     private String ville;
-    @Size(max = 10)
     private String codePostal;
-    @NotNull
     private RoleNom role;
 
-    @Positive
     private Integer rayonActionKm;
     private String materiauxDisponibles;
     private String descriptionImprimante;
