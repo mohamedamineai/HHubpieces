@@ -35,13 +35,19 @@ L'application démarre sur **http://localhost:9090**
 ### URLs
 | Page | URL |
 |------|-----|
-| 🏠 Accueil | http://localhost:9090/index.html |
-| 🔐 Connexion | http://localhost:9090/login.html |
-| 📝 Inscription | http://localhost:9090/register.html |
+| 🏠 Accueil | http://localhost:9090/ *(= /index.html)* |
+| 🔐 Connexion | http://localhost:9090/login *(= /login.html)* |
+| 📝 Inscription | http://localhost:9090/register *(= /register.html)* |
+| 🖼️ Catalogue public | http://localhost:9090/catalogue *(= /catalogue.html)* |
 | 📚 Swagger UI | http://localhost:9090/swagger-ui.html |
 | 📋 OpenAPI | http://localhost:9090/v3/api-docs |
-| 🖼️ Catalogue public | http://localhost:9090/catalogue.html |
 | 👤 Profil public | http://localhost:9090/profil-public.html?id=X |
+| 📊 Dashboard demandeur | http://localhost:9090/dashboard-demandeur.html |
+| 🖨️ Dashboard maker | http://localhost:9090/dashboard-maker.html |
+| 🧊 Dashboard expert CAO | http://localhost:9090/dashboard-expertcao.html |
+| 🛡️ Dashboard admin | http://localhost:9090/dashboard-admin.html |
+
+> Les URLs sans extension sont des redirections/forward configurés dans `WebMvcConfig`.
 
 ### Test rapide avec Postman
 1. Importez la collection : `docs/postman-collection.json`
