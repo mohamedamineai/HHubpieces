@@ -207,7 +207,7 @@ public class DataLoader {
                 OffreMaker savedO2 = offreMakerRepository.save(o2);
 
                 Transaction t2 = new Transaction(savedO2, 11.00);
-                t2.setEtatPaiement(EtatPaiement.PAYE_SEQUESTRE);
+                t2.setEtatPaiement(EtatPaiement.EN_SEQUESTRE);
                 t2.setDatePaiement(LocalDateTime.now());
                 transactionRepository.save(t2);
 
@@ -275,9 +275,9 @@ public class DataLoader {
                 messageRepository.save(m2);
 
                 // Notifications
-                notificationRepository.save(new Notification(demandeur, "Nouvelle offre reçue", "Ahmed Benali a déposé une offre de 14.50 EUR pour votre engrenage Moulinex.", TypeNotification.OFFRE_RECUE));
-                notificationRepository.save(new Notification(demandeur, "Impression en cours", "Votre commande de bouton de lave-linge est actuellement en cours d'impression 3D.", TypeNotification.COMMANDE_STATUS));
-                notificationRepository.save(new Notification(maker, "Offre acceptée !", "Le demandeur Jean Dupont a validé votre proposition de 11.00 EUR.", TypeNotification.COMMANDE_STATUS));
+                notificationRepository.save(new Notification(demandeur, "Nouvelle offre reçue", "Ahmed Benali a déposé une offre de 14.50 EUR pour votre engrenage Moulinex.", TypeNotification.INFO));
+                notificationRepository.save(new Notification(demandeur, "Impression en cours", "Votre commande de bouton de lave-linge est actuellement en cours d'impression 3D.", TypeNotification.INFO));
+                notificationRepository.save(new Notification(maker, "Offre acceptée !", "Le demandeur Jean Dupont a validé votre proposition de 11.00 EUR.", TypeNotification.SUCCESS));
             }
         };
     }
