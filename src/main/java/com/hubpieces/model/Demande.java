@@ -59,6 +59,15 @@ public class Demande {
     @JoinColumn(name = "fichier_stl_id")
     private FichierStl fichierStl;
 
+    @OneToMany(mappedBy = "demande", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private java.util.List<PhotoDemande> photos = new java.util.ArrayList<>();
+
+    @OneToMany(mappedBy = "demande", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private java.util.List<OffreMaker> offres = new java.util.ArrayList<>();
+
+    @OneToMany(mappedBy = "demande", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private java.util.List<Message> messages = new java.util.ArrayList<>();
+
     public Demande() {}
 
     public Demande(String titre, String description, Utilisateur demandeur) {
@@ -119,4 +128,13 @@ public class Demande {
 
     public FichierStl getFichierStl() { return fichierStl; }
     public void setFichierStl(FichierStl fichierStl) { this.fichierStl = fichierStl; }
+
+    public java.util.List<PhotoDemande> getPhotos() { return photos; }
+    public void setPhotos(java.util.List<PhotoDemande> photos) { this.photos = photos; }
+
+    public java.util.List<OffreMaker> getOffres() { return offres; }
+    public void setOffres(java.util.List<OffreMaker> offres) { this.offres = offres; }
+
+    public java.util.List<Message> getMessages() { return messages; }
+    public void setMessages(java.util.List<Message> messages) { this.messages = messages; }
 }

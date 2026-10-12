@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mon espace - hubpieces</title>
-<meta name="description" content="Tableau de bord demandeur hubpieces - Suivez vos demandes de reparation par impression 3D">
+<meta name="description" content="Tableau de bord demandeur hubpieces - Suivez vos demandes de réparation par impression 3D">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -43,240 +43,219 @@
     </div>
 
     <!-- ==================== STATS STRIP ==================== -->
-    <div class="dashboard-stats-strip">
+    <div class="dashboard-stats-strip" id="statsStrip">
         <div class="stat-mini-card">
             <div class="stat-mini-icon orange"><i class="fas fa-clipboard-list"></i></div>
             <div class="stat-mini-info">
-                <div class="stat-mini-number">3</div>
-                <span class="stat-mini-label">Demandes soumises</span>
+                <div class="stat-mini-number" id="statTotal">-</div>
+                <span class="stat-mini-label">Demandes totales</span>
             </div>
         </div>
         <div class="stat-mini-card">
             <div class="stat-mini-icon green"><i class="fas fa-check-double"></i></div>
             <div class="stat-mini-info">
-                <div class="stat-mini-number">1</div>
+                <div class="stat-mini-number" id="statCloturees">-</div>
                 <span class="stat-mini-label">Pieces recues</span>
             </div>
         </div>
         <div class="stat-mini-card">
             <div class="stat-mini-icon blue"><i class="fas fa-print"></i></div>
             <div class="stat-mini-info">
-                <div class="stat-mini-number">1</div>
+                <div class="stat-mini-number" id="statEnCours">-</div>
                 <span class="stat-mini-label">En impression</span>
             </div>
         </div>
         <div class="stat-mini-card">
             <div class="stat-mini-icon yellow"><i class="fas fa-clock"></i></div>
             <div class="stat-mini-info">
-                <div class="stat-mini-number">1</div>
-                <span class="stat-mini-label">En attente de maker</span>
+                <div class="stat-mini-number" id="statEnAttente">-</div>
+                <span class="stat-mini-label">En attente</span>
             </div>
         </div>
     </div>
 
-    <!-- ==================== CHARTS ROW ==================== -->
+    <!-- ==================== ACTIONS RAPIDES ==================== -->
     <div class="dashboard-2col">
-
-        <!-- Progress: Suivi des demandes -->
         <div class="dashboard-chart-panel">
-            <div class="chart-panel-header">
-                <div>
-                    <div class="chart-panel-title"><i class="fas fa-tasks"></i> Suivi de mes demandes</div>
-                    <div class="chart-panel-subtitle">Progression globale de vos reparations</div>
-                </div>
-            </div>
-            <div class="progress-list">
-                <div class="progress-item">
-                    <div class="progress-item-header">
-                        <span class="progress-item-label">Poignee lave-linge Samsung</span>
-                        <span class="progress-item-value">100%</span>
-                    </div>
-                    <div class="progress-bar-track">
-                        <div class="progress-bar-fill green" style="width:100%"></div>
-                    </div>
-                </div>
-                <div class="progress-item">
-                    <div class="progress-item-header">
-                        <span class="progress-item-label">Support telephone voiture</span>
-                        <span class="progress-item-value">65%</span>
-                    </div>
-                    <div class="progress-bar-track">
-                        <div class="progress-bar-fill" style="width:65%"></div>
-                    </div>
-                </div>
-                <div class="progress-item">
-                    <div class="progress-item-header">
-                        <span class="progress-item-label">Engrenage cafetiere Nespresso</span>
-                        <span class="progress-item-value">20%</span>
-                    </div>
-                    <div class="progress-bar-track">
-                        <div class="progress-bar-fill blue" style="width:20%"></div>
-                    </div>
-                </div>
+            <h4 style="color:#fff; margin-bottom:16px;">
+                <i class="fas fa-rocket me-2" style="color: var(--neon-pink);"></i>
+                Actions rapides
+            </h4>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="creer-demande.html" class="btn btn-neon">
+                    <i class="fas fa-plus me-2"></i>Nouvelle demande
+                </a>
+                <a href="mes-demandes.html" class="btn btn-ghost">
+                    <i class="fas fa-list me-2"></i>Mes demandes
+                </a>
+                <a href="catalogue.html" class="btn btn-ghost">
+                    <i class="fas fa-cube me-2"></i>Catalogue STL
+                </a>
+                <a href="mon-profil.html" class="btn btn-ghost">
+                    <i class="fas fa-user me-2"></i>Mon profil
+                </a>
             </div>
         </div>
 
-        <!-- Activity timeline -->
         <div class="dashboard-chart-panel">
-            <div class="chart-panel-header">
-                <div>
-                    <div class="chart-panel-title"><i class="fas fa-history"></i> Activite recente</div>
-                    <div class="chart-panel-subtitle">Derniers evenements sur vos demandes</div>
-                </div>
-            </div>
-            <div class="activity-timeline">
-                <div class="activity-item">
-                    <div class="activity-dot green"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Piece livree</strong> — Poignee lave-linge recue et validee</div>
-                        <div class="activity-time">Il y a 1 jour</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-dot orange"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Impression lancee</strong> — Ahmed B. imprime votre support telephone</div>
-                        <div class="activity-time">Il y a 3 jours</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-dot blue"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Offre acceptee</strong> — Youssef M. propose 12€ pour l'engrenage</div>
-                        <div class="activity-time">Il y a 5 jours</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-dot yellow"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Nouvelle demande</strong> — Engrenage cafetiere Nespresso soumis</div>
-                        <div class="activity-time">Il y a 1 semaine</div>
-                    </div>
-                </div>
+            <h4 style="color:#fff; margin-bottom:16px;">
+                <i class="fas fa-bell me-2" style="color: var(--neon-pink);"></i>
+                Notifications recentes
+            </h4>
+            <div id="notifications" style="max-height: 250px; overflow-y: auto;">
+                <p style="color: rgba(255,255,255,0.5);">Chargement...</p>
             </div>
         </div>
     </div>
 
-    <!-- ==================== MES DEMANDES ==================== -->
-    <h2 class="dashboard-section-title" id="mes-demandes"><i class="fas fa-list"></i>Mes demandes</h2>
-    <div class="dashboard-full-panel">
-        <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-                <thead>
-                    <tr>
-                        <th>Piece</th>
-                        <th>Maker assigne</th>
-                        <th>Prix</th>
-                        <th>Date</th>
-                        <th>Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Poignee lave-linge Samsung</strong></td>
-                        <td>Ahmed B.</td>
-                        <td>8,00 €</td>
-                        <td>20 Sept 2026</td>
-                        <td><span class="table-status done"><i class="fas fa-circle" style="font-size:6px"></i> Livree</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Support telephone voiture</strong></td>
-                        <td>Ahmed B.</td>
-                        <td>15,00 €</td>
-                        <td>02 Oct 2026</td>
-                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> En impression</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Engrenage cafetiere Nespresso</strong></td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>04 Oct 2026</td>
-                        <td><span class="table-status pending"><i class="fas fa-circle" style="font-size:6px"></i> En attente</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <!-- ==================== DERNIERES DEMANDES ==================== -->
+    <h2 class="dashboard-section-title" id="mes-demandes">
+        <i class="fas fa-list"></i>Mes dernieres demandes
+    </h2>
+    <div class="dashboard-full-panel" id="demandesRecentes">
+        <p style="color: rgba(255,255,255,0.5); padding: 24px;">Chargement...</p>
     </div>
 
-    <!-- ==================== 3D + ACTIONS ==================== -->
-    <div class="dashboard-2col">
-
-        <!-- 3D Model viewer -->
-        <div class="dashboard-3d-panel">
-            <div class="model-header">
-                <h4><i class="fas fa-cube"></i> Apercu de votre piece</h4>
-                <span class="model-tag">Interactif</span>
-            </div>
-            <model-viewer
-                src="images/model2.glb"
-                alt="modele 3d de la piece demandee"
-                auto-rotate
-                auto-rotate-delay="0"
-                rotation-per-second="25deg"
-                camera-controls
-                shadow-intensity="0.6"
-                class="dashboard-3d-viewer">
-            </model-viewer>
-            <div class="model-3d-footer">
-                <span>Support telephone — en impression</span>
-                <span class="model-interact-hint"><i class="fas fa-hand-pointer"></i> Glisser pour tourner</span>
-            </div>
+    <!-- ==================== AIDE ==================== -->
+    <div class="dashboard-2col" style="margin-top: 32px;">
+        <div class="dashboard-chart-panel">
+            <h4 style="color:#fff; margin-bottom:16px;">
+                <i class="fas fa-question-circle me-2" style="color: var(--neon-pink);"></i>
+                Comment ca marche ?
+            </h4>
+            <ol style="color: rgba(255,255,255,0.8); line-height: 1.8; padding-left: 20px;">
+                <li><strong>Decrivez</strong> votre piece cassee en detail</li>
+                <li><strong>Un expert CAO</strong> cree le modele 3D si necessaire</li>
+                <li><strong>Les makers</strong> pres de chez vous proposent leurs offres</li>
+                <li><strong>Choisissez</strong> la meilleure offre et suivez l'impression</li>
+                <li><strong>Validez</strong> la livraison et laissez un avis</li>
+            </ol>
         </div>
-
-        <!-- Actions rapides -->
-        <div class="dashboard-chart-panel" id="nouvelle-demande">
-            <div class="chart-panel-header">
-                <div>
-                    <div class="chart-panel-title"><i class="fas fa-bolt"></i> Actions rapides</div>
-                    <div class="chart-panel-subtitle">Que souhaitez-vous faire ?</div>
-                </div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <div class="dashboard-card" style="animation:none;margin:0;">
-                    <div class="dashboard-card-icon"><i class="fas fa-plus-circle"></i></div>
-                    <h5>Nouvelle demande</h5>
-                    <p>Soumettez une nouvelle piece a reparer avec photos et description.</p>
-                    <span class="dashboard-card-badge soon">Bientot disponible</span>
-                </div>
-                <div class="dashboard-card" style="animation:none;margin:0;">
-                    <div class="dashboard-card-icon"><i class="fas fa-cube"></i></div>
-                    <h5>Catalogue STL</h5>
-                    <p>Parcourez les fichiers 3D valides par nos experts CAO.</p>
-                    <a href="index.html#catalogue" class="dashboard-card-badge active-badge">Voir le catalogue</a>
-                </div>
-                <div class="dashboard-card" style="animation:none;margin:0;" id="messages">
-                    <div class="dashboard-card-icon"><i class="fas fa-envelope"></i></div>
-                    <h5>Messages <span style="background:var(--db-red);color:#fff;font-size:0.65rem;padding:2px 7px;border-radius:50px;margin-left:6px;">2</span></h5>
-                    <p>Echangez avec les makers concernant vos demandes en cours.</p>
-                    <span class="dashboard-card-badge soon">Bientot disponible</span>
-                </div>
-            </div>
+        <div class="dashboard-chart-panel">
+            <h4 style="color:#fff; margin-bottom:16px;">
+                <i class="fas fa-shield-alt me-2" style="color: var(--neon-pink);"></i>
+                Paiement securise
+            </h4>
+            <p style="color: rgba(255,255,255,0.7); line-height: 1.7;">
+                Le paiement est <strong style="color: #6ee7b7;">sequestre</strong> lors de l'acceptation de l'offre.
+                Il n'est libere au maker qu'apres votre validation de la piece recue.
+                En cas de litige, notre equipe admin arbitre.
+            </p>
         </div>
-
-    </div>
-
-    <!-- ==================== QUICK ACTIONS BAR ==================== -->
-    <h2 class="dashboard-section-title"><i class="fas fa-compass"></i>Navigation rapide</h2>
-    <div class="quick-actions">
-        <a href="index.html" class="quick-action-btn"><i class="fas fa-home"></i> Accueil</a>
-        <a href="index.html#catalogue" class="quick-action-btn"><i class="fas fa-cube"></i> Catalogue STL</a>
-        <a href="index.html#makers" class="quick-action-btn"><i class="fas fa-print"></i> Trouver un maker</a>
-        <a href="#mes-demandes" class="quick-action-btn"><i class="fas fa-list"></i> Mes demandes</a>
     </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>
-    document.addEventListener("userLoaded", (e) => {
-        const user = e.detail;
-        if (user) {
-            document.getElementById("welcomeTitle").textContent = "Bienvenue, " + (user.prenom || "") + " !";
+async function loadAll() {
+    // Charger les stats
+    try {
+        const r = await fetch('/api/demandeur/stats', { credentials: 'include' });
+        if (r.status === 401) { location.href = 'login.html'; return; }
+        if (r.ok) {
+            const s = await r.json();
+            document.getElementById('statTotal').textContent = s.total || 0;
+            document.getElementById('statCloturees').textContent = s.cloturees || 0;
+            document.getElementById('statEnCours').textContent = s.enCours || 0;
+            document.getElementById('statEnAttente').textContent = s.nouvelles || 0;
         }
-    });
+    } catch (e) {}
+
+    // Charger les notifications
+    try {
+        const r = await fetch('/api/demandeur/notifications', { credentials: 'include' });
+        if (r.ok) {
+            const notifs = await r.json();
+            const el = document.getElementById('notifications');
+            if (notifs.length === 0) {
+                el.innerHTML = '<p style="color: rgba(255,255,255,0.4); text-align: center; padding: 20px;">Aucune notification</p>';
+            } else {
+                el.innerHTML = notifs.slice(0, 5).map(n => `
+                    <div style="padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 8px; border-left: 3px solid ${n.lu ? 'rgba(255,255,255,0.2)' : 'var(--neon-pink)'};">
+                        <div style="color: #fff; font-weight: ${n.lu ? '400' : '600'};">${escapeHtml(n.titre)}</div>
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 4px;">${escapeHtml(n.message)}</div>
+                        <div style="color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-top: 4px;">${formatDate(n.dateCreation)}</div>
+                    </div>
+                `).join('');
+            }
+        }
+    } catch (e) {}
+
+    // Charger les dernieres demandes
+    try {
+        const r = await fetch('/api/demandeur/demandes', { credentials: 'include' });
+        if (r.ok) {
+            const demandes = await r.json();
+            const el = document.getElementById('demandesRecentes');
+            if (demandes.length === 0) {
+                el.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-inbox" style="font-size: 3rem; color: rgba(255,255,255,0.2);"></i>
+                        <p style="color: rgba(255,255,255,0.5); margin-top: 12px;">Vous n'avez pas encore de demande</p>
+                        <a href="creer-demande.html" class="btn btn-neon mt-3">
+                            <i class="fas fa-plus me-2"></i>Creer ma premiere demande
+                        </a>
+                    </div>
+                `;
+            } else {
+                el.innerHTML = `
+                    <div class="dashboard-table-wrap">
+                        <table class="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Piece</th>
+                                    <th>Date</th>
+                                    <th>Budget</th>
+                                    <th>Offres</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${demandes.slice(0, 5).map(d => `
+                                    <tr style="cursor: pointer;" onclick="window.location='mes-demandes.html'">
+                                        <td><strong style="color: #fff;">${escapeHtml(d.titre)}</strong></td>
+                                        <td>${formatDate(d.dateCreation)}</td>
+                                        <td>${d.budgetMax ? d.budgetMax.toFixed(2) + ' EUR' : '-'}</td>
+                                        <td>${d.nombreOffres || 0}</td>
+                                        <td><span class="etat-badge etat-${d.etat}">${formatEtat(d.etat)}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+        }
+    } catch (e) {}
+
+    // Mettre a jour le titre
+    try {
+        const r = await fetch('/api/utilisateurs/me', { credentials: 'include' });
+        if (r.ok) {
+            const u = await r.json();
+            document.getElementById('welcomeTitle').textContent = 'Bienvenue ' + u.prenom + ' !';
+        }
+    } catch (e) {}
+}
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+function formatDate(d) {
+    if (!d) return '';
+    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function formatEtat(e) {
+    return (e || '').replace(/_/g, ' ').toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
+}
+
+loadAll();
 </script>
+
 </body>
 </html>

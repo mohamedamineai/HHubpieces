@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes modelisations - hubpieces</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/header.css" rel="stylesheet">
+<link href="css/dashboard.css" rel="stylesheet">
+<style>
+.demande-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+.demande-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: #9d4edd;
+}
+.demande-card:hover { transform: translateY(-2px); border-color: rgba(255,94,174,0.4); }
+.demande-title { color: #fff; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px; }
+.demande-meta { color: rgba(255,255,255,0.5); font-size: 0.85rem; display: flex; gap: 16px; flex-wrap: wrap; }
+.demande-meta i { color: var(--neon-pink); margin-right: 4px; }
+.empty-state { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.4); }
+.empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: 0.3; }
+.btn-neon {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(255,94,174,0.3);
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-neon:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,94,174,0.5); color: #fff; }
+.tab-pill {
+    padding: 10px 20px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+.tab-pill.active { background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%); color: #fff; border-color: transparent; }
+.etat-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.etat-EN_ATTENTE { background: rgba(255,193,7,0.2); color: #ffc107; }
+.etat-VALIDE { background: rgba(110,231,183,0.2); color: #6ee7b7; }
+.etat-REJETE { background: rgba(255,94,174,0.2); color: #ff5eae; }
+</style>
+</head>
+<body class="dashboard-body">
+
+<div class="db-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="db-watermark">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+</div>
+
+<div id="navbar-placeholder"></div>
+
+<div class="dashboard-container" style="max-width: 1200px; margin: 0 auto;">
+
+    <div class="dashboard-welcome">
+        <div class="dashboard-welcome-text">
+            <h1>Tableau de bord Expert CAO</h1>
+            <p>Créez des modèles 3D pour les demandes qui en ont besoin et gérez le catalogue STL</p>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <div class="tab-pill active" data-tab="a-modeliser">Demandes a modeliser</div>
+        <div class="tab-pill" data-tab="catalogue">Catalogue STL</div>
+        <div class="tab-pill" data-tab="mes-fichiers">Mes fichiers</div>
+    </div>
+
+    <div id="contenu">
+        <div style="text-align:center; padding: 40px;">
+            <i class="fas fa-spinner fa-spin" style="font-size:2rem; color: var(--neon-pink);"></i>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal pour creer un STL -->
+<div class="modal fade" id="stlModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="background: #150a2e; color: #fff; border: 1px solid rgba(255,94,174,0.3);">
+            <div class="modal-header" style="border-bottom-color: rgba(255,255,255,0.1);">
+                <h5 class="modal-title">Modeliser la piece</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="stlForm">
+                    <input type="hidden" id="demandeIdModelisation">
+                    <div class="row g-2">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Nom du fichier STL *</label>
+                            <input type="text" class="form-control" id="stlNom" required placeholder="Ex: Poignee-LaveLinge-Samsung">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Categorie</label>
+                            <input type="text" class="form-control" id="stlCategorie" placeholder="Ex: electromenager">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="stlDescription" rows="2"></textarea>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Marque</label>
+                            <input type="text" class="form-control" id="stlMarque">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Modele d'appareil</label>
+                            <input type="text" class="form-control" id="stlModele">
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Materiau recommande</label>
+                            <input type="text" class="form-control" id="stlMateriau" placeholder="PLA, ABS, PETG">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Dimensions</label>
+                            <input type="text" class="form-control" id="stlDimensions" placeholder="Ex: 80x40x20mm">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Chemin du fichier STL *</label>
+                        <input type="text" class="form-control" id="stlChemin" required placeholder="/uploads/stl/mon-fichier.stl">
+                        <small class="text-muted">En production : upload du fichier STL/OBJ/3MF</small>
+                    </div>
+                    <button type="submit" class="btn btn-neon w-100">
+                        <i class="fas fa-magic me-2"></i>Creer et transmettre au demandeur
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/header.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+let currentTab = 'a-modeliser';
+
+document.querySelectorAll('.tab-pill').forEach(p => {
+    p.addEventListener('click', () => {
+        document.querySelectorAll('.tab-pill').forEach(x => x.classList.remove('active'));
+        p.classList.add('active');
+        currentTab = p.dataset.tab;
+        load();
+    });
+});
+
+async function load() {
+    const el = document.getElementById('contenu');
+    el.innerHTML = '<div style="text-align:center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="font-size:2rem; color: var(--neon-pink);"></i></div>';
+    if (currentTab === 'a-modeliser') {
+        const r = await fetch('/api/expert-cao/demandes-a-modeliser', { credentials: 'include' });
+        if (r.status === 401) { location.href = 'login.html'; return; }
+        const data = await r.json();
+        renderAModeliser(data);
+    } else if (currentTab === 'catalogue') {
+        const r = await fetch('/api/expert-cao/fichiers-stl/valides', { credentials: 'include' });
+        const data = await r.json();
+        renderSTL(data, 'Catalogue STL validé');
+    } else if (currentTab === 'mes-fichiers') {
+        const r = await fetch('/api/expert-cao/fichiers-stl', { credentials: 'include' });
+        const data = await r.json();
+        renderSTL(data, 'Mes fichiers STL');
+    }
+}
+
+function renderAModeliser(demandes) {
+    const el = document.getElementById('contenu');
+    if (demandes.length === 0) {
+        el.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-cube"></i>
+                <p>Aucune demande en attente de modélisation</p>
+            </div>
+        `;
+        return;
+    }
+    el.innerHTML = demandes.map(d => `
+        <div class="demande-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div style="flex: 1;">
+                    <h3 class="demande-title">${escapeHtml(d.titre)}</h3>
+                    <p style="color: rgba(255,255,255,0.6); margin: 8px 0;">${escapeHtml(d.description || '')}</p>
+                    <div class="demande-meta">
+                        ${d.marque ? `<span><i class="fas fa-tag"></i>${escapeHtml(d.marque)}</span>` : ''}
+                        ${d.modeleAppareil ? `<span><i class="fas fa-microchip"></i>${escapeHtml(d.modeleAppareil)}</span>` : ''}
+                        ${d.ville ? `<span><i class="fas fa-map-marker-alt"></i>${escapeHtml(d.ville)}</span>` : ''}
+                        <span><i class="fas fa-user"></i>${escapeHtml(d.demandeurPrenom)} ${escapeHtml(d.demandeurNom)}</span>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-neon" onclick="openSTLModal(${d.id}, '${escapeHtml(d.titre).replace(/'/g, "\\'")}', '${escapeHtml(d.marque || '')}', '${escapeHtml(d.modeleAppareil || '')}')">
+                        <i class="fas fa-magic me-1"></i>Modeliser
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderSTL(fichiers, titre) {
+    const el = document.getElementById('contenu');
+    if (fichiers.length === 0) {
+        el.innerHTML = `<div class="empty-state"><i class="fas fa-cube"></i><p>Aucun fichier</p></div>`;
+        return;
+    }
+    el.innerHTML = `<h4 style="color:#fff; margin-bottom: 16px;">${titre} (${fichiers.length})</h4>` +
+        fichiers.map(f => `
+            <div class="demande-card">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h3 class="demande-title">${escapeHtml(f.nom)}</h3>
+                        <p style="color: rgba(255,255,255,0.6); margin: 8px 0;">${escapeHtml(f.description || '')}</p>
+                        <div class="demande-meta">
+                            ${f.marque ? `<span><i class="fas fa-tag"></i>${escapeHtml(f.marque)}</span>` : ''}
+                            ${f.materiauRecommande ? `<span><i class="fas fa-cube"></i>${escapeHtml(f.materiauRecommande)}</span>` : ''}
+                            <span><i class="fas fa-download"></i>${f.nombreTelechargements} téléchargements</span>
+                            <span><i class="fas fa-star"></i>${(f.noteMoyenne || 0).toFixed(1)}/5</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <span class="etat-badge etat-${f.etatValidation}">${f.etatValidation}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+}
+
+function openSTLModal(demandeId, titre, marque, modele) {
+    document.getElementById('demandeIdModelisation').value = demandeId;
+    document.getElementById('stlNom').value = titre.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase();
+    document.getElementById('stlMarque').value = marque;
+    document.getElementById('stlModele').value = modele;
+    new bootstrap.Modal(document.getElementById('stlModal')).show();
+}
+
+document.getElementById('stlForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = {
+        demandeId: parseInt(document.getElementById('demandeIdModelisation').value),
+        nom: document.getElementById('stlNom').value,
+        description: document.getElementById('stlDescription').value,
+        cheminFichier: document.getElementById('stlChemin').value,
+        categorie: document.getElementById('stlCategorie').value,
+        marque: document.getElementById('stlMarque').value,
+        modeleAppareil: document.getElementById('stlModele').value,
+        materiauRecommande: document.getElementById('stlMateriau').value,
+        dimensions: document.getElementById('stlDimensions').value
+    };
+    // 1) Creer le fichier STL
+    const r1 = await fetch('/api/expert-cao/fichiers-stl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(data)
+    });
+    if (!r1.ok) {
+        const err = await r1.json();
+        alert('Erreur: ' + (err.message || 'inconnue'));
+        return;
+    }
+    const fichier = await r1.json();
+    // 2) Lier a la demande
+    const r2 = await fetch(`/api/expert-cao/demandes/${data.demandeId}/modelisation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(data)
+    });
+    if (r2.ok) {
+        alert('Modelisation transmise ! Le demandeur va etre notifie.');
+        bootstrap.Modal.getInstance(document.getElementById('stlModal')).hide();
+        e.target.reset();
+        load();
+    } else {
+        const err = await r2.json();
+        alert('Erreur liaison: ' + (err.message || 'inconnue'));
+    }
+});
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+load();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+{
+  "info": {
+    "name": "Hubpieces API",
+    "description": "Collection complète pour tester l'API Hubpieces (4 acteurs, ~70 endpoints)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:9090" }
+  ],
+  "item": [
+    {
+      "name": "🔐 Authentification",
+      "item": [
+        {
+          "name": "Login (Demandeur)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"demandeur@hubpieces.fr\", \"motDePasse\": \"demo1234\"}"
+            }
+          }
+        },
+        {
+          "name": "Login (Maker)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"maker@hubpieces.fr\", \"motDePasse\": \"demo1234\"}"
+            }
+          }
+        },
+        {
+          "name": "Login (Expert CAO)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"expert@hubpieces.fr\", \"motDePasse\": \"demo1234\"}"
+            }
+          }
+        },
+        {
+          "name": "Login (Admin)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"admin@hubpieces.fr\", \"motDePasse\": \"admin123\"}"
+            }
+          }
+        },
+        {
+          "name": "Register nouveau demandeur",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nom\": \"Test\", \"prenom\": \"User\", \"email\": \"test@example.com\", \"motDePasse\": \"test1234\", \"role\": \"DEMANDEUR\"}"
+            }
+          }
+        },
+        {
+          "name": "Qui suis-je",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/auth/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "👤 Demandeur",
+      "item": [
+        {
+          "name": "Mes demandes",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/demandeur/demandes" }
+        },
+        {
+          "name": "Créer une demande",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/demandeur/demandes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"titre\": \"Test\", \"description\": \"Test\", \"marque\": \"Samsung\", \"budgetMax\": 20}"
+            }
+          }
+        },
+        {
+          "name": "Notifications",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/demandeur/notifications" }
+        },
+        {
+          "name": "Stats",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/demandeur/stats" }
+        }
+      ]
+    },
+    {
+      "name": "🖨️ Maker",
+      "item": [
+        {
+          "name": "Demandes disponibles",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/maker/demandes-disponibles" }
+        },
+        {
+          "name": "Mes offres",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/maker/offres" }
+        },
+        {
+          "name": "Mes commandes",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/maker/commandes" }
+        },
+        {
+          "name": "Déposer une offre",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/maker/offres",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"demandeId\": 1, \"prix\": 12.5, \"delaiJours\": 3, \"message\": \"Test\", \"modeLivraison\": \"REMISE_EN_MAIN\"}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🎨 Expert CAO",
+      "item": [
+        {
+          "name": "Demandes à modéliser",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/expert-cao/demandes-a-modeliser" }
+        },
+        {
+          "name": "Mes fichiers STL",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/expert-cao/fichiers-stl" }
+        }
+      ]
+    },
+    {
+      "name": "🛡️ Admin",
+      "item": [
+        {
+          "name": "Statistiques globales",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/stats" }
+        },
+        {
+          "name": "Tous les utilisateurs",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/utilisateurs" }
+        },
+        {
+          "name": "STL en attente",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/fichiers-stl/en-attente" }
+        },
+        {
+          "name": "Litiges",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/litiges" }
+        },
+        {
+          "name": "Transactions",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/transactions" }
+        }
+      ]
+    },
+    {
+      "name": "🌍 Public",
+      "item": [
+        {
+          "name": "Catalogue STL",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/public/catalogue-stl" }
+        },
+        {
+          "name": "Makers",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/public/makers" }
+        },
+        {
+          "name": "Experts CAO",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/public/experts-cao" }
+        }
+      ]
+    }
+  ]
+}

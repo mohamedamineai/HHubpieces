@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes demandes - hubpieces</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/header.css" rel="stylesheet">
+<link href="css/dashboard.css" rel="stylesheet">
+<style>
+.demande-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.demande-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,94,174,0.4);
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.demande-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--etat-couleur, #9d4edd);
+}
+.demande-title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0 0 8px;
+}
+.demande-meta {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.demande-meta i { color: var(--neon-pink); margin-right: 4px; }
+.etat-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.etat-NOUVELLE, .etat-MODELISATION_REQUISE { background: rgba(255,193,7,0.2); color: #ffc107; }
+.etat-RECHERCHE_MAKER { background: rgba(13,202,240,0.2); color: #0dcaf0; }
+.etat-EN_COURS_IMPRESSION { background: rgba(13,110,253,0.2); color: #6ea8fe; }
+.etat-ATTENTE_VALIDATION { background: rgba(157,78,221,0.2); color: #c89bf0; }
+.etat-CLOTUREE { background: rgba(110,231,183,0.2); color: #6ee7b7; }
+.etat-ANNULEE { background: rgba(255,94,174,0.2); color: #ff5eae; }
+.demande-budget {
+    color: var(--neon-pink);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255,255,255,0.4);
+}
+.empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: 0.3; }
+.btn-neon {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(255,94,174,0.3);
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-neon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,94,174,0.5);
+    color: #fff;
+}
+.filtre-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+.filtre-pill {
+    padding: 8px 18px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+.filtre-pill.active, .filtre-pill:hover {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    color: #fff;
+    border-color: transparent;
+}
+</style>
+</head>
+<body class="dashboard-body">
+
+<div class="db-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="db-watermark">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+</div>
+
+<div id="navbar-placeholder"></div>
+
+<div class="dashboard-container" style="max-width: 1100px; margin: 0 auto;">
+
+    <div class="dashboard-welcome">
+        <div class="dashboard-welcome-text">
+            <h1>Mes demandes</h1>
+            <p>Suivez l'avancement de toutes vos reparations</p>
+        </div>
+        <a href="creer-demande.html" class="btn-neon">
+            <i class="fas fa-plus me-2"></i>Nouvelle demande
+        </a>
+    </div>
+
+    <div class="filtre-bar" id="filtres">
+        <div class="filtre-pill active" data-filtre="toutes">Toutes</div>
+        <div class="filtre-pill" data-filtre="NOUVELLE">Nouvelles</div>
+        <div class="filtre-pill" data-filtre="MODELISATION_REQUISE">A modeliser</div>
+        <div class="filtre-pill" data-filtre="RECHERCHE_MAKER">En recherche</div>
+        <div class="filtre-pill" data-filtre="EN_COURS_IMPRESSION">En impression</div>
+        <div class="filtre-pill" data-filtre="ATTENTE_VALIDATION">A valider</div>
+        <div class="filtre-pill" data-filtre="CLOTUREE">Cloturees</div>
+        <div class="filtre-pill" data-filtre="ANNULEE">Annulees</div>
+    </div>
+
+    <div id="demandesList"></div>
+
+</div>
+
+<div class="modal fade" id="demandeDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="background: #150a2e; color: #fff; border: 1px solid rgba(255,94,174,0.3);">
+            <div class="modal-header" style="border-bottom-color: rgba(255,255,255,0.1);">
+                <h5 class="modal-title" id="modalTitle">Detail</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modalBody">...</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/header.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+let demandes = [];
+let filtreActif = 'toutes';
+
+async function load() {
+    try {
+        const r = await fetch('/api/demandeur/demandes', { credentials: 'include' });
+        if (r.status === 401) { location.href = 'login.html'; return; }
+        if (!r.ok) throw new Error('Erreur chargement');
+        demandes = await r.json();
+        render();
+    } catch (e) {
+        document.getElementById('demandesList').innerHTML = `
+            <div class="alert alert-danger">Erreur lors du chargement des demandes</div>
+        `;
+    }
+}
+
+function render() {
+    const list = document.getElementById('demandesList');
+    const filtered = filtreActif === 'toutes' ? demandes : demandes.filter(d => d.etat === filtreActif);
+    if (filtered.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p>Aucune demande pour ce filtre</p>
+                <a href="creer-demande.html" class="btn-neon mt-3">
+                    <i class="fas fa-plus me-2"></i>Creer ma premiere demande
+                </a>
+            </div>
+        `;
+        return;
+    }
+    list.innerHTML = filtered.map(d => `
+        <div class="demande-card" onclick="showDetail(${d.id})" style="--etat-couleur: ${getEtatColor(d.etat)}">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <h3 class="demande-title">${escapeHtml(d.titre)}</h3>
+                <span class="etat-badge etat-${d.etat}">${formatEtat(d.etat)}</span>
+            </div>
+            <p style="color: rgba(255,255,255,0.6); margin: 0 0 12px; line-height: 1.5;">
+                ${escapeHtml((d.description || '').substring(0, 150))}${d.description && d.description.length > 150 ? '...' : ''}
+            </p>
+            <div class="demande-meta">
+                ${d.marque ? `<span><i class="fas fa-tag"></i>${escapeHtml(d.marque)}</span>` : ''}
+                ${d.materiauSouhaite ? `<span><i class="fas fa-cube"></i>${escapeHtml(d.materiauSouhaite)}</span>` : ''}
+                ${d.ville ? `<span><i class="fas fa-map-marker-alt"></i>${escapeHtml(d.ville)}</span>` : ''}
+                <span><i class="fas fa-comments"></i>${d.nombreOffres || 0} offre(s)</span>
+                <span><i class="fas fa-clock"></i>${formatDate(d.dateCreation)}</span>
+            </div>
+            ${d.budgetMax ? `<div class="demande-budget mt-2"><i class="fas fa-coins"></i> Budget max : ${d.budgetMax.toFixed(2)} EUR</div>` : ''}
+        </div>
+    `).join('');
+}
+
+function showDetail(id) {
+    const d = demandes.find(x => x.id === id);
+    if (!d) return;
+    document.getElementById('modalTitle').textContent = d.titre;
+    document.getElementById('modalBody').innerHTML = `
+        <div class="mb-3">
+            <span class="etat-badge etat-${d.etat}">${formatEtat(d.etat)}</span>
+            <span style="color: rgba(255,255,255,0.5); margin-left: 12px;">
+                Cree le ${formatDate(d.dateCreation)}
+            </span>
+        </div>
+        <p style="color: rgba(255,255,255,0.8); line-height: 1.7;">${escapeHtml(d.description)}</p>
+        ${d.marque || d.modeleAppareil ? `
+            <h6 class="mt-3" style="color: var(--neon-pink);">Appareil</h6>
+            <p>${escapeHtml(d.marque || '')} ${escapeHtml(d.modeleAppareil || '')}</p>
+        ` : ''}
+        ${d.materiauSouhaite ? `
+            <h6 class="mt-3" style="color: var(--neon-pink);">Materiau</h6>
+            <p>${escapeHtml(d.materiauSouhaite)}</p>
+        ` : ''}
+        ${d.budgetMax ? `
+            <h6 class="mt-3" style="color: var(--neon-pink);">Budget maximum</h6>
+            <p style="font-size: 1.3rem; color: #fff; font-weight: 700;">${d.budgetMax.toFixed(2)} EUR</p>
+        ` : ''}
+        <div id="offresList" class="mt-4"></div>
+    `;
+    new bootstrap.Modal(document.getElementById('demandeDetailModal')).show();
+    loadOffres(id);
+}
+
+async function loadOffres(demandeId) {
+    const r = await fetch(`/api/demandeur/demandes/${demandeId}/offres`, { credentials: 'include' });
+    if (!r.ok) return;
+    const offres = await r.json();
+    const el = document.getElementById('offresList');
+    if (offres.length === 0) {
+        el.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Aucune offre pour le moment</p>';
+        return;
+    }
+    el.innerHTML = `
+        <h6 style="color: var(--neon-pink);">Offres recues (${offres.length})</h6>
+        ${offres.map(o => `
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; margin-top: 12px;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong style="color: #fff;">${escapeHtml(o.makerPrenom)} ${escapeHtml(o.makerNom)}</strong>
+                        <span class="etat-badge etat-${o.etat}" style="margin-left: 12px;">${o.etat}</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="color: var(--neon-pink); font-size: 1.4rem; font-weight: 700;">${o.prix.toFixed(2)} EUR</div>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Delai : ${o.delaiJours} jours</div>
+                    </div>
+                </div>
+                ${o.message ? `<p style="color: rgba(255,255,255,0.7); margin: 12px 0 0;">${escapeHtml(o.message)}</p>` : ''}
+                ${o.etat === 'EN_ATTENTE' ? `
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-sm btn-success" onclick="accepterOffre(${demandeId}, ${o.id})">
+                            <i class="fas fa-check me-1"></i>Accepter
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="refuserOffre(${demandeId}, ${o.id})">
+                            <i class="fas fa-times me-1"></i>Refuser
+                        </button>
+                    </div>
+                ` : ''}
+            </div>
+        `).join('')}
+    `;
+}
+
+async function accepterOffre(demandeId, offreId) {
+    if (!confirm('Confirmer l\'acceptation de cette offre ?')) return;
+    const r = await fetch(`/api/demandeur/demandes/${demandeId}/offres/${offreId}/accepter`, {
+        method: 'POST', credentials: 'include'
+    });
+    if (r.ok) {
+        alert('Offre acceptee !');
+        location.reload();
+    } else {
+        const err = await r.json();
+        alert(err.message || 'Erreur');
+    }
+}
+
+async function refuserOffre(demandeId, offreId) {
+    if (!confirm('Refuser cette offre ?')) return;
+    const r = await fetch(`/api/demandeur/demandes/${demandeId}/offres/${offreId}/refuser`, {
+        method: 'POST', credentials: 'include'
+    });
+    if (r.ok) {
+        alert('Offre refusee');
+        location.reload();
+    } else {
+        const err = await r.json();
+        alert(err.message || 'Erreur');
+    }
+}
+
+function getEtatColor(e) {
+    const m = {
+        'NOUVELLE': '#ffc107',
+        'MODELISATION_REQUISE': '#fd7e14',
+        'RECHERCHE_MAKER': '#0dcaf0',
+        'EN_COURS_IMPRESSION': '#6ea8fe',
+        'ATTENTE_VALIDATION': '#9d4edd',
+        'CLOTUREE': '#6ee7b7',
+        'ANNULEE': '#ff5eae'
+    };
+    return m[e] || '#9d4edd';
+}
+
+function formatEtat(e) {
+    return (e || '').replace(/_/g, ' ').toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
+}
+
+function formatDate(d) {
+    if (!d) return '';
+    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+document.getElementById('filtres').addEventListener('click', e => {
+    const pill = e.target.closest('.filtre-pill');
+    if (!pill) return;
+    document.querySelectorAll('.filtre-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    filtreActif = pill.dataset.filtre;
+    render();
+});
+
+load();
+</script>
+
+</body>
+</html>
