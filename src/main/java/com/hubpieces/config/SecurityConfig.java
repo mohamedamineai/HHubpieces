@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 "/mes-demandes.html",
                                 "/mes-offres.html",
                                 "/mes-modelisations.html",
-                                "/mes-messages.html",
+                                "/mes-mssages.html",
                                 "/mon-profil.html",
                                 "/profil-public.html",
                                 "/gestion-admin.html",
