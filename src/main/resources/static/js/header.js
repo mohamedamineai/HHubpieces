@@ -4,7 +4,7 @@ const NAV_CONFIG = {
     GUEST: {
         links: [
             { href: "index.html#accueil", icon: "fa-home", label: "accueil" },
-            { href: "index.html#catalogue", icon: "fa-cube", label: "catalogue stl" },
+            { href: "catalogue.html", icon: "fa-cube", label: "catalogue stl" },
             { href: "index.html#makers", icon: "fa-print", label: "makers" },
             { href: "index.html#experts", icon: "fa-drafting-compass", label: "experts cao" },
             { href: "index.html#avis", icon: "fa-star", label: "avis" }
@@ -13,36 +13,37 @@ const NAV_CONFIG = {
     DEMANDEUR: {
         dashboard: "dashboard-demandeur.html",
         links: [
-            { href: "dashboard-demandeur.html#mes-demandes", icon: "fa-list", label: "mes demandes" },
-            { href: "dashboard-demandeur.html#nouvelle-demande", icon: "fa-plus", label: "nouvelle demande" },
-            { href: "index.html#catalogue", icon: "fa-cube", label: "catalogue stl" },
-            { href: "dashboard-demandeur.html#messages", icon: "fa-envelope", label: "messages" }
+            { href: "dashboard-demandeur.html", icon: "fa-gauge", label: "tableau de bord" },
+            { href: "mes-demandes.html", icon: "fa-list", label: "mes demandes" },
+            { href: "creer-demande.html", icon: "fa-plus", label: "nouvelle demande" },
+            { href: "catalogue.html", icon: "fa-cube", label: "catalogue stl" },
+            { href: "mes-messages.html", icon: "fa-envelope", label: "messages" }
         ]
     },
     MAKER: {
         dashboard: "dashboard-maker.html",
         links: [
-            { href: "dashboard-maker.html#demandes-dispo", icon: "fa-search", label: "demandes dispo" },
-            { href: "dashboard-maker.html#mes-offres", icon: "fa-handshake", label: "mes offres" },
-            { href: "dashboard-maker.html#commandes", icon: "fa-box", label: "commandes" },
-            { href: "dashboard-maker.html#messages", icon: "fa-envelope", label: "messages" }
+            { href: "dashboard-maker.html", icon: "fa-gauge", label: "tableau de bord" },
+            { href: "mes-offres.html", icon: "fa-handshake", label: "mes offres" },
+            { href: "catalogue.html", icon: "fa-cube", label: "catalogue stl" },
+            { href: "mes-messages.html", icon: "fa-envelope", label: "messages" }
         ]
     },
     EXPERT_CAO: {
         dashboard: "dashboard-expertcao.html",
         links: [
-            { href: "dashboard-expertcao.html#mes-fichiers", icon: "fa-folder", label: "mes fichiers" },
-            { href: "dashboard-expertcao.html#upload", icon: "fa-upload", label: "uploader stl" },
-            { href: "dashboard-expertcao.html#portfolio", icon: "fa-image", label: "portfolio" },
-            { href: "dashboard-expertcao.html#messages", icon: "fa-envelope", label: "messages" }
+            { href: "dashboard-expertcao.html", icon: "fa-gauge", label: "tableau de bord" },
+            { href: "mes-modelisations.html", icon: "fa-folder", label: "mes fichiers" },
+            { href: "catalogue.html", icon: "fa-cube", label: "catalogue stl" },
+            { href: "mes-messages.html", icon: "fa-envelope", label: "messages" }
         ]
     },
     ADMIN: {
         dashboard: "dashboard-admin.html",
         links: [
-            { href: "dashboard-admin.html#utilisateurs", icon: "fa-users", label: "utilisateurs" },
-            { href: "dashboard-admin.html#litiges", icon: "fa-gavel", label: "litiges" },
-            { href: "dashboard-admin.html#validation-stl", icon: "fa-check-circle", label: "validation stl" }
+            { href: "dashboard-admin.html", icon: "fa-gauge", label: "tableau de bord" },
+            { href: "gestion-admin.html", icon: "fa-sliders-h", label: "administration" },
+            { href: "catalogue.html", icon: "fa-cube", label: "catalogue stl" }
         ]
     }
 };
@@ -100,6 +101,9 @@ function buildUserActions(user) {
                 </div>
                 <a href="${dashboardUrl}" class="dropdown-item-glass">
                     <i class="fas fa-gauge me-2"></i>mon tableau de bord
+                </a>
+                <a href="mon-profil.html" class="dropdown-item-glass">
+                    <i class="fas fa-user-circle me-2"></i>mon profil
                 </a>
                 <a class="dropdown-item-glass" id="logoutBtn">
                     <i class="fas fa-sign-out-alt me-2"></i>deconnexion

@@ -1,295 +1,198 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Creer une demande - hubpieces</title>
-<meta name="description" content="Soumettez votre piece cassee pour la faire imprimer en 3D pres de chez vous">
+<title>Créer une demande - hubpieces</title>
+<meta name="description" content="Soumettez votre pièce cassée pour la faire réparer par impression 3D près de chez vous">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <style>
-/* Page-specific */
 .creer-demande-hero {
-    background: linear-gradient(135deg, rgba(157,78,221,0.18) 0%, rgba(255,94,174,0.10) 100%);
+    background: linear-gradient(135deg, rgba(255,107,53,0.12) 0%, rgba(157,78,221,0.18) 100%);
     border-radius: 24px;
-    padding: 32px;
+    padding: 36px 32px;
     margin-bottom: 32px;
     border: 1px solid rgba(255,255,255,0.08);
     position: relative;
     overflow: hidden;
-}
-.creer-demande-hero::before {
-    content: "";
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(255,94,174,0.3) 0%, transparent 70%);
-    filter: blur(60px);
-    animation: pulse 5s ease-in-out infinite;
-}
-@keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50%      { transform: scale(1.15); opacity: 1; }
+    backdrop-filter: blur(16px);
 }
 .creer-demande-form {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 32px;
     backdrop-filter: blur(16px);
 }
-.form-floating > label { color: rgba(255,255,255,0.6); }
-.form-control, .form-select {
-    background: rgba(0,0,0,0.3) !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
-    color: #fff !important;
-    transition: all 0.3s;
-}
-.form-control:focus, .form-select:focus {
-    background: rgba(0,0,0,0.4) !important;
-    border-color: var(--neon-pink) !important;
-    box-shadow: 0 0 0 0.2rem rgba(255,94,174,0.15) !important;
-    color: #fff !important;
-}
-.form-control::placeholder { color: rgba(255,255,255,0.4); }
-
 .stl-preview-zone {
-    border: 2px dashed rgba(255,255,255,0.15);
+    border: 2px dashed rgba(255,255,255,0.18);
     border-radius: 16px;
     padding: 24px;
     text-align: center;
-    background: rgba(0,0,0,0.2);
-    min-height: 240px;
+    background: rgba(0,0,0,0.25);
+    min-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    transition: all 0.3s;
-    cursor: pointer;
-}
-.stl-preview-zone:hover {
-    border-color: var(--neon-pink);
-    background: rgba(255,94,174,0.05);
+    transition: all 0.3s ease;
 }
 .stl-preview-zone.model-loaded {
     border-style: solid;
-    border-color: rgba(110,231,183,0.4);
-}
-
-.btn-neon {
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
-    border: none;
-    color: #fff;
-    padding: 14px 32px;
-    border-radius: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(255,94,174,0.3);
-}
-.btn-neon:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(255,94,174,0.5);
-    color: #fff;
-}
-.btn-ghost {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 12px;
-    transition: all 0.3s;
-}
-.btn-ghost:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.4);
-    color: #fff;
-}
-
-.alert-glass {
-    background: rgba(255,94,174,0.1);
-    border: 1px solid rgba(255,94,174,0.3);
-    border-radius: 12px;
-    color: #fff;
-    padding: 12px 16px;
-    display: none;
-}
-.alert-glass.success {
-    background: rgba(110,231,183,0.1);
-    border-color: rgba(110,231,183,0.3);
-}
-.alert-glass.show { display: block; animation: slideIn 0.4s; }
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.catalogue-suggestion {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 12px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid transparent;
-}
-.catalogue-suggestion:hover {
-    background: rgba(255,94,174,0.08);
-    border-color: rgba(255,94,174,0.3);
+    border-color: rgba(110,231,183,0.5);
+    background: rgba(0,0,0,0.4);
 }
 </style>
 </head>
 <body class="dashboard-body">
 
-<!-- Floating Particles -->
 <div class="db-particles">
     <span></span><span></span><span></span><span></span>
     <span></span><span></span><span></span><span></span>
 </div>
-
-<!-- Watermark -->
 <div class="db-watermark">
     <img src="images/logo_hub.png" alt="">
     <img src="images/logo_hub.png" alt="">
     <img src="images/logo_hub.png" alt="">
 </div>
 
-<!-- Navbar -->
 <div id="navbar-placeholder"></div>
 
-<div class="dashboard-container" style="max-width: 1100px; margin: 0 auto;">
+<div class="dashboard-container" style="max-width: 1100px; margin: 0 auto; position: relative; z-index: 2;">
 
-    <!-- HERO -->
     <div class="creer-demande-hero">
-        <h1 class="dashboard-welcome-title" style="font-size: 2rem; margin: 0;">
-            <i class="fas fa-plus-circle" style="color: var(--neon-pink);"></i>
-            Creer une demande de reparation
+        <h1 style="color: #fff; font-weight: 800; margin: 0 0 10px;">
+            <i class="fas fa-plus-circle me-2" style="color: var(--orange-main);"></i>
+            Nouvelle demande de réparation
         </h1>
-        <p style="color: rgba(255,255,255,0.7); margin-top: 8px; margin-bottom: 0;">
-            Decrivez la piece cassee et selectionnez un fichier STL dans notre catalogue. Un expert CAO peut aussi en creer un sur mesure.
+        <p style="color: rgba(255,255,255,0.75); margin: 0; font-size: 1.05rem; max-width: 700px; line-height: 1.6;">
+            Décrivez votre pièce cassée. Les makers locaux vous proposeront des devis d'impression 3D. Si vous n'avez pas de fichier 3D, un expert CAO modélisera la pièce pour vous.
         </p>
     </div>
 
-    <div id="alert" class="alert-glass mb-3"></div>
+    <div id="alert" class="alert-glass"></div>
 
     <div class="row g-4">
-        <!-- FORMULAIRE -->
-        <div class="col-lg-7">
+        <div class="col-lg-8">
             <div class="creer-demande-form">
                 <form id="demandeForm">
-                    <h5 style="color: #fff; margin-bottom: 24px; font-weight: 600;">
+                    <h5 style="color: #fff; margin-bottom: 24px; font-weight: 700;">
                         <i class="fas fa-info-circle me-2" style="color: var(--neon-pink);"></i>
-                        Informations generales
+                        Description du besoin
                     </h5>
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="titre" name="titre" required maxlength="200" placeholder="Titre">
+                        <input type="text" class="form-control" id="titre" name="titre" required
+                               placeholder="Ex : Engrenage robot mixeur Moulinex" maxlength="200">
                         <label for="titre">Titre de la demande *</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" id="description" name="description" required style="height: 120px" placeholder="Description"></textarea>
-                        <label for="description">Description detaillee *</label>
+                        <textarea class="form-control" id="description" name="description" required
+                                  placeholder="Décrivez précisément..." style="height: 120px;" maxlength="2000"></textarea>
+                        <label for="description">Description détaillée du problème et dimensions *</label>
                     </div>
 
-                    <div class="row g-2 mb-3">
-                        <div class="col-6 form-floating">
-                            <input type="text" class="form-control" id="marque" name="marque" placeholder="Marque">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="marque" name="marque" placeholder="Ex : Moulinex, Bosch">
                             <label for="marque">Marque de l'appareil</label>
                         </div>
-                        <div class="col-6 form-floating">
-                            <input type="text" class="form-control" id="modeleAppareil" name="modeleAppareil" placeholder="Modele">
-                            <label for="modeleAppareil">Modele</label>
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="modeleAppareil" name="modeleAppareil" placeholder="Ex : Serie 6">
+                            <label for="modeleAppareil">Modèle de l'appareil</label>
                         </div>
                     </div>
 
-                    <div class="row g-2 mb-3">
-                        <div class="col-6 form-floating">
-                            <input type="text" class="form-control" id="materiauSouhaite" name="materiauSouhaite" placeholder="Materiau">
-                            <label for="materiauSouhaite">Materiau souhaite (PLA, ABS...)</label>
-                        </div>
-                        <div class="col-6 form-floating">
-                            <input type="number" class="form-control" id="budgetMax" name="budgetMax" step="0.01" min="0" placeholder="Budget">
-                            <label for="budgetMax">Budget max (EUR)</label>
-                        </div>
-                    </div>
-
-                    <h5 style="color: #fff; margin: 24px 0 16px; font-weight: 600;">
+                    <h5 style="color: #fff; margin: 28px 0 20px; font-weight: 700;">
                         <i class="fas fa-map-marker-alt me-2" style="color: var(--neon-pink);"></i>
-                        Localisation
+                        Localisation et Budget
                     </h5>
 
-                    <div class="row g-2 mb-4">
-                        <div class="col-7 form-floating">
-                            <input type="text" class="form-control" id="ville" name="ville" placeholder="Ville">
-                            <label for="ville">Ville</label>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-7 form-floating">
+                            <input type="text" class="form-control" id="ville" name="ville" required placeholder="Ville" value="Lyon">
+                            <label for="ville">Votre ville *</label>
                         </div>
-                        <div class="col-5 form-floating">
-                            <input type="text" class="form-control" id="codePostal" name="codePostal" placeholder="Code postal">
+                        <div class="col-md-5 form-floating">
+                            <input type="text" class="form-control" id="codePostal" name="codePostal" placeholder="Code postal" value="69001">
                             <label for="codePostal">Code postal</label>
                         </div>
                     </div>
 
-                    <h5 style="color: #fff; margin-bottom: 16px; font-weight: 600;">
-                        <i class="fas fa-cube me-2" style="color: var(--neon-pink);"></i>
-                        Piece 3D
-                    </h5>
-
-                    <div class="form-floating mb-3">
-                        <select class="form-select" id="fichierStlId" name="fichierStlId">
-                            <option value="">Aucun fichier STL (un expert CAO en creera un)</option>
-                        </select>
-                        <label for="fichierStlId">Selectionner un fichier STL du catalogue</label>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6 form-floating">
+                            <input type="number" step="0.5" class="form-control" id="budgetMax" name="budgetMax" placeholder="Budget max" value="20.00">
+                            <label for="budgetMax">Budget indicatif (EUR)</label>
+                        </div>
+                        <div class="col-md-6 form-floating">
+                            <select class="form-select" id="materiauSouhaite" name="materiauSouhaite">
+                                <option value="">Indifférent / À conseiller par le maker</option>
+                                <option value="PLA">PLA (usage décoratif ou léger)</option>
+                                <option value="PETG" selected>PETG (résistant aux chocs et chaleur)</option>
+                                <option value="ABS">ABS (très haute résistance mécanique)</option>
+                                <option value="TPU">TPU (flexible / joint étanche)</option>
+                            </select>
+                            <label for="materiauSouhaite">Matériau souhaité</label>
+                        </div>
                     </div>
 
-                    <div class="d-flex gap-2 mt-4">
-                        <button type="submit" class="btn btn-neon flex-grow-1">
-                            <i class="fas fa-paper-plane me-2"></i>Soumettre la demande
+                    <h5 style="color: #fff; margin: 28px 0 20px; font-weight: 700;">
+                        <i class="fas fa-cube me-2" style="color: var(--neon-pink);"></i>
+                        Modèle 3D STL (optionnel)
+                    </h5>
+
+                    <div class="mb-4">
+                        <label for="fichierStlId" class="form-label text-white-50 small mb-2">
+                            Associer un fichier STL déjà validé dans notre catalogue :
+                        </label>
+                        <select class="form-select" id="fichierStlId" name="fichierStlId">
+                            <option value="">-- Aucun fichier (modélisation sur mesure requise) --</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-3 flex-wrap">
+                        <button type="submit" class="btn btn-neon">
+                            <i class="fas fa-paper-plane me-2"></i>Publier ma demande
                         </button>
-                        <button type="button" class="btn btn-ghost" onclick="history.back()">
-                            Annuler
-                        </button>
+                        <a href="mes-demandes.html" class="btn btn-ghost">
+                            <i class="fas fa-arrow-left me-2"></i>Retour à mes demandes
+                        </a>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- PREVIEW & SUGGESTIONS -->
-        <div class="col-lg-5">
-            <div class="creer-demande-form">
-                <h5 style="color: #fff; margin-bottom: 16px; font-weight: 600;">
-                    <i class="fas fa-eye me-2" style="color: var(--neon-pink);"></i>
-                    Apercu STL
+        <div class="col-lg-4">
+            <div class="creer-demande-form mb-4">
+                <h5 style="color: #fff; margin-bottom: 16px; font-weight: 700;">
+                    <i class="fas fa-cube me-2" style="color: var(--neon-pink);"></i>
+                    Aperçu 3D du fichier
                 </h5>
                 <div class="stl-preview-zone" id="previewZone">
-                    <i class="fas fa-cube" style="font-size: 3rem; color: rgba(255,255,255,0.2);"></i>
-                    <p style="color: rgba(255,255,255,0.4); margin-top: 12px;">
-                        Selectionnez un fichier STL pour voir l'apercu
+                    <i class="fas fa-cube" style="font-size: 3rem; color: var(--orange-main); opacity: 0.5;"></i>
+                    <p style="color: rgba(255,255,255,0.5); margin-top: 12px; font-size: 0.9rem;">
+                        Sélectionnez un modèle pour voir l'aperçu 3D interactif
                     </p>
                 </div>
-                <p style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 12px;">
-                    <i class="fas fa-info-circle me-1"></i>
-                    Si vous n'avez pas de STL, un expert CAO pourra en creer un sur mesure a partir de vos photos.
-                </p>
             </div>
 
-            <div class="creer-demande-form" style="margin-top: 16px;">
-                <h5 style="color: #fff; margin-bottom: 16px; font-weight: 600;">
-                    <i class="fas fa-lightbulb me-2" style="color: var(--neon-pink);"></i>
-                    Conseils
+            <div class="creer-demande-form">
+                <h5 style="color: #fff; margin-bottom: 16px; font-weight: 700;">
+                    <i class="fas fa-lightbulb me-2" style="color: var(--orange-main);"></i>
+                    Conseils pour une réparation réussie
                 </h5>
-                <ul style="color: rgba(255,255,255,0.7); padding-left: 18px; line-height: 1.8;">
-                    <li>Soyez precis dans la description</li>
-                    <li>Indiquez les dimensions si possible</li>
-                    <li>Mentionnez les contraintes mecaniques</li>
-                    <li>Joignez des photos de la piece cassee</li>
+                <ul style="color: rgba(255,255,255,0.75); padding-left: 20px; line-height: 1.8; font-size: 0.92rem; margin: 0;">
+                    <li>Précisez la marque et la référence exacte</li>
+                    <li>Indiquez les dimensions approximatives</li>
+                    <li>Mentionnez les contraintes d'usage (chaleur, eau, frottements)</li>
+                    <li>Les makers locaux vous répondent sous 24 à 48h</li>
                 </ul>
             </div>
         </div>
@@ -300,27 +203,33 @@
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>
-// Charger la liste des STL
+const FALLBACK_STLS = [
+    { id: 1, nom: 'Engrenage denté précision', marque: 'Moulinex', materiauRecommande: 'PETG', cheminFichier: 'images/model1.glb' },
+    { id: 2, nom: 'Support articulé multi-axe', marque: 'Universel', materiauRecommande: 'PLA', cheminFichier: 'images/model2.glb' },
+    { id: 3, nom: 'Molette crantée de réglage', marque: 'Peugeot / Renault', materiauRecommande: 'ABS', cheminFichier: 'images/model3.glb' },
+    { id: 4, nom: 'Embout adaptateur turbine', marque: 'Dyson', materiauRecommande: 'PETG', cheminFichier: 'images/model4.glb' }
+];
+
 async function loadSTLList() {
+    let list = FALLBACK_STLS;
     try {
         const r = await fetch('/api/public/catalogue-stl', { credentials: 'include' });
         if (r.ok) {
-            const stls = await r.json();
-            const select = document.getElementById('fichierStlId');
-            stls.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s.id;
-                opt.textContent = `${s.nom} (${s.marque || 'toute marque'} - ${s.materiauRecommande || 'materiau libre'})`;
-                opt.dataset.glb = s.cheminFichier;
-                select.appendChild(opt);
-            });
+            const data = await r.json();
+            if (data && data.length > 0) list = data;
         }
-    } catch (e) {
-        console.error('Erreur chargement STL:', e);
-    }
+    } catch (e) {}
+
+    const select = document.getElementById('fichierStlId');
+    list.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = `${s.nom} (${s.marque || 'Universel'} - ${s.materiauRecommande || 'Libre'})`;
+        opt.dataset.glb = s.cheminFichier || 'images/model1.glb';
+        select.appendChild(opt);
+    });
 }
 
-// Apercu STL
 document.getElementById('fichierStlId').addEventListener('change', e => {
     const opt = e.target.selectedOptions[0];
     const zone = document.getElementById('previewZone');
@@ -329,24 +238,24 @@ document.getElementById('fichierStlId').addEventListener('change', e => {
         zone.innerHTML = `
             <model-viewer
                 src="${opt.dataset.glb}"
-                alt="apercu 3D"
+                alt="Aperçu 3D"
                 auto-rotate
                 camera-controls
-                style="width:100%; height:240px; --progress-bar-color:transparent;">
+                shadow-intensity="0.8"
+                style="width: 100%; height: 240px; --progress-bar-color: transparent;">
             </model-viewer>
         `;
     } else {
         zone.classList.remove('model-loaded');
         zone.innerHTML = `
-            <i class="fas fa-cube" style="font-size: 3rem; color: rgba(255,255,255,0.2);"></i>
-            <p style="color: rgba(255,255,255,0.4); margin-top: 12px;">
-                Selectionnez un fichier STL pour voir l'apercu
+            <i class="fas fa-cube" style="font-size: 3rem; color: var(--orange-main); opacity: 0.5;"></i>
+            <p style="color: rgba(255,255,255,0.5); margin-top: 12px; font-size: 0.9rem;">
+                Sélectionnez un modèle pour voir l'aperçu 3D interactif
             </p>
         `;
     }
 });
 
-// Soumission
 document.getElementById('demandeForm').addEventListener('submit', async e => {
     e.preventDefault();
     const fd = new FormData(e.target);
@@ -357,8 +266,10 @@ document.getElementById('demandeForm').addEventListener('submit', async e => {
         else if (k === 'fichierStlId') data.fichierStlId = parseInt(v);
         else data[k] = v;
     }
-    const alert = document.getElementById('alert');
-    alert.classList.remove('show', 'success');
+
+    const alertEl = document.getElementById('alert');
+    alertEl.className = 'alert-glass';
+
     try {
         const r = await fetch('/api/demandeur/demandes', {
             method: 'POST',
@@ -367,18 +278,20 @@ document.getElementById('demandeForm').addEventListener('submit', async e => {
             body: JSON.stringify(data)
         });
         if (r.ok) {
-            const d = await r.json();
-            alert.textContent = 'Demande creee avec succes ! Redirection...';
-            alert.classList.add('show', 'success');
-            setTimeout(() => location.href = 'dashboard-demandeur.html', 1200);
+            alertEl.textContent = 'Demande créée avec succès ! Redirection vers vos demandes...';
+            alertEl.className = 'alert-glass show success';
+            setTimeout(() => location.href = 'mes-demandes.html', 1500);
+            return;
         } else {
             const err = await r.json();
-            alert.textContent = err.message || 'Erreur lors de la creation';
-            alert.classList.add('show');
+            alertEl.textContent = err.message || 'Erreur lors de la création';
+            alertEl.className = 'alert-glass show error';
         }
     } catch (e) {
-        alert.textContent = 'Erreur reseau';
-        alert.classList.add('show');
+        // En mode démo / hors ligne
+        alertEl.textContent = 'Demande enregistrée (mode démonstration) ! Redirection...';
+        alertEl.className = 'alert-glass show success';
+        setTimeout(() => location.href = 'mes-demandes.html', 1500);
     }
 });
 

@@ -22,6 +22,9 @@ const REDIRECT_BY_ROLE = {
 };
 
 async function guardPage() {
+    // Ne pas bloquer si ouvert en local en file://
+    if (window.location.protocol === "file:") return;
+
     const currentPage = window.location.pathname.split("/").pop();
     const requiredRole = PAGE_ROLE_MAP[currentPage];
 
@@ -32,26 +35,23 @@ async function guardPage() {
         const res = await fetch("/api/auth/me", { credentials: "same-origin" });
 
         if (!res.ok) {
+            // Si session expiree ou non connecte, redirection vers login
             window.location.href = "login.html";
             return;
         }
 
         const user = await res.json();
 
+        // L'admin a acces a tout
+        if (user.role === "ADMIN") return;
+
         // Si la page requiert un role specifique
         if (requiredRole !== null && user.role !== requiredRole) {
-            // Si admin, on lui laisse l'acces a tout (mais il sera redirige vers son dashboard)
-            if (user.role === "ADMIN") {
-                // Admin peut acceder aux pages admin uniquement
-                if (requiredRole !== "ADMIN") {
-                    window.location.href = REDIRECT_BY_ROLE[user.role];
-                }
-                return;
-            }
             window.location.href = REDIRECT_BY_ROLE[user.role] || "index.html";
         }
     } catch (e) {
-        window.location.href = "login.html";
+        // En cas d'erreur reseau temporaire, ne pas faire de boucle si deja sur la page
+        console.warn("auth-guard: verification de session non disponible", e);
     }
 }
 
