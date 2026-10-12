@@ -2,6 +2,7 @@ package com.hubpieces.dto;
 
 import com.hubpieces.model.EtatPaiement;
 import com.hubpieces.model.Transaction;
+import com.hubpieces.model.Utilisateur;
 
 import java.time.LocalDateTime;
 

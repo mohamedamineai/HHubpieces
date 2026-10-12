@@ -6,6 +6,7 @@ import com.hubpieces.exception.ForbiddenException;
 import com.hubpieces.exception.ResourceNotFoundException;
 import com.hubpieces.model.EtatValidation;
 import com.hubpieces.model.FichierStl;
+import com.hubpieces.model.TypeNotification;
 import com.hubpieces.model.Utilisateur;
 import com.hubpieces.repository.FichierStlRepository;
 import org.springframework.stereotype.Service;
