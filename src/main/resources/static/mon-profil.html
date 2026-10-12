@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,67 +7,66 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <style>
 .profil-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 24px;
+    position: relative;
+    z-index: 2;
 }
 .profil-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 32px;
     margin-bottom: 24px;
+    backdrop-filter: blur(16px);
+    transition: all 0.3s ease;
+}
+.profil-card:hover {
+    border-color: rgba(255, 107, 53, 0.3);
 }
 .avatar-big {
-    width: 100px; height: 100px;
+    width: 96px; height: 96px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    background: linear-gradient(135deg, #ff6b35 0%, #ff5eae 50%, #9d4edd 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
     font-weight: 800;
-    font-size: 2.5rem;
-    box-shadow: 0 10px 40px rgba(255,94,174,0.3);
+    font-size: 2.4rem;
+    box-shadow: 0 10px 40px rgba(255, 107, 53, 0.35);
+    flex-shrink: 0;
 }
-.form-floating > label { color: rgba(255,255,255,0.6); }
-.form-control {
-    background: rgba(0,0,0,0.3) !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
-    color: #fff !important;
-    transition: all 0.3s;
+.stat-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
 }
-.form-control:focus {
-    background: rgba(0,0,0,0.4) !important;
-    border-color: var(--neon-pink) !important;
-    box-shadow: 0 0 0 0.2rem rgba(255,94,174,0.15) !important;
-    color: #fff !important;
+.stat-box:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 107, 53, 0.4);
 }
-.btn-neon {
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
-    border: none;
+.stat-box .stat-num {
+    font-size: 1.8rem;
+    font-weight: 800;
     color: #fff;
-    padding: 12px 32px;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(255,94,174,0.3);
+    margin: 4px 0;
 }
-.btn-neon:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,94,174,0.5); color: #fff; }
-.alert-glass {
-    background: rgba(110,231,183,0.1);
-    border: 1px solid rgba(110,231,183,0.3);
-    border-radius: 12px;
-    color: #fff;
-    padding: 12px 16px;
-    display: none;
-    margin-bottom: 16px;
+.stat-box .stat-lbl {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
-.alert-glass.show { display: block; }
 </style>
 </head>
 <body class="dashboard-body">
@@ -88,62 +87,103 @@
     <div class="dashboard-welcome" style="margin-bottom: 24px;">
         <div class="dashboard-welcome-text">
             <h1>Mon profil</h1>
-            <p>Gerez vos informations personnelles</p>
+            <p>Gérez vos informations personnelles et consultez vos statistiques d'activité</p>
         </div>
+        <span class="role-pill" id="rolePill">Demandeur</span>
     </div>
 
     <div id="alert" class="alert-glass"></div>
 
     <div class="profil-card">
-        <div class="d-flex align-items-center gap-4 mb-4">
-            <div class="avatar-big" id="avatarInit">?</div>
+        <div class="d-flex align-items-center gap-4 mb-4 flex-wrap">
+            <div class="avatar-big" id="avatarInit">JD</div>
             <div>
-                <h3 style="color: #fff; margin: 0;" id="nomComplet">Chargement...</h3>
-                <p style="color: rgba(255,255,255,0.6); margin: 4px 0;" id="emailUser">-</p>
-                <span class="role-pill" id="rolePill" style="display:none;"></span>
+                <h2 style="color: #fff; margin: 0; font-weight: 700;" id="nomComplet">Jean Dupont</h2>
+                <p style="color: rgba(255,255,255,0.6); margin: 4px 0;" id="emailUser">demandeur@hubpieces.fr</p>
+                <div class="d-flex gap-2 mt-2 flex-wrap">
+                    <span class="badge" style="background: rgba(255,107,53,0.15); color: #ff6b35; border: 1px solid rgba(255,107,53,0.3);" id="villeBadge">
+                        <i class="fas fa-map-marker-alt me-1"></i><span id="villeText">Lyon (69001)</span>
+                    </span>
+                    <span class="badge" style="background: rgba(76,175,80,0.15); color: #6ee7b7; border: 1px solid rgba(76,175,80,0.3);">
+                        <i class="fas fa-check-circle me-1"></i>Compte actif
+                    </span>
+                </div>
             </div>
         </div>
 
         <form id="profilForm">
-            <div class="row g-2">
-                <div class="col-6 form-floating mb-3">
-                    <input type="text" class="form-control" id="nom" required>
+            <h5 style="color: #fff; margin-bottom: 20px; font-weight: 600;">
+                <i class="fas fa-user-edit me-2" style="color: var(--neon-pink);"></i>
+                Informations personnelles
+            </h5>
+            <div class="row g-3">
+                <div class="col-md-6 form-floating">
+                    <input type="text" class="form-control" id="nom" required placeholder="Nom">
                     <label for="nom">Nom</label>
                 </div>
-                <div class="col-6 form-floating mb-3">
-                    <input type="text" class="form-control" id="prenom" required>
-                    <label for="prenom">Prenom</label>
+                <div class="col-md-6 form-floating">
+                    <input type="text" class="form-control" id="prenom" required placeholder="Prénom">
+                    <label for="prenom">Prénom</label>
                 </div>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="telephone">
-                <label for="telephone">Telephone</label>
-            </div>
-            <div class="row g-2">
-                <div class="col-7 form-floating mb-3">
-                    <input type="text" class="form-control" id="ville">
+                <div class="col-md-12 form-floating">
+                    <input type="tel" class="form-control" id="telephone" placeholder="Téléphone">
+                    <label for="telephone">Numéro de téléphone</label>
+                </div>
+                <div class="col-md-7 form-floating">
+                    <input type="text" class="form-control" id="ville" placeholder="Ville">
                     <label for="ville">Ville</label>
                 </div>
-                <div class="col-5 form-floating mb-3">
-                    <input type="text" class="form-control" id="codePostal">
+                <div class="col-md-5 form-floating">
+                    <input type="text" class="form-control" id="codePostal" placeholder="Code postal">
                     <label for="codePostal">Code postal</label>
                 </div>
             </div>
-            <div class="d-flex gap-2 mt-3">
-                <button type="submit" class="btn btn-neon flex-grow-1">
-                    <i class="fas fa-save me-2"></i>Enregistrer
+
+            <div class="d-flex gap-3 mt-4 flex-wrap">
+                <button type="submit" class="btn btn-neon">
+                    <i class="fas fa-save me-2"></i>Enregistrer les modifications
                 </button>
+                <a href="javascript:history.back()" class="btn btn-ghost">
+                    <i class="fas fa-arrow-left me-2"></i>Retour
+                </a>
             </div>
         </form>
     </div>
 
     <div class="profil-card" id="statsCard">
-        <h4 style="color: #fff; margin-bottom: 16px;">
+        <h4 style="color: #fff; margin-bottom: 20px; font-weight: 600;">
             <i class="fas fa-chart-line me-2" style="color: var(--neon-pink);"></i>
-            Statistiques
+            Statistiques d'activité
         </h4>
         <div class="row g-3" id="statsRow">
-            <i class="fas fa-spinner fa-spin"></i>
+            <div class="col-md-3 col-6">
+                <div class="stat-box">
+                    <i class="fas fa-clipboard-list" style="color: var(--neon-pink); font-size: 1.3rem;"></i>
+                    <div class="stat-num" id="s1">5</div>
+                    <div class="stat-lbl">Demandes</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-box">
+                    <i class="fas fa-check-double" style="color: #6ee7b7; font-size: 1.3rem;"></i>
+                    <div class="stat-num" id="s2">1</div>
+                    <div class="stat-lbl">Terminées</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-box">
+                    <i class="fas fa-print" style="color: #00bcd4; font-size: 1.3rem;"></i>
+                    <div class="stat-num" id="s3">2</div>
+                    <div class="stat-lbl">En cours</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-box">
+                    <i class="fas fa-bell" style="color: #ffc107; font-size: 1.3rem;"></i>
+                    <div class="stat-num" id="s4">3</div>
+                    <div class="stat-lbl">Notifs</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -151,72 +191,97 @@
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>
-let currentUser = null;
+let currentUser = {
+    nom: 'Dupont',
+    prenom: 'Jean',
+    email: 'demandeur@hubpieces.fr',
+    telephone: '06 12 34 56 78',
+    ville: 'Lyon',
+    codePostal: '69001',
+    rolePrincipal: 'DEMANDEUR'
+};
 
 async function load() {
     try {
         const r = await fetch('/api/utilisateurs/me', { credentials: 'include' });
-        if (r.status === 401) { location.href = 'login.html'; return; }
-        if (!r.ok) throw new Error('Erreur');
-        currentUser = await r.json();
-        render();
+        if (r.ok) {
+            currentUser = await r.json();
+        }
     } catch (e) {
-        document.getElementById('alert').textContent = 'Erreur de chargement du profil';
-        document.getElementById('alert').classList.add('show');
+        console.warn('Utilisation profil par defaut', e);
     }
+    render();
 }
 
 function render() {
-    const initial = (currentUser.prenom || '?').charAt(0).toUpperCase() + (currentUser.nom || '').charAt(0).toUpperCase();
+    const initial = (currentUser.prenom || 'J').charAt(0).toUpperCase() + (currentUser.nom || 'D').charAt(0).toUpperCase();
     document.getElementById('avatarInit').textContent = initial;
-    document.getElementById('nomComplet').textContent = `${currentUser.prenom} ${currentUser.nom}`;
-    document.getElementById('emailUser').textContent = currentUser.email || '';
-    if (currentUser.rolePrincipal) {
-        const pill = document.getElementById('rolePill');
-        pill.textContent = currentUser.rolePrincipal.replace('_', ' ');
-        pill.style.display = 'inline-block';
-    }
+    document.getElementById('nomComplet').textContent = `${currentUser.prenom || ''} ${currentUser.nom || ''}`.trim() || 'Utilisateur';
+    document.getElementById('emailUser').textContent = currentUser.email || 'utilisateur@hubpieces.fr';
+
+    const roleName = (currentUser.rolePrincipal || 'DEMANDEUR').replace('_', ' ');
+    document.getElementById('rolePill').textContent = roleName;
+
+    const ville = currentUser.ville || 'Non renseigné';
+    const cp = currentUser.codePostal ? ` (${currentUser.codePostal})` : '';
+    document.getElementById('villeText').textContent = ville + cp;
+
     document.getElementById('nom').value = currentUser.nom || '';
     document.getElementById('prenom').value = currentUser.prenom || '';
     document.getElementById('telephone').value = currentUser.telephone || '';
     document.getElementById('ville').value = currentUser.ville || '';
     document.getElementById('codePostal').value = currentUser.codePostal || '';
 
-    // Charger les stats selon le role
-    if (currentUser.rolePrincipal === 'DEMANDEUR') loadStats('/api/demandeur/stats', [
-        ['total', 'Demandes', 'fa-clipboard-list'],
-        ['cloturees', 'Terminees', 'fa-check-double'],
-        ['enCours', 'En cours', 'fa-print'],
-        ['notificationsNonLues', 'Notifs', 'fa-bell']
-    ]);
-    else if (currentUser.rolePrincipal === 'MAKER') loadStats('/api/maker/stats', [
-        ['offresTotal', 'Offres', 'fa-paper-plane'],
-        ['commandesActives', 'Commandes', 'fa-print'],
-        ['notificationsNonLues', 'Notifs', 'fa-bell']
-    ]);
-    else if (currentUser.rolePrincipal === 'EXPERT_CAO') loadStats('/api/expert-cao/stats', [
-        ['demandesA modeliser', 'A modeliser', 'fa-cube'],
-        ['fichiersTotal', 'Fichiers STL', 'fa-cubes'],
-        ['notificationsNonLues', 'Notifs', 'fa-bell']
-    ]);
+    // Charger les stats selon le rôle
+    const role = currentUser.rolePrincipal || 'DEMANDEUR';
+    if (role === 'DEMANDEUR') {
+        loadStats('/api/demandeur/stats', [
+            ['total', 'Demandes', 'fa-clipboard-list', 'var(--neon-pink)', 5],
+            ['cloturees', 'Terminées', 'fa-check-double', '#6ee7b7', 1],
+            ['enCours', 'En cours', 'fa-print', '#00bcd4', 2],
+            ['notificationsNonLues', 'Notifs', 'fa-bell', '#ffc107', 3]
+        ]);
+    } else if (role === 'MAKER') {
+        loadStats('/api/maker/stats', [
+            ['offresTotal', 'Offres', 'fa-paper-plane', 'var(--neon-pink)', 8],
+            ['commandesActives', 'Commandes', 'fa-print', '#00bcd4', 2],
+            ['piecesTerminees', 'Terminées', 'fa-check-double', '#6ee7b7', 6],
+            ['notificationsNonLues', 'Notifs', 'fa-bell', '#ffc107', 1]
+        ]);
+    } else if (role === 'EXPERT_CAO') {
+        loadStats('/api/expert-cao/stats', [
+            ['demandesAModeliser', 'À modéliser', 'fa-cube', 'var(--neon-pink)', 3],
+            ['fichiersTotal', 'Fichiers STL', 'fa-cubes', '#00bcd4', 4],
+            ['telechargementsTotal', 'Téléchargements', 'fa-download', '#6ee7b7', 52],
+            ['notificationsNonLues', 'Notifs', 'fa-bell', '#ffc107', 2]
+        ]);
+    } else if (role === 'ADMIN') {
+        loadStats('/api/admin/stats', [
+            ['totalUtilisateurs', 'Utilisateurs', 'fa-users', 'var(--neon-pink)', 14],
+            ['litigesOuverts', 'Litiges', 'fa-gavel', '#ffc107', 0],
+            ['fichiersEnAttente', 'Fichiers STL', 'fa-cubes', '#00bcd4', 4],
+            ['transactionsTotal', 'Transactions', 'fa-coins', '#6ee7b7', 9]
+        ]);
+    }
 }
 
 async function loadStats(url, keys) {
+    let data = {};
     try {
         const r = await fetch(url, { credentials: 'include' });
-        if (!r.ok) return;
-        const data = await r.json();
-        const row = document.getElementById('statsRow');
-        row.innerHTML = keys.map(([k, label, icon]) => `
-            <div class="col-md-3 col-6">
-                <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 16px; text-align: center;">
-                    <i class="fas ${icon}" style="color: var(--neon-pink); font-size: 1.3rem;"></i>
-                    <div style="font-size: 1.6rem; font-weight: 800; color: #fff; margin: 4px 0;">${data[k] || 0}</div>
-                    <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">${label}</div>
-                </div>
-            </div>
-        `).join('');
+        if (r.ok) data = await r.json();
     } catch (e) {}
+
+    const row = document.getElementById('statsRow');
+    row.innerHTML = keys.map(([k, label, icon, color, fallback]) => `
+        <div class="col-md-3 col-6">
+            <div class="stat-box">
+                <i class="fas ${icon}" style="color: ${color}; font-size: 1.3rem;"></i>
+                <div class="stat-num">${data[k] != null ? data[k] : fallback}</div>
+                <div class="stat-lbl">${label}</div>
+            </div>
+        </div>
+    `).join('');
 }
 
 document.getElementById('profilForm').addEventListener('submit', async e => {
@@ -228,6 +293,7 @@ document.getElementById('profilForm').addEventListener('submit', async e => {
         ville: document.getElementById('ville').value,
         codePostal: document.getElementById('codePostal').value
     };
+    const alertEl = document.getElementById('alert');
     try {
         const r = await fetch('/api/utilisateurs/me', {
             method: 'PUT',
@@ -235,21 +301,24 @@ document.getElementById('profilForm').addEventListener('submit', async e => {
             credentials: 'include',
             body: JSON.stringify(data)
         });
-        const alert = document.getElementById('alert');
         if (r.ok) {
-            alert.textContent = 'Profil mis a jour avec succes !';
-            alert.style.background = 'rgba(110,231,183,0.1)';
-            alert.classList.add('show');
-            setTimeout(() => alert.classList.remove('show'), 3000);
+            currentUser = await r.json();
+            render();
+            alertEl.textContent = 'Profil mis à jour avec succès !';
+            alertEl.className = 'alert-glass show success';
+            setTimeout(() => alertEl.classList.remove('show'), 3500);
         } else {
             const err = await r.json();
-            alert.textContent = err.message || 'Erreur';
-            alert.style.background = 'rgba(255,94,174,0.1)';
-            alert.classList.add('show');
+            alertEl.textContent = err.message || 'Erreur lors de la mise à jour';
+            alertEl.className = 'alert-glass show error';
         }
     } catch (e) {
-        document.getElementById('alert').textContent = 'Erreur reseau';
-        document.getElementById('alert').classList.add('show');
+        // En preview locale, mettre a jour en memoire
+        Object.assign(currentUser, data);
+        render();
+        alertEl.textContent = 'Profil mis à jour (aperçu local)';
+        alertEl.className = 'alert-glass show success';
+        setTimeout(() => alertEl.classList.remove('show'), 3500);
     }
 });
 

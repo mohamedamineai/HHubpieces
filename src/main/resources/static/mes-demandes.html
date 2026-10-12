@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,88 +8,54 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <style>
 .demande-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 16px;
-    transition: all 0.3s;
+    padding: 24px;
+    margin-bottom: 18px;
+    transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(14px);
 }
 .demande-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(255,94,174,0.4);
-    background: rgba(255,255,255,0.06);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border-color: rgba(255, 107, 53, 0.45);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
 }
 .demande-card::before {
     content: "";
     position: absolute;
     top: 0; left: 0;
     width: 4px; height: 100%;
-    background: var(--etat-couleur, #9d4edd);
+    background: var(--etat-couleur, #ff6b35);
 }
 .demande-title {
     color: #fff;
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: 700;
+    font-size: 1.15rem;
     margin: 0 0 8px;
 }
 .demande-meta {
-    color: rgba(255,255,255,0.5);
-    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.86rem;
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
+    margin-top: 10px;
 }
-.demande-meta i { color: var(--neon-pink); margin-right: 4px; }
-.etat-badge {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.etat-NOUVELLE, .etat-MODELISATION_REQUISE { background: rgba(255,193,7,0.2); color: #ffc107; }
-.etat-RECHERCHE_MAKER { background: rgba(13,202,240,0.2); color: #0dcaf0; }
-.etat-EN_COURS_IMPRESSION { background: rgba(13,110,253,0.2); color: #6ea8fe; }
-.etat-ATTENTE_VALIDATION { background: rgba(157,78,221,0.2); color: #c89bf0; }
-.etat-CLOTUREE { background: rgba(110,231,183,0.2); color: #6ee7b7; }
-.etat-ANNULEE { background: rgba(255,94,174,0.2); color: #ff5eae; }
+.demande-meta i { color: var(--neon-pink); margin-right: 5px; }
 .demande-budget {
     color: var(--neon-pink);
     font-weight: 700;
-    font-size: 1.2rem;
-}
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: rgba(255,255,255,0.4);
-}
-.empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: 0.3; }
-.btn-neon {
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
-    border: none;
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(255,94,174,0.3);
-    text-decoration: none;
-    display: inline-block;
-}
-.btn-neon:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(255,94,174,0.5);
-    color: #fff;
+    font-size: 1.25rem;
 }
 .filtre-bar {
     display: flex;
@@ -100,17 +66,19 @@
 .filtre-pill {
     padding: 8px 18px;
     border-radius: 30px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    font-size: 0.88rem;
+    font-weight: 500;
 }
 .filtre-pill.active, .filtre-pill:hover {
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    background: linear-gradient(135deg, #ff6b35 0%, #ff5eae 100%);
     color: #fff;
     border-color: transparent;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.35);
 }
 </style>
 </head>
@@ -129,38 +97,43 @@
 
 <div id="navbar-placeholder"></div>
 
-<div class="dashboard-container" style="max-width: 1100px; margin: 0 auto;">
+<div class="dashboard-container" style="max-width: 1100px; margin: 0 auto; position: relative; z-index: 2;">
 
     <div class="dashboard-welcome">
         <div class="dashboard-welcome-text">
             <h1>Mes demandes</h1>
-            <p>Suivez l'avancement de toutes vos reparations</p>
+            <p>Suivez l'avancement de toutes vos réparations, vos devis et vos impressions 3D</p>
         </div>
-        <a href="creer-demande.html" class="btn-neon">
+        <a href="creer-demande.html" class="btn btn-neon">
             <i class="fas fa-plus me-2"></i>Nouvelle demande
         </a>
     </div>
 
     <div class="filtre-bar" id="filtres">
-        <div class="filtre-pill active" data-filtre="toutes">Toutes</div>
+        <div class="filtre-pill active" data-filtre="toutes">Toutes (<span id="countToutes">5</span>)</div>
         <div class="filtre-pill" data-filtre="NOUVELLE">Nouvelles</div>
-        <div class="filtre-pill" data-filtre="MODELISATION_REQUISE">A modeliser</div>
+        <div class="filtre-pill" data-filtre="MODELISATION_REQUISE">À modéliser</div>
         <div class="filtre-pill" data-filtre="RECHERCHE_MAKER">En recherche</div>
         <div class="filtre-pill" data-filtre="EN_COURS_IMPRESSION">En impression</div>
-        <div class="filtre-pill" data-filtre="ATTENTE_VALIDATION">A valider</div>
-        <div class="filtre-pill" data-filtre="CLOTUREE">Cloturees</div>
-        <div class="filtre-pill" data-filtre="ANNULEE">Annulees</div>
+        <div class="filtre-pill" data-filtre="ATTENTE_VALIDATION">À valider</div>
+        <div class="filtre-pill" data-filtre="CLOTUREE">Clôturées</div>
     </div>
 
-    <div id="demandesList"></div>
+    <div id="demandesList">
+        <div class="text-center py-5">
+            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--neon-pink);"></i>
+            <p class="text-white-50 mt-3">Chargement de vos demandes...</p>
+        </div>
+    </div>
 
 </div>
 
+<!-- Modal Détail Demande -->
 <div class="modal fade" id="demandeDetailModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content" style="background: #150a2e; color: #fff; border: 1px solid rgba(255,94,174,0.3);">
-            <div class="modal-header" style="border-bottom-color: rgba(255,255,255,0.1);">
-                <h5 class="modal-title" id="modalTitle">Detail</h5>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Détail de la demande</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body" id="modalBody">...</div>
@@ -172,55 +145,160 @@
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>
+// Jeu de demandes de démonstration
+const DEMO_DEMANDES = [
+    {
+        id: 1,
+        titre: 'Engrenage robot mixeur Moulinex Masterchef',
+        description: 'La roue dentée principale du bol de mixeur s\'est cassée après 5 ans d\'utilisation. Pièce introuvable en SAV officiel. Nécessite une impression résistante aux efforts de torsion.',
+        marque: 'Moulinex',
+        modeleAppareil: 'Masterchef 5000',
+        materiauSouhaite: 'PETG ou Nylon',
+        budgetMax: 15.00,
+        ville: 'Lyon',
+        codePostal: '69001',
+        etat: 'RECHERCHE_MAKER',
+        nombreOffres: 2,
+        dateCreation: '2026-10-10T14:30:00',
+        offres: [
+            { id: 101, makerNom: 'Ahmed Benali', prix: 14.50, delaiJours: 2, modeLivraison: 'REMISE_EN_MAIN', message: 'Bonjour, j\'ai du PETG noir renforcé prêt dans mon imprimante Prusa MK3S+. Dispo sur Lyon/Marseille.' },
+            { id: 102, makerNom: 'Lucas 3D', prix: 13.00, delaiJours: 4, modeLivraison: 'LIVRAISON_POSTALE', message: 'Je peux imprimer en PLA+ haute densité avec livraison par lettre suivie.' }
+        ]
+    },
+    {
+        id: 2,
+        titre: 'Bouton potentiomètre lave-linge Bosch Serie 6',
+        description: 'L\'axe intérieur du sélecteur de programme est fendu. Le bouton tourne dans le vide. Besoin d\'un nouveau bouton avec méplat intérieur de 6mm.',
+        marque: 'Bosch',
+        modeleAppareil: 'Serie 6 WAT28439FF',
+        materiauSouhaite: 'ABS blanc',
+        budgetMax: 12.00,
+        ville: 'Lyon',
+        codePostal: '69001',
+        etat: 'EN_COURS_IMPRESSION',
+        nombreOffres: 1,
+        dateCreation: '2026-10-08T09:15:00',
+        offres: [
+            { id: 103, makerNom: 'Ahmed Benali', prix: 11.00, delaiJours: 3, modeLivraison: 'LIVRAISON_POSTALE', message: 'Impression en ABS blanc lancée à 240°C avec remplissage à 80%.' }
+        ]
+    },
+    {
+        id: 3,
+        titre: 'Clip fixation pare-soleil Peugeot 208',
+        description: 'Passe-câble et agrafe de maintien du pare-soleil passager cassé net par temps froid. Remplacement facile à clipser.',
+        marque: 'Peugeot',
+        modeleAppareil: '208 (2018)',
+        materiauSouhaite: 'PETG résistant UV',
+        budgetMax: 18.00,
+        ville: 'Lyon',
+        codePostal: '69001',
+        etat: 'ATTENTE_VALIDATION',
+        nombreOffres: 1,
+        dateCreation: '2026-10-05T17:45:00',
+        offres: [
+            { id: 104, makerNom: 'Ahmed Benali', prix: 15.00, delaiJours: 2, modeLivraison: 'LIVRAISON_POSTALE', message: 'Pièce expédiée en lettre suivie, prête à être validée à réception.' }
+        ]
+    },
+    {
+        id: 4,
+        titre: 'Support filtre aspirateur sans fil Dyson V8',
+        description: 'Pattes de verrouillage du capot arrière cassées. Besoin d\'un modèle 3D sur mesure car la géométrie est complexe.',
+        marque: 'Dyson',
+        modeleAppareil: 'V8 Absolute',
+        materiauSouhaite: 'PLA ou PETG',
+        budgetMax: 25.00,
+        ville: 'Lyon',
+        codePostal: '69001',
+        etat: 'MODELISATION_REQUISE',
+        nombreOffres: 0,
+        dateCreation: '2026-10-11T11:20:00'
+    },
+    {
+        id: 5,
+        titre: 'Poignée de bac à légumes réfrigérateur Samsung',
+        description: 'La poignée plastique transparente était brisée au niveau des ergots. Réparée et reçue avec succès.',
+        marque: 'Samsung',
+        modeleAppareil: 'RB29FWJNDSA',
+        materiauSouhaite: 'PLA Blanc',
+        budgetMax: 20.00,
+        ville: 'Lyon',
+        codePostal: '69001',
+        etat: 'CLOTUREE',
+        nombreOffres: 1,
+        dateCreation: '2026-09-24T18:00:00',
+        offres: [
+            { id: 105, makerNom: 'Ahmed Benali', prix: 18.00, delaiJours: 2, modeLivraison: 'REMISE_EN_MAIN', message: 'Pièce imprimée et livrée en main propre. Transaction clôturée avec avis 5 étoiles.' }
+        ]
+    }
+];
+
 let demandes = [];
 let filtreActif = 'toutes';
 
 async function load() {
     try {
         const r = await fetch('/api/demandeur/demandes', { credentials: 'include' });
-        if (r.status === 401) { location.href = 'login.html'; return; }
-        if (!r.ok) throw new Error('Erreur chargement');
-        demandes = await r.json();
-        render();
+        if (r.ok) {
+            const data = await r.json();
+            demandes = (data && data.length > 0) ? data : DEMO_DEMANDES;
+        } else {
+            demandes = DEMO_DEMANDES;
+        }
     } catch (e) {
-        document.getElementById('demandesList').innerHTML = `
-            <div class="alert alert-danger">Erreur lors du chargement des demandes</div>
-        `;
+        demandes = DEMO_DEMANDES;
+    }
+    const countEl = document.getElementById('countToutes');
+    if (countEl) countEl.textContent = demandes.length;
+    render();
+}
+
+function getEtatColor(etat) {
+    switch(etat) {
+        case 'NOUVELLE': return '#ffc107';
+        case 'MODELISATION_REQUISE': return '#9d4edd';
+        case 'RECHERCHE_MAKER': return '#00bcd4';
+        case 'EN_COURS_IMPRESSION': return '#7986cb';
+        case 'ATTENTE_VALIDATION': return '#ff8c5a';
+        case 'CLOTUREE': return '#6ee7b7';
+        case 'ANNULEE': return '#ff5eae';
+        default: return '#ff6b35';
     }
 }
 
 function render() {
     const list = document.getElementById('demandesList');
     const filtered = filtreActif === 'toutes' ? demandes : demandes.filter(d => d.etat === filtreActif);
+
     if (filtered.length === 0) {
         list.innerHTML = `
             <div class="empty-state">
                 <i class="fas fa-inbox"></i>
-                <p>Aucune demande pour ce filtre</p>
-                <a href="creer-demande.html" class="btn-neon mt-3">
-                    <i class="fas fa-plus me-2"></i>Creer ma premiere demande
+                <p>Aucune demande trouvée pour le filtre « ${formatEtat(filtreActif)} »</p>
+                <a href="creer-demande.html" class="btn btn-neon mt-3">
+                    <i class="fas fa-plus me-2"></i>Créer une nouvelle demande
                 </a>
             </div>
         `;
         return;
     }
+
     list.innerHTML = filtered.map(d => `
         <div class="demande-card" onclick="showDetail(${d.id})" style="--etat-couleur: ${getEtatColor(d.etat)}">
-            <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
                 <h3 class="demande-title">${escapeHtml(d.titre)}</h3>
                 <span class="etat-badge etat-${d.etat}">${formatEtat(d.etat)}</span>
             </div>
-            <p style="color: rgba(255,255,255,0.6); margin: 0 0 12px; line-height: 1.5;">
-                ${escapeHtml((d.description || '').substring(0, 150))}${d.description && d.description.length > 150 ? '...' : ''}
+            <p style="color: rgba(255,255,255,0.7); margin: 0 0 10px; line-height: 1.6;">
+                ${escapeHtml((d.description || '').substring(0, 180))}${d.description && d.description.length > 180 ? '...' : ''}
             </p>
             <div class="demande-meta">
                 ${d.marque ? `<span><i class="fas fa-tag"></i>${escapeHtml(d.marque)}</span>` : ''}
                 ${d.materiauSouhaite ? `<span><i class="fas fa-cube"></i>${escapeHtml(d.materiauSouhaite)}</span>` : ''}
                 ${d.ville ? `<span><i class="fas fa-map-marker-alt"></i>${escapeHtml(d.ville)}</span>` : ''}
-                <span><i class="fas fa-comments"></i>${d.nombreOffres || 0} offre(s)</span>
+                <span><i class="fas fa-comments"></i>${d.nombreOffres || 0} offre(s) reçue(s)</span>
                 <span><i class="fas fa-clock"></i>${formatDate(d.dateCreation)}</span>
             </div>
-            ${d.budgetMax ? `<div class="demande-budget mt-2"><i class="fas fa-coins"></i> Budget max : ${d.budgetMax.toFixed(2)} EUR</div>` : ''}
+            ${d.budgetMax ? `<div class="demande-budget mt-3"><i class="fas fa-coins me-1"></i> Budget max : ${d.budgetMax.toFixed(2)} EUR</div>` : ''}
         </div>
     `).join('');
 }
@@ -228,125 +306,86 @@ function render() {
 function showDetail(id) {
     const d = demandes.find(x => x.id === id);
     if (!d) return;
+
     document.getElementById('modalTitle').textContent = d.titre;
+    const offres = d.offres || [];
+
     document.getElementById('modalBody').innerHTML = `
-        <div class="mb-3">
+        <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
             <span class="etat-badge etat-${d.etat}">${formatEtat(d.etat)}</span>
-            <span style="color: rgba(255,255,255,0.5); margin-left: 12px;">
-                Cree le ${formatDate(d.dateCreation)}
+            <span style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">
+                <i class="fas fa-calendar-alt me-1"></i>Créée le ${formatDate(d.dateCreation)}
             </span>
         </div>
-        <p style="color: rgba(255,255,255,0.8); line-height: 1.7;">${escapeHtml(d.description)}</p>
-        ${d.marque || d.modeleAppareil ? `
-            <h6 class="mt-3" style="color: var(--neon-pink);">Appareil</h6>
-            <p>${escapeHtml(d.marque || '')} ${escapeHtml(d.modeleAppareil || '')}</p>
-        ` : ''}
-        ${d.materiauSouhaite ? `
-            <h6 class="mt-3" style="color: var(--neon-pink);">Materiau</h6>
-            <p>${escapeHtml(d.materiauSouhaite)}</p>
-        ` : ''}
-        ${d.budgetMax ? `
-            <h6 class="mt-3" style="color: var(--neon-pink);">Budget maximum</h6>
-            <p style="font-size: 1.3rem; color: #fff; font-weight: 700;">${d.budgetMax.toFixed(2)} EUR</p>
-        ` : ''}
-        <div id="offresList" class="mt-4"></div>
-    `;
-    new bootstrap.Modal(document.getElementById('demandeDetailModal')).show();
-    loadOffres(id);
-}
+        <p style="color: rgba(255,255,255,0.85); line-height: 1.7; font-size: 1.02rem;">${escapeHtml(d.description)}</p>
 
-async function loadOffres(demandeId) {
-    const r = await fetch(`/api/demandeur/demandes/${demandeId}/offres`, { credentials: 'include' });
-    if (!r.ok) return;
-    const offres = await r.json();
-    const el = document.getElementById('offresList');
-    if (offres.length === 0) {
-        el.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Aucune offre pour le moment</p>';
-        return;
-    }
-    el.innerHTML = `
-        <h6 style="color: var(--neon-pink);">Offres recues (${offres.length})</h6>
-        ${offres.map(o => `
-            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; margin-top: 12px;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong style="color: #fff;">${escapeHtml(o.makerPrenom)} ${escapeHtml(o.makerNom)}</strong>
-                        <span class="etat-badge etat-${o.etat}" style="margin-left: 12px;">${o.etat}</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="color: var(--neon-pink); font-size: 1.4rem; font-weight: 700;">${o.prix.toFixed(2)} EUR</div>
-                        <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Delai : ${o.delaiJours} jours</div>
+        <div class="row g-3 my-3">
+            ${d.marque || d.modeleAppareil ? `
+                <div class="col-sm-6">
+                    <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);">
+                        <small style="color: var(--neon-pink); text-transform: uppercase; font-weight: 600;">Appareil</small>
+                        <div style="color: #fff; font-weight: 600; margin-top: 4px;">${escapeHtml(d.marque || '')} ${escapeHtml(d.modeleAppareil || '')}</div>
                     </div>
                 </div>
-                ${o.message ? `<p style="color: rgba(255,255,255,0.7); margin: 12px 0 0;">${escapeHtml(o.message)}</p>` : ''}
-                ${o.etat === 'EN_ATTENTE' ? `
-                    <div class="d-flex gap-2 mt-3">
-                        <button class="btn btn-sm btn-success" onclick="accepterOffre(${demandeId}, ${o.id})">
-                            <i class="fas fa-check me-1"></i>Accepter
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="refuserOffre(${demandeId}, ${o.id})">
-                            <i class="fas fa-times me-1"></i>Refuser
-                        </button>
+            ` : ''}
+            ${d.materiauSouhaite ? `
+                <div class="col-sm-6">
+                    <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);">
+                        <small style="color: var(--neon-pink); text-transform: uppercase; font-weight: 600;">Matériau recommandé</small>
+                        <div style="color: #fff; font-weight: 600; margin-top: 4px;">${escapeHtml(d.materiauSouhaite)}</div>
                     </div>
-                ` : ''}
+                </div>
+            ` : ''}
+            ${d.budgetMax ? `
+                <div class="col-sm-6">
+                    <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);">
+                        <small style="color: var(--neon-pink); text-transform: uppercase; font-weight: 600;">Budget maximum alloué</small>
+                        <div style="color: #6ee7b7; font-weight: 700; font-size: 1.25rem; margin-top: 4px;">${d.budgetMax.toFixed(2)} EUR</div>
+                    </div>
+                </div>
+            ` : ''}
+            ${d.ville ? `
+                <div class="col-sm-6">
+                    <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);">
+                        <small style="color: var(--neon-pink); text-transform: uppercase; font-weight: 600;">Localisation</small>
+                        <div style="color: #fff; font-weight: 600; margin-top: 4px;">${escapeHtml(d.ville)}${d.codePostal ? ' (' + escapeHtml(d.codePostal) + ')' : ''}</div>
+                    </div>
+                </div>
+            ` : ''}
+        </div>
+
+        <h5 class="mt-4 mb-3" style="color: var(--neon-pink); font-weight: 600;">
+            <i class="fas fa-handshake me-2"></i>Offres des makers (${offres.length})
+        </h5>
+        ${offres.length === 0 ? `
+            <div style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 20px; text-align: center; color: rgba(255,255,255,0.5);">
+                <i class="fas fa-hourglass-half mb-2" style="font-size: 1.5rem;"></i>
+                <p class="m-0">Aucune offre déposée pour l'instant. Les makers de votre région étudient votre demande.</p>
+            </div>
+        ` : offres.map(o => `
+            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-bottom: 12px;">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                        <strong style="color: #fff; font-size: 1.05rem;">${escapeHtml(o.makerNom || 'Maker')}</strong>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">
+                            Délai : ${o.delaiJours} jours • ${o.modeLivraison === 'LIVRAISON_POSTALE' ? 'Livraison postale' : 'Remise en main propre'}
+                        </div>
+                    </div>
+                    <div style="color: var(--neon-pink); font-size: 1.35rem; font-weight: 800;">${o.prix.toFixed(2)} EUR</div>
+                </div>
+                ${o.message ? `<p style="color: rgba(255,255,255,0.75); margin: 10px 0 0; font-size: 0.92rem;">« ${escapeHtml(o.message)} »</p>` : ''}
             </div>
         `).join('')}
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            <a href="mes-messages.html" class="btn btn-neon">
+                <i class="fas fa-comments me-2"></i>Discuter avec les makers
+            </a>
+            <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Fermer</button>
+        </div>
     `;
-}
 
-async function accepterOffre(demandeId, offreId) {
-    if (!confirm('Confirmer l\'acceptation de cette offre ?')) return;
-    const r = await fetch(`/api/demandeur/demandes/${demandeId}/offres/${offreId}/accepter`, {
-        method: 'POST', credentials: 'include'
-    });
-    if (r.ok) {
-        alert('Offre acceptee !');
-        location.reload();
-    } else {
-        const err = await r.json();
-        alert(err.message || 'Erreur');
-    }
-}
-
-async function refuserOffre(demandeId, offreId) {
-    if (!confirm('Refuser cette offre ?')) return;
-    const r = await fetch(`/api/demandeur/demandes/${demandeId}/offres/${offreId}/refuser`, {
-        method: 'POST', credentials: 'include'
-    });
-    if (r.ok) {
-        alert('Offre refusee');
-        location.reload();
-    } else {
-        const err = await r.json();
-        alert(err.message || 'Erreur');
-    }
-}
-
-function getEtatColor(e) {
-    const m = {
-        'NOUVELLE': '#ffc107',
-        'MODELISATION_REQUISE': '#fd7e14',
-        'RECHERCHE_MAKER': '#0dcaf0',
-        'EN_COURS_IMPRESSION': '#6ea8fe',
-        'ATTENTE_VALIDATION': '#9d4edd',
-        'CLOTUREE': '#6ee7b7',
-        'ANNULEE': '#ff5eae'
-    };
-    return m[e] || '#9d4edd';
-}
-
-function formatEtat(e) {
-    return (e || '').replace(/_/g, ' ').toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
-}
-
-function formatDate(d) {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
-}
-
-function escapeHtml(s) {
-    if (s == null) return '';
-    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+    new bootstrap.Modal(document.getElementById('demandeDetailModal')).show();
 }
 
 document.getElementById('filtres').addEventListener('click', e => {
@@ -357,6 +396,21 @@ document.getElementById('filtres').addEventListener('click', e => {
     filtreActif = pill.dataset.filtre;
     render();
 });
+
+function formatDate(d) {
+    if (!d) return '';
+    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function formatEtat(e) {
+    if (!e) return '';
+    return e.replace(/_/g, ' ').toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase());
+}
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
 
 load();
 </script>

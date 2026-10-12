@@ -9,6 +9,9 @@
     --orange-main:  #ff6b35;
     --orange-light: #ff8c5a;
     --orange-dark:  #e55a2b;
+    --neon-pink:    #ff5eae;
+    --neon-purple:  #9d4edd;
+    --bg-deep:      #0a0514;
     --white:        #ffffff;
     --gray-light:   #f8f9fa;
     --gray-text:    #6c757d;
@@ -31,6 +34,10 @@ body {
     background-color: var(--blue-dark);
     color: var(--white);
     overflow-x: hidden;
+}
+
+.form-floating > label::after {
+    background-color: transparent !important;
 }
 
 /* ==================== NAVBAR GLASSMORPHISM ==================== */

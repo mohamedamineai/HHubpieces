@@ -26,6 +26,13 @@
     --db-yellow-soft: rgba(255,193,7,0.15);
     --db-cyan: #00bcd4;
     --db-cyan-soft: rgba(0,188,212,0.15);
+    --neon-pink: #ff5eae;
+    --neon-purple: #9d4edd;
+    --bg-deep: #0a0514;
+    --orange-main: #ff6b35;
+    --blue-dark: #0d1b3e;
+    --bs-body-bg: #060d1f;
+    --bs-body-color: #ffffff;
     --db-glass-blur: blur(22px);
     --db-radius: 22px;
     --db-radius-sm: 16px;
@@ -1222,6 +1229,168 @@ body.dashboard-body::after {
     text-align: center;
     padding: 60px 0;
     color: rgba(255,255,255,0.5);
+}
+
+/* ==================== GLOBAL DARK GLASS FORM CONTROLS ==================== */
+.form-floating > label {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+.form-floating > label::after {
+    background-color: transparent !important;
+}
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    color: var(--neon-pink, #ff5eae) !important;
+    background-color: transparent !important;
+}
+.form-control, .form-select {
+    background: rgba(0, 0, 0, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-radius: 12px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+}
+.form-control:focus, .form-select:focus {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-color: var(--neon-pink, #ff5eae) !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 94, 174, 0.2) !important;
+    color: #ffffff !important;
+}
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+select.form-select option {
+    background-color: #0b1832 !important;
+    color: #ffffff !important;
+}
+
+/* ==================== MODALS DARK GLASS ==================== */
+.modal-content {
+    background: #0b1832 !important;
+    border: 1px solid rgba(255, 94, 174, 0.3) !important;
+    border-radius: 20px !important;
+    color: #ffffff !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+}
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ==================== TABLES DARK ==================== */
+.table {
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.table th, .table td {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-neon {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%) !important;
+    border: none !important;
+    color: #fff !important;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 94, 174, 0.35);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn-neon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 94, 174, 0.55);
+    color: #fff !important;
+}
+.btn-ghost {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff !important;
+    padding: 10px 22px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #fff !important;
+}
+
+/* ==================== BADGES & ROLES ==================== */
+.role-pill {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.etat-badge {
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.etat-NOUVELLE { background: rgba(255, 193, 7, 0.18) !important; color: #ffc107 !important; border: 1px solid rgba(255, 193, 7, 0.35); }
+.etat-MODELISATION_REQUISE { background: rgba(157, 78, 221, 0.2) !important; color: #c89bf0 !important; border: 1px solid rgba(157, 78, 221, 0.35); }
+.etat-RECHERCHE_MAKER { background: rgba(0, 188, 212, 0.2) !important; color: #00bcd4 !important; border: 1px solid rgba(0, 188, 212, 0.35); }
+.etat-EN_COURS_IMPRESSION { background: rgba(57, 73, 171, 0.25) !important; color: #7986cb !important; border: 1px solid rgba(57, 73, 171, 0.4); }
+.etat-ATTENTE_VALIDATION { background: rgba(255, 107, 53, 0.2) !important; color: #ff8c5a !important; border: 1px solid rgba(255, 107, 53, 0.35); }
+.etat-CLOTUREE, .etat-VALIDE, .etat-ACCEPTEE { background: rgba(76, 175, 80, 0.2) !important; color: #6ee7b7 !important; border: 1px solid rgba(76, 175, 80, 0.35); }
+.etat-ANNULEE, .etat-REJETEE, .etat-REFUSEE { background: rgba(239, 83, 80, 0.2) !important; color: #ff5eae !important; border: 1px solid rgba(239, 83, 80, 0.35); }
+.etat-EN_ATTENTE { background: rgba(255, 193, 7, 0.18) !important; color: #ffc107 !important; border: 1px solid rgba(255, 193, 7, 0.35); }
+
+/* ==================== EMPTY STATE & ALERTS ==================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255, 255, 255, 0.5);
+}
+.empty-state i {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+    opacity: 0.35;
+    color: var(--neon-pink, #ff5eae);
+}
+.alert-glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: #fff;
+    padding: 14px 20px;
+    display: none;
+    margin-bottom: 20px;
+}
+.alert-glass.show { display: block; }
+.alert-glass.success {
+    background: rgba(76, 175, 80, 0.15);
+    border-color: rgba(76, 175, 80, 0.4);
+    color: #6ee7b7;
+}
+.alert-glass.error {
+    background: rgba(239, 83, 80, 0.15);
+    border-color: rgba(239, 83, 80, 0.4);
+    color: #ff5eae;
 }
 
 /* ==================== RESPONSIVE ==================== */

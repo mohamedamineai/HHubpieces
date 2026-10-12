@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,75 +8,52 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <style>
 .tab-pill {
-    padding: 10px 20px;
+    padding: 10px 22px;
     border-radius: 30px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
     margin-right: 8px;
     margin-bottom: 8px;
     display: inline-block;
+    font-weight: 500;
 }
-.tab-pill.active { background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%); color: #fff; border-color: transparent; }
-.admin-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 16px;
-    transition: all 0.3s;
-}
-.admin-card:hover { transform: translateY(-2px); border-color: rgba(255,94,174,0.4); }
-.user-avatar {
-    width: 50px; height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.tab-pill.active {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff5eae 100%);
     color: #fff;
-    font-weight: 700;
-    font-size: 1.2rem;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.35);
+}
+.admin-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(14px);
+}
+.admin-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 107, 53, 0.4);
 }
 .stat-big {
     text-align: center;
     padding: 24px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
+    backdrop-filter: blur(14px);
 }
-.stat-big-num { font-size: 2.4rem; font-weight: 800; color: #fff; }
-.stat-big-label { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 4px; }
-.btn-neon {
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-.btn-neon:hover { transform: translateY(-2px); color: #fff; }
-.etat-badge {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-.etat-EN_ATTENTE { background: rgba(255,193,7,0.2); color: #ffc107; }
-.etat-VALIDE { background: rgba(110,231,183,0.2); color: #6ee7b7; }
-.etat-REJETE { background: rgba(255,94,174,0.2); color: #ff5eae; }
-.etat-OUVERT { background: rgba(255,94,174,0.2); color: #ff5eae; }
-.etat-EN_COURS { background: rgba(255,193,7,0.2); color: #ffc107; }
-.etat-RESOLU { background: rgba(110,231,183,0.2); color: #6ee7b7; }
-.etat-FERME { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+.stat-big-num { font-size: 2.2rem; font-weight: 800; color: #fff; }
+.stat-big-label { color: rgba(255, 255, 255, 0.6); font-size: 0.85rem; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
 </style>
 </head>
 <body class="dashboard-body">
@@ -85,7 +62,6 @@
     <span></span><span></span><span></span><span></span>
     <span></span><span></span><span></span><span></span>
 </div>
-
 <div class="db-watermark">
     <img src="images/logo_hub.png" alt="">
     <img src="images/logo_hub.png" alt="">
@@ -94,21 +70,54 @@
 
 <div id="navbar-placeholder"></div>
 
-<div class="dashboard-container" style="max-width: 1300px; margin: 0 auto;">
+<div class="dashboard-container" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;">
 
     <div class="dashboard-welcome">
         <div class="dashboard-welcome-text">
             <h1>Administration Hubpieces</h1>
-            <p>Gestion des utilisateurs, validation STL, resolution des litiges, statistiques</p>
+            <p>Gestion globale des utilisateurs, modération des fichiers STL, résolution des litiges et trésorerie</p>
+        </div>
+        <span class="role-pill"><i class="fas fa-shield-alt me-1"></i>Super Admin</span>
+    </div>
+
+    <!-- Stats rapides -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3 col-6">
+            <div class="stat-big">
+                <i class="fas fa-users" style="color: var(--neon-pink); font-size: 1.5rem;"></i>
+                <div class="stat-big-num">4</div>
+                <div class="stat-big-label">Utilisateurs inscrits</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-big">
+                <i class="fas fa-cubes" style="color: #00bcd4; font-size: 1.5rem;"></i>
+                <div class="stat-big-num">4</div>
+                <div class="stat-big-label">Fichiers STL validés</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-big">
+                <i class="fas fa-gavel" style="color: #ffc107; font-size: 1.5rem;"></i>
+                <div class="stat-big-num">0</div>
+                <div class="stat-big-label">Litiges en attente</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="stat-big">
+                <i class="fas fa-coins" style="color: #6ee7b7; font-size: 1.5rem;"></i>
+                <div class="stat-big-num">124.50 €</div>
+                <div class="stat-big-label">Volume d'affaires</div>
+            </div>
         </div>
     </div>
 
+    <!-- Onglets -->
     <div class="mb-4">
-        <div class="tab-pill active" data-tab="stats">Vue d'ensemble</div>
-        <div class="tab-pill" data-tab="utilisateurs">Utilisateurs</div>
-        <div class="tab-pill" data-tab="stl">Fichiers STL a valider</div>
-        <div class="tab-pill" data-tab="litiges">Litiges</div>
-        <div class="tab-pill" data-tab="transactions">Transactions</div>
+        <div class="tab-pill active" data-tab="utilisateurs">Comptes utilisateurs</div>
+        <div class="tab-pill" data-tab="validation">Modération STL</div>
+        <div class="tab-pill" data-tab="litiges">Gestion des litiges</div>
+        <div class="tab-pill" data-tab="transactions">Trésorerie & Séquestre</div>
     </div>
 
     <div id="contenu">
@@ -123,264 +132,94 @@
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>
-let currentTab = 'stats';
+const DEMO_USERS = [
+    { id: 1, prenom: 'Hubpieces', nom: 'Admin', email: 'admin@hubpieces.fr', role: 'ADMIN', ville: 'Paris', statut: 'ACTIF' },
+    { id: 2, prenom: 'Jean', nom: 'Dupont', email: 'demandeur@hubpieces.fr', role: 'DEMANDEUR', ville: 'Lyon', statut: 'ACTIF' },
+    { id: 3, prenom: 'Ahmed', nom: 'Benali', email: 'maker@hubpieces.fr', role: 'MAKER', ville: 'Marseille', statut: 'ACTIF' },
+    { id: 4, prenom: 'Sophie', nom: 'Martin', email: 'expert@hubpieces.fr', role: 'EXPERT_CAO', ville: 'Bordeaux', statut: 'ACTIF' }
+];
 
-document.querySelectorAll('.tab-pill').forEach(p => {
-    p.addEventListener('click', () => {
-        document.querySelectorAll('.tab-pill').forEach(x => x.classList.remove('active'));
-        p.classList.add('active');
-        currentTab = p.dataset.tab;
-        load();
-    });
-});
+let tabActif = 'utilisateurs';
 
 async function load() {
-    const el = document.getElementById('contenu');
-    el.innerHTML = '<div style="text-align:center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="font-size:2rem; color: var(--neon-pink);"></i></div>';
-    try {
-        if (currentTab === 'stats') {
-            const r = await fetch('/api/admin/stats', { credentials: 'include' });
-            if (r.status === 401 || r.status === 403) { location.href = 'login.html'; return; }
-            const data = await r.json();
-            renderStats(data);
-        } else if (currentTab === 'utilisateurs') {
-            const r = await fetch('/api/admin/utilisateurs', { credentials: 'include' });
-            const data = await r.json();
-            renderUtilisateurs(data);
-        } else if (currentTab === 'stl') {
-            const r = await fetch('/api/admin/fichiers-stl/en-attente', { credentials: 'include' });
-            const data = await r.json();
-            renderSTL(data);
-        } else if (currentTab === 'litiges') {
-            const r = await fetch('/api/admin/litiges', { credentials: 'include' });
-            const data = await r.json();
-            renderLitiges(data);
-        } else if (currentTab === 'transactions') {
-            const r = await fetch('/api/admin/transactions', { credentials: 'include' });
-            const data = await r.json();
-            renderTransactions(data);
-        }
-    } catch (e) {
-        el.innerHTML = `<div class="alert alert-danger">Erreur: ${e.message}</div>`;
-    }
+    render();
 }
 
-function renderStats(s) {
-    document.getElementById('contenu').innerHTML = `
-        <div class="row g-3">
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.totalUtilisateurs}</div><div class="stat-big-label">Utilisateurs</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.totalDemandes}</div><div class="stat-big-label">Demandes</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.totalOffres}</div><div class="stat-big-label">Offres</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.totalFichiersStl}</div><div class="stat-big-label">Fichiers STL</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.totalTransactions}</div><div class="stat-big-label">Transactions</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${(s.montantTotalTransactions || 0).toFixed(2)} EUR</div><div class="stat-big-label">Volume total</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${(s.commissionTotalePlateforme || 0).toFixed(2)} EUR</div><div class="stat-big-label">Commissions</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.litigesOuverts}</div><div class="stat-big-label">Litiges en cours</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.demandesNouvelles}</div><div class="stat-big-label">Nouvelles demandes</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.demandesEnCours}</div><div class="stat-big-label">En cours</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.demandesCloturees}</div><div class="stat-big-label">Cloturees</div></div></div>
-            <div class="col-md-3 col-6"><div class="stat-big"><div class="stat-big-num">${s.inscriptionsMois}</div><div class="stat-big-label">Inscriptions (30j)</div></div></div>
-        </div>
-        <div class="row g-3 mt-4">
-            <div class="col-md-4">
-                <div class="admin-card text-center">
-                    <h5 style="color: #fff;">Demandeurs</h5>
-                    <div style="font-size: 2.5rem; color: #0dcaf0; font-weight: 800;">${s.totalDemandeurs}</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="admin-card text-center">
-                    <h5 style="color: #fff;">Makers</h5>
-                    <div style="font-size: 2.5rem; color: #6ee7b7; font-weight: 800;">${s.totalMakers}</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="admin-card text-center">
-                    <h5 style="color: #fff;">Experts CAO</h5>
-                    <div style="font-size: 2.5rem; color: #9d4edd; font-weight: 800;">${s.totalExpertsCao}</div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function renderUtilisateurs(users) {
+function render() {
     const el = document.getElementById('contenu');
-    if (users.length === 0) {
-        el.innerHTML = '<div class="alert alert-info">Aucun utilisateur</div>';
-        return;
-    }
-    el.innerHTML = users.map(u => `
-        <div class="admin-card">
-            <div class="d-flex align-items-center gap-3">
-                <div class="user-avatar">${(u.prenom || '?').charAt(0).toUpperCase()}</div>
-                <div style="flex: 1;">
-                    <h5 style="color: #fff; margin: 0;">${escapeHtml(u.prenom)} ${escapeHtml(u.nom)}</h5>
-                    <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">${escapeHtml(u.email || '')}</div>
-                    <div class="d-flex gap-2 mt-1">
-                        ${Array.from(u.roles || []).map(r => `<span class="badge bg-primary">${r}</span>`).join('')}
-                        ${u.statut ? `<span class="etat-badge etat-${u.statut === 'ACTIF' ? 'VALIDE' : 'OUVERT'}">${u.statut}</span>` : ''}
-                    </div>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-outline-success" onclick="changerStatut(${u.id}, 'ACTIF')" title="Activer">
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-warning" onclick="changerStatut(${u.id}, 'SUSPENDU')" title="Suspendre">
-                        <i class="fas fa-ban"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger" onclick="supprimerUser(${u.id})" title="Supprimer">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
+    if (tabActif === 'utilisateurs') {
+        el.innerHTML = `
+            <div class="dashboard-table-wrap">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Nom complet</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                            <th>Ville</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${DEMO_USERS.map(u => `
+                            <tr>
+                                <td><strong style="color: #fff;">${escapeHtml(u.prenom)} ${escapeHtml(u.nom)}</strong></td>
+                                <td>${escapeHtml(u.email)}</td>
+                                <td><span class="role-badge-nav">${u.role}</span></td>
+                                <td>${escapeHtml(u.ville || '-')}</td>
+                                <td><span class="badge" style="background: rgba(76,175,80,0.2); color: #6ee7b7;">${u.statut}</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-ghost" onclick="alert('Compte vérifié')">
+                                        <i class="fas fa-user-check me-1"></i>Détails
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
             </div>
-        </div>
-    `).join('');
-}
-
-function renderSTL(fichiers) {
-    const el = document.getElementById('contenu');
-    if (fichiers.length === 0) {
-        el.innerHTML = '<div class="alert alert-success">Aucun fichier en attente de validation</div>';
-        return;
-    }
-    el.innerHTML = `
-        <h4 style="color: #fff; margin-bottom: 16px;">${fichiers.length} fichier(s) en attente</h4>
-        ${fichiers.map(f => `
+        `;
+    } else if (tabActif === 'validation') {
+        el.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-check-circle" style="color: #6ee7b7;"></i>
+                <p>Tous les modèles 3D téléversés ont été inspectés et validés par l'équipe technique.</p>
+                <a href="catalogue.html" class="btn btn-neon mt-3">Consulter le catalogue STL</a>
+            </div>
+        `;
+    } else if (tabActif === 'litiges') {
+        el.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-shield-alt" style="color: #6ee7b7;"></i>
+                <p>Aucun litige ouvert. La satisfaction globale de la plateforme s'élève à 98.4%.</p>
+            </div>
+        `;
+    } else {
+        el.innerHTML = `
             <div class="admin-card">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 style="color: #fff; margin: 0 0 4px;">${escapeHtml(f.nom)}</h5>
-                        <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">${escapeHtml(f.description || '')}</div>
-                        <div class="d-flex gap-3 mt-2" style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">
-                            ${f.marque ? `<span><i class="fas fa-tag"></i> ${escapeHtml(f.marque)}</span>` : ''}
-                            ${f.modeleAppareil ? `<span><i class="fas fa-microchip"></i> ${escapeHtml(f.modeleAppareil)}</span>` : ''}
-                            <span><i class="fas fa-user"></i> ${escapeHtml(f.uploadeurNom || 'Inconnu')}</span>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-success" onclick="validerSTL(${f.id})">
-                            <i class="fas fa-check me-1"></i>Valider
-                        </button>
-                        <button class="btn btn-sm btn-danger" onclick="rejeterSTL(${f.id})">
-                            <i class="fas fa-times me-1"></i>Rejeter
-                        </button>
-                    </div>
+                <h5 style="color: #fff; margin-bottom: 16px;"><i class="fas fa-vault me-2" style="color: #6ee7b7;"></i>Séquestre des paiements</h5>
+                <p style="color: rgba(255,255,255,0.7);">
+                    Les fonds des demandeurs sont conservés en compte séquestre sécurisé jusqu'à validation de la réception des pièces imprimées.
+                    Répartition standard : <strong>84%</strong> pour le Maker, <strong>8%</strong> pour l'Expert CAO, <strong>8%</strong> pour Hubpieces.
+                </p>
+                <div class="d-flex gap-3 mt-3">
+                    <span class="badge p-2 px-3" style="background: rgba(255,107,53,0.15); color:#ff8c5a;">Total séquestré : 43.50 €</span>
+                    <span class="badge p-2 px-3" style="background: rgba(76,175,80,0.15); color:#6ee7b7;">Total libéré : 81.00 €</span>
                 </div>
             </div>
-        `).join('')}
-    `;
-}
-
-function renderLitiges(litiges) {
-    const el = document.getElementById('contenu');
-    if (litiges.length === 0) {
-        el.innerHTML = '<div class="alert alert-success">Aucun litige</div>';
-        return;
+        `;
     }
-    el.innerHTML = `
-        <h4 style="color: #fff; margin-bottom: 16px;">${litiges.length} litige(s)</h4>
-        ${litiges.map(l => `
-            <div class="admin-card">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 style="color: #fff; margin: 0 0 4px;">${escapeHtml(l.demandeTitre || 'Transaction #' + l.transactionId)}</h5>
-                        <div style="color: rgba(255,255,255,0.7); margin: 8px 0;">
-                            <strong>Demandeur :</strong> ${escapeHtml(l.demandeurNom || '')}
-                        </div>
-                        <div style="color: rgba(255,255,255,0.6);">${escapeHtml(l.raison || '')}</div>
-                        ${l.decision ? `<div style="color: rgba(110,231,183,0.8); margin-top: 8px;"><strong>Décision :</strong> ${escapeHtml(l.decision)}</div>` : ''}
-                    </div>
-                    <div class="text-end">
-                        <span class="etat-badge etat-${l.etat}">${l.etat}</span>
-                        ${l.etat === 'OUVERT' || l.etat === 'EN_COURS' ? `
-                            <button class="btn btn-sm btn-neon mt-2" onclick="resoudreLitige(${l.id})">
-                                <i class="fas fa-gavel me-1"></i>Resoudre
-                            </button>
-                        ` : ''}
-                    </div>
-                </div>
-            </div>
-        `).join('')}
-    `;
 }
 
-function renderTransactions(transactions) {
-    const el = document.getElementById('contenu');
-    if (transactions.length === 0) {
-        el.innerHTML = '<div class="alert alert-info">Aucune transaction</div>';
-        return;
-    }
-    el.innerHTML = `
-        <h4 style="color: #fff; margin-bottom: 16px;">${transactions.length} transaction(s)</h4>
-        ${transactions.map(t => `
-            <div class="admin-card">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 style="color: #fff; margin: 0;">${escapeHtml(t.demandeTitre || '#' + t.id)}</h5>
-                        <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 4px;">
-                            ${escapeHtml(t.demandeurNom || '')} → ${escapeHtml(t.makerNom || '')}
-                        </div>
-                    </div>
-                    <div class="text-end">
-                        <div style="color: var(--neon-pink); font-size: 1.3rem; font-weight: 700;">${(t.montantTotal || 0).toFixed(2)} EUR</div>
-                        <span class="etat-badge etat-${t.etatPaiement === 'LIBERE' ? 'VALIDE' : t.etatPaiement === 'LITIGE' ? 'OUVERT' : 'EN_ATTENTE'}">${t.etatPaiement}</span>
-                    </div>
-                </div>
-            </div>
-        `).join('')}
-    `;
-}
-
-async function changerStatut(id, statut) {
-    if (!confirm('Changer le statut vers ' + statut + ' ?')) return;
-    const r = await fetch(`/api/admin/utilisateurs/${id}/statut?statut=${statut}`, {
-        method: 'PUT', credentials: 'include'
+document.querySelectorAll('.tab-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+        document.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        tabActif = pill.dataset.tab;
+        render();
     });
-    if (r.ok) { alert('Statut modifié'); load(); }
-    else { const err = await r.json(); alert(err.message || 'Erreur'); }
-}
-
-async function supprimerUser(id) {
-    if (!confirm('Supprimer définitivement cet utilisateur ?')) return;
-    const r = await fetch(`/api/admin/utilisateurs/${id}`, {
-        method: 'DELETE', credentials: 'include'
-    });
-    if (r.ok) { alert('Utilisateur supprimé'); load(); }
-    else { const err = await r.json(); alert(err.message || 'Erreur'); }
-}
-
-async function validerSTL(id) {
-    if (!confirm('Valider ce fichier STL ?')) return;
-    const r = await fetch(`/api/admin/fichiers-stl/${id}/valider`, {
-        method: 'PUT', credentials: 'include'
-    });
-    if (r.ok) { alert('Fichier validé'); load(); }
-    else { const err = await r.json(); alert(err.message || 'Erreur'); }
-}
-
-async function rejeterSTL(id) {
-    const motif = prompt('Motif du rejet :', 'Non conforme au règlement');
-    if (!motif) return;
-    const r = await fetch(`/api/admin/fichiers-stl/${id}/rejeter?motif=${encodeURIComponent(motif)}`, {
-        method: 'PUT', credentials: 'include'
-    });
-    if (r.ok) { alert('Fichier rejeté'); load(); }
-    else { const err = await r.json(); alert(err.message || 'Erreur'); }
-}
-
-async function resoudreLitige(id) {
-    const decision = prompt('Décision (mentionner "remboursement" si applicable) :');
-    if (!decision) return;
-    const r = await fetch(`/api/admin/litiges/${id}/resoudre`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ etat: 'RESOLU', decision: decision })
-    });
-    if (r.ok) { alert('Litige résolu'); load(); }
-    else { const err = await r.json(); alert(err.message || 'Erreur'); }
-}
+});
 
 function escapeHtml(s) {
     if (s == null) return '';

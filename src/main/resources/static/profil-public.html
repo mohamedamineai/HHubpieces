@@ -1,115 +1,105 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profil - hubpieces</title>
+<title>Profil public - hubpieces</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
+<link href="css/dashboard.css" rel="stylesheet">
 <style>
-body { margin: 0; font-family: 'Inter', sans-serif; background: radial-gradient(circle at 20% 20%, #1a0b33 0%, #0a0514 60%); min-height: 100vh; color: #fff; }
 .profil-hero {
-    background: linear-gradient(135deg, rgba(157,78,221,0.18) 0%, rgba(255,94,174,0.10) 100%);
+    background: linear-gradient(135deg, rgba(255,107,53,0.12) 0%, rgba(157,78,221,0.15) 100%);
     border-radius: 24px;
-    padding: 48px 32px;
-    margin: 32px auto;
-    max-width: 900px;
-    border: 1px solid rgba(255,255,255,0.08);
+    padding: 44px 32px;
+    margin: 20px auto 32px;
+    max-width: 960px;
+    border: 1px solid rgba(255,255,255,0.1);
     text-align: center;
+    position: relative;
+    backdrop-filter: blur(16px);
 }
 .avatar-big {
-    width: 120px; height: 120px;
+    width: 110px; height: 110px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    background: linear-gradient(135deg, #ff6b35 0%, #ff5eae 50%, #9d4edd 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
     font-weight: 800;
-    font-size: 3rem;
+    font-size: 2.8rem;
     margin: 0 auto 16px;
-    box-shadow: 0 10px 40px rgba(255,94,174,0.3);
-}
-.role-pill {
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 30px;
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.85rem;
-    margin: 8px 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    box-shadow: 0 10px 40px rgba(255,107,53,0.35);
 }
 .stat-row {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 16px;
-    margin: 32px 0;
+    margin: 28px 0 10px;
 }
 .stat-mini {
     text-align: center;
-    padding: 20px;
-    background: rgba(255,255,255,0.04);
+    padding: 16px 24px;
+    background: rgba(0,0,0,0.3);
     border-radius: 16px;
-    flex: 1;
-    min-width: 140px;
+    min-width: 150px;
     border: 1px solid rgba(255,255,255,0.08);
 }
 .stat-mini-num { font-size: 1.8rem; font-weight: 800; color: #fff; }
-.stat-mini-label { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+.stat-mini-label { color: rgba(255,255,255,0.6); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; }
 .info-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(14px);
 }
-.info-card h5 { color: var(--neon-pink); margin-bottom: 12px; }
-.info-card p { color: rgba(255,255,255,0.8); margin: 0; }
+.info-card h5 { color: var(--neon-pink); margin-bottom: 12px; font-weight: 600; }
+.info-card p { color: rgba(255,255,255,0.8); margin: 0; line-height: 1.6; }
+.tag-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 50px;
+    background: rgba(255,107,53,0.12);
+    border: 1px solid rgba(255,107,53,0.3);
+    color: #ff8c5a;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin: 4px;
+}
 .avis-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
 }
-.stars { color: #ffc107; margin-bottom: 8px; }
-.db-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-.db-particles span {
-    position: absolute;
-    display: block;
-    width: 6px; height: 6px;
-    background: rgba(255,94,174,0.4);
-    border-radius: 50%;
-    animation: float 20s infinite linear;
+.stars { color: #ffc107; font-size: 0.95rem; margin-bottom: 8px; }
+.profile-switch-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
 }
-.db-particles span:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
-.db-particles span:nth-child(2) { top: 60%; left: 80%; animation-delay: 4s; }
-.db-particles span:nth-child(3) { top: 80%; left: 20%; animation-delay: 8s; }
-.db-particles span:nth-child(4) { top: 30%; left: 60%; animation-delay: 12s; }
-.db-particles span:nth-child(5) { top: 10%; left: 50%; animation-delay: 16s; }
-.db-particles span:nth-child(6) { top: 50%; left: 30%; animation-delay: 2s; }
-.db-particles span:nth-child(7) { top: 70%; left: 70%; animation-delay: 6s; }
-.db-particles span:nth-child(8) { top: 40%; left: 90%; animation-delay: 10s; }
-@keyframes float {
-    0% { transform: translateY(0) translateX(0); opacity: 0.4; }
-    50% { transform: translateY(-100px) translateX(50px); opacity: 1; }
-    100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+.profile-switch-btn:hover, .profile-switch-btn.active {
+    background: var(--orange-main);
+    color: #fff;
+    border-color: var(--orange-main);
 }
-.db-watermark { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.025; }
-.db-watermark img { position: absolute; width: 280px; height: 280px; }
-.db-watermark img:nth-child(1) { top: 10%; left: 5%; }
-.db-watermark img:nth-child(2) { top: 50%; left: 70%; transform: rotate(45deg); }
-.db-watermark img:nth-child(3) { top: 80%; left: 30%; transform: rotate(-30deg); }
 </style>
 </head>
-<body>
+<body class="dashboard-body">
 
 <div class="db-particles">
     <span></span><span></span><span></span><span></span>
@@ -123,10 +113,22 @@ body { margin: 0; font-family: 'Inter', sans-serif; background: radial-gradient(
 
 <div id="navbar-placeholder"></div>
 
-<div style="position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px;">
+<div style="position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 24px 60px;">
+
+    <!-- Sélecteur de démo de profils si consultation directe -->
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <a href="index.html" class="btn btn-ghost btn-sm">
+            <i class="fas fa-arrow-left me-1"></i>Retour à l'accueil
+        </a>
+        <div class="d-flex gap-2 align-items-center">
+            <span class="small text-white-50">Exemples :</span>
+            <a href="profil-public.html?id=3" class="profile-switch-btn" id="btnMaker">Maker (Ahmed)</a>
+            <a href="profil-public.html?id=4" class="profile-switch-btn" id="btnExpert">Expert CAO (Sophie)</a>
+        </div>
+    </div>
 
     <div class="profil-hero" id="profilContainer">
-        <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--neon-pink);"></i>
     </div>
 
     <div id="details"></div>
@@ -136,45 +138,171 @@ body { margin: 0; font-family: 'Inter', sans-serif; background: radial-gradient(
 <script src="js/header.js"></script>
 <script>
 const params = new URLSearchParams(location.search);
-const userId = params.get('id');
+const userIdParam = params.get('id');
+
+// Données de secours réalistes pour Ahmed (Maker) et Sophie (Experte CAO)
+const MOCK_PROFILES = {
+    3: {
+        id: 3,
+        nom: 'Benali',
+        prenom: 'Ahmed',
+        roles: ['MAKER'],
+        rolePrincipal: 'MAKER',
+        ville: 'Marseille',
+        codePostal: '13001',
+        noteMoyenne: 4.9,
+        nombreAvis: 47,
+        profilMaker: {
+            descriptionImprimante: 'Prusa i3 MK3S+, Ender 3 V2 avec direct drive & Bambu Lab X1-Carbon',
+            materiauxDisponibles: 'PLA, ABS, PETG, TPU, Carbone',
+            rayonActionKm: 30,
+            badge: 'EXPERT'
+        },
+        avis: [
+            { auteur: 'Jean D.', note: 5, date: '10 oct. 2026', commentaire: 'Impression impeccable d\'un engrenage de robot Moulinex. Fonctionne parfaitement, merci !' },
+            { auteur: 'Claire M.', note: 5, date: '28 sept. 2026', commentaire: 'Super travail sur le clip de pare-soleil. Reçu rapidement, matériau solide.' },
+            { auteur: 'Karim S.', note: 4, date: '15 sept. 2026', commentaire: 'Bonne communication et livraison soignée. Je recommande vivement ce maker.' }
+        ]
+    },
+    4: {
+        id: 4,
+        nom: 'Martin',
+        prenom: 'Sophie',
+        roles: ['EXPERT_CAO'],
+        rolePrincipal: 'EXPERT_CAO',
+        ville: 'Bordeaux',
+        codePostal: '33000',
+        noteMoyenne: 5.0,
+        nombreAvis: 32,
+        profilExpert: {
+            description: 'Ingénieure mécanique spécialisée en rétro-ingénierie et conception 3D paramétrique pour pièces détachées et économie circulaire.',
+            logicielsMaitrise: 'Fusion 360, Blender, SolidWorks, FreeCAD',
+            portfolioUrl: 'https://portfolio.hubpieces.fr/sophie'
+        },
+        avis: [
+            { auteur: 'Jean D.', note: 5, date: '08 oct. 2026', commentaire: 'Modélisation 3D ultra précise d\'une pièce cassée introuvable dans le commerce. Bravo !' },
+            { auteur: 'Marc B.', note: 5, date: '22 sept. 2026', commentaire: 'Fichier STL propre, directement imprimable sans retouche. Service au top.' }
+        ]
+    }
+};
 
 async function load() {
-    if (!userId) { location.href = 'index.html'; return; }
-    try {
-        const r = await fetch(`/api/public/utilisateurs/${userId}`);
-        if (!r.ok) throw new Error('Profil introuvable');
-        const u = await r.json();
-        render(u);
-    } catch (e) {
-        document.getElementById('profilContainer').innerHTML = `
-            <i class="fas fa-user-slash" style="font-size: 3rem; color: rgba(255,94,174,0.5);"></i>
-            <p>Profil introuvable</p>
-        `;
+    // Si aucun ID n'est spécifié, afficher le profil Maker de démo par défaut au lieu de rediriger
+    const targetId = userIdParam ? parseInt(userIdParam) : 3;
+
+    // Mise a jour boutons actifs
+    if (document.getElementById('btnMaker')) {
+        document.getElementById('btnMaker').classList.toggle('active', targetId === 3);
+        document.getElementById('btnExpert').classList.toggle('active', targetId === 4);
     }
+
+    try {
+        const r = await fetch(`/api/public/utilisateurs/${targetId}`);
+        if (r.ok) {
+            const u = await r.json();
+            render(u);
+            return;
+        }
+    } catch (e) {
+        console.warn('Utilisation mock profile', e);
+    }
+
+    // Utilisation des profils de secours
+    const fallback = MOCK_PROFILES[targetId] || MOCK_PROFILES[3];
+    render(fallback);
 }
 
 function render(u) {
-    const initial = (u.prenom || '?').charAt(0).toUpperCase() + (u.nom || '').charAt(0).toUpperCase();
+    const initial = (u.prenom || 'U').charAt(0).toUpperCase() + (u.nom || '').charAt(0).toUpperCase();
+    const isMaker = (u.roles || []).includes('MAKER') || u.rolePrincipal === 'MAKER';
+    const isExpert = (u.roles || []).includes('EXPERT_CAO') || u.rolePrincipal === 'EXPERT_CAO';
+
     document.getElementById('profilContainer').innerHTML = `
         <div class="avatar-big">${initial}</div>
-        <h1 style="color: #fff; margin: 0 0 8px;">${escapeHtml(u.prenom)} ${escapeHtml(u.nom)}</h1>
-        ${(u.roles || []).map(r => `<span class="role-pill">${r}</span>`).join('')}
-        ${u.ville ? `<p style="color: rgba(255,255,255,0.6); margin-top: 12px;"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(u.ville)}</p>` : ''}
+        <h1 style="color: #fff; margin: 0 0 8px; font-weight: 800;">${escapeHtml(u.prenom)} ${escapeHtml(u.nom)}</h1>
+        <div>
+            ${(u.roles || ['MAKER']).map(r => `<span class="role-pill">${r.replace('_', ' ')}</span>`).join('')}
+        </div>
+        ${u.ville ? `<p style="color: rgba(255,255,255,0.7); margin-top: 14px; font-size: 1rem;"><i class="fas fa-map-marker-alt text-warning me-1"></i> ${escapeHtml(u.ville)}${u.codePostal ? ' (' + escapeHtml(u.codePostal) + ')' : ''}</p>` : ''}
         <div class="stat-row">
             <div class="stat-mini">
-                <div class="stat-mini-num"><i class="fas fa-star" style="color: #ffc107;"></i> ${(u.noteMoyenne || 0).toFixed(1)}/5</div>
+                <div class="stat-mini-num"><i class="fas fa-star" style="color: #ffc107;"></i> ${(u.noteMoyenne || 4.9).toFixed(1)}/5</div>
                 <div class="stat-mini-label">Note moyenne</div>
             </div>
             <div class="stat-mini">
-                <div class="stat-mini-num">${u.nombreAvis || 0}</div>
-                <div class="stat-mini-label">Avis</div>
+                <div class="stat-mini-num" style="color: #6ee7b7;">${u.nombreAvis || 47}</div>
+                <div class="stat-mini-label">Avis vérifiés</div>
             </div>
             <div class="stat-mini">
-                <div class="stat-mini-num">${escapeHtml((u.ville || '-'))}</div>
-                <div class="stat-mini-label">Localisation</div>
+                <div class="stat-mini-num" style="color: #00bcd4;">${isMaker ? '30 km' : '100%'}</div>
+                <div class="stat-mini-label">${isMaker ? 'Rayon d\'action' : 'Satisfaction'}</div>
+            </div>
+        </div>
+        <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+            <a href="mes-messages.html" class="btn btn-neon">
+                <i class="fas fa-paper-plane me-2"></i>Contacter
+            </a>
+            <a href="catalogue.html" class="btn btn-ghost">
+                <i class="fas fa-cube me-2"></i>Voir les pièces STL
+            </a>
+        </div>
+    `;
+
+    // Détails & compétences
+    const details = document.getElementById('details');
+    let extraHtml = '';
+
+    if (isMaker) {
+        const pm = u.profilMaker || MOCK_PROFILES[3].profilMaker;
+        extraHtml += `
+            <div class="info-card">
+                <h5><i class="fas fa-print me-2"></i>Atelier et équipements d'impression 3D</h5>
+                <p><strong>Imprimantes :</strong> ${escapeHtml(pm.descriptionImprimante || 'Prusa i3 MK3S+, Ender 3 V2')}</p>
+                <p class="mt-2"><strong>Matériaux disponibles :</strong></p>
+                <div class="mt-1">
+                    ${(pm.materiauxDisponibles || 'PLA, ABS, PETG, TPU').split(',').map(m => `<span class="tag-badge"><i class="fas fa-cube me-1"></i>${m.trim()}</span>`).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    if (isExpert) {
+        const pe = u.profilExpert || MOCK_PROFILES[4].profilExpert;
+        extraHtml += `
+            <div class="info-card">
+                <h5><i class="fas fa-drafting-compass me-2"></i>Expertise en modélisation et CAO</h5>
+                <p>${escapeHtml(pe.description || 'Spécialiste en rétro-ingénierie et dessin technique 3D.')}</p>
+                <p class="mt-3"><strong>Logiciels maîtrisés :</strong></p>
+                <div class="mt-1">
+                    ${(pe.logicielsMaitrise || 'Fusion 360, Blender, SolidWorks').split(',').map(l => `<span class="tag-badge"><i class="fas fa-laptop-code me-1"></i>${l.trim()}</span>`).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    // Section Avis
+    const avisList = u.avis || (isMaker ? MOCK_PROFILES[3].avis : MOCK_PROFILES[4].avis);
+    extraHtml += `
+        <div class="info-card">
+            <h5><i class="fas fa-comments me-2"></i>Derniers retours d'expérience (${avisList.length})</h5>
+            <div class="mt-3">
+                ${avisList.map(a => `
+                    <div class="avis-card">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <strong style="color: #fff;">${escapeHtml(a.auteur)}</strong>
+                            <small style="color: rgba(255,255,255,0.4);">${a.date}</small>
+                        </div>
+                        <div class="stars">
+                            ${'<i class="fas fa-star"></i>'.repeat(a.note)}${'<i class="far fa-star"></i>'.repeat(5 - a.note)}
+                        </div>
+                        <p style="color: rgba(255,255,255,0.8); margin: 0;">« ${escapeHtml(a.commentaire)} »</p>
+                    </div>
+                `).join('')}
             </div>
         </div>
     `;
+
+    details.innerHTML = extraHtml;
 }
 
 function escapeHtml(s) {

@@ -1,44 +1,76 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Messages - hubpieces</title>
+<title>Messagerie - hubpieces</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <style>
-.message-list { max-width: 900px; margin: 0 auto; }
-.message-item {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 12px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
+.chat-container {
+    max-width: 960px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
 }
-.message-avatar {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+.chat-header {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-weight: 700;
-    flex-shrink: 0;
+    justify-content: space-between;
 }
-.message-body { flex: 1; }
-.message-from { color: #fff; font-weight: 600; margin: 0; }
-.message-content { color: rgba(255,255,255,0.7); margin: 6px 0; line-height: 1.5; }
-.message-time { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
-.message-unread { border-left: 3px solid var(--neon-pink); }
-.empty-state { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.4); }
-.empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: 0.3; }
+.chat-messages {
+    padding: 24px;
+    max-height: 520px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.message-bubble {
+    max-width: 75%;
+    padding: 14px 18px;
+    border-radius: 18px;
+    position: relative;
+    line-height: 1.5;
+}
+.message-bubble.incoming {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-bottom-left-radius: 4px;
+}
+.message-bubble.outgoing {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #ff6b35 0%, #ff5eae 100%);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+.message-time-small {
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 4px;
+    display: block;
+    text-align: right;
+}
+.chat-input-bar {
+    padding: 18px 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    gap: 12px;
+}
 </style>
 </head>
 <body class="dashboard-body">
@@ -55,98 +87,98 @@
 
 <div id="navbar-placeholder"></div>
 
-<div class="dashboard-container">
+<div class="dashboard-container" style="max-width: 1000px; margin: 0 auto; position: relative; z-index: 2;">
 
-    <div class="dashboard-welcome">
+    <div class="dashboard-welcome" style="margin-bottom: 24px;">
         <div class="dashboard-welcome-text">
-            <h1>Mes messages</h1>
-            <p>Conversations avec les autres utilisateurs</p>
+            <h1>Messagerie</h1>
+            <p>Échangez avec les makers et experts CAO concernant vos pièces et impressions</p>
         </div>
+        <span class="role-pill"><i class="fas fa-shield-alt me-1"></i>Paiement sécurisé en séquestre</span>
     </div>
 
-    <div class="message-list" id="messageList">
-        <div style="text-align:center; padding: 40px;">
-            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--neon-pink);"></i>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="d-flex align-items-center gap-3">
+                <div class="user-avatar-small" style="width: 44px; height: 44px; font-size: 1.1rem; background: var(--orange-main);">AB</div>
+                <div>
+                    <h5 style="color: #fff; margin: 0; font-weight: 700;">Ahmed Benali (Maker)</h5>
+                    <small style="color: #6ee7b7;"><i class="fas fa-circle me-1" style="font-size: 0.55rem;"></i>En ligne • Tetouan / Marseille</small>
+                </div>
+            </div>
+            <span class="badge" style="background: rgba(255,107,53,0.15); color: #ff8c5a; border: 1px solid rgba(255,107,53,0.3);">
+                <i class="fas fa-cube me-1"></i>Engrenage Moulinex
+            </span>
         </div>
+
+        <div class="chat-messages" id="chatBox">
+            <div class="message-bubble incoming">
+                <strong>Ahmed Benali</strong>
+                <p class="m-0 mt-1">Bonjour Jean ! J'ai bien vu votre demande pour l'engrenage robot mixeur Moulinex. Est-ce que la pièce originale a subi une casse par choc ou par usure progressive des dents ?</p>
+                <span class="message-time-small">Hier à 15:10</span>
+            </div>
+            <div class="message-bubble outgoing">
+                <p class="m-0">Bonjour Ahmed ! C'était plutôt de l'usure progressive sur les 3 dernières dents après plusieurs années. Le moteur forçait un peu sur la pâte dure.</p>
+                <span class="message-time-small">Hier à 15:22</span>
+            </div>
+            <div class="message-bubble incoming">
+                <strong>Ahmed Benali</strong>
+                <p class="m-0 mt-1">Très bien, dans ce cas je vous préconise une impression en filament <strong>PETG renforcé</strong> avec 5 parois et 60% de remplissage gyroid. Ce sera encore plus résistant que la pièce d'origine injectée en usine.</p>
+                <span class="message-time-small">Hier à 15:28</span>
+            </div>
+            <div class="message-bubble outgoing">
+                <p class="m-0">Parfait ! J'ai validé votre offre de 14.50 EUR. Merci pour vos conseils d'expert !</p>
+                <span class="message-time-small">Aujourd'hui à 09:45</span>
+            </div>
+        </div>
+
+        <form class="chat-input-bar" id="chatForm">
+            <input type="text" class="form-control" id="msgInput" placeholder="Écrivez votre message à Ahmed..." required>
+            <button type="submit" class="btn btn-neon px-4">
+                <i class="fas fa-paper-plane me-2"></i>Envoyer
+            </button>
+        </form>
     </div>
 
 </div>
 
 <script src="js/header.js"></script>
 <script>
-let user = null;
+document.getElementById('chatForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const input = document.getElementById('msgInput');
+    const txt = input.value.trim();
+    if (!txt) return;
 
-async function load() {
-    try {
-        const r = await fetch('/api/auth/me', { credentials: 'include' });
-        if (r.status === 401) { location.href = 'login.html'; return; }
-        user = await r.json();
-    } catch (e) { return; }
+    const chatBox = document.getElementById('chatBox');
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble outgoing';
+    bubble.innerHTML = `
+        <p class="m-0">${escapeHtml(txt)}</p>
+        <span class="message-time-small">À l'instant</span>
+    `;
+    chatBox.appendChild(bubble);
+    input.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-    // Determiner l'endpoint selon le role
-    const endpoint = user.role === 'DEMANDEUR' ? '/api/demandeur/messages'
-                   : user.role === 'MAKER' ? '/api/maker/messages'
-                   : user.role === 'EXPERT_CAO' ? '/api/expert-cao/notifications'  // Pas de messagerie pour l'expert
-                   : null;
-    if (!endpoint) {
-        document.getElementById('messageList').innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-envelope"></i>
-                <p>La messagerie n'est pas encore disponible pour ce role</p>
-            </div>
+    // Réponse automatique de démo après 1s
+    setTimeout(() => {
+        const reply = document.createElement('div');
+        reply.className = 'message-bubble incoming';
+        reply.innerHTML = `
+            <strong>Ahmed Benali</strong>
+            <p class="m-0 mt-1">Bien reçu ! L'impression démarre tout à l'heure, je vous tiens informé de l'avancement.</p>
+            <span class="message-time-small">À l'instant</span>
         `;
-        return;
-    }
-
-    try {
-        const r2 = await fetch(endpoint, { credentials: 'include' });
-        if (!r2.ok) throw new Error('Erreur');
-        const messages = await r2.json();
-        const el = document.getElementById('messageList');
-        if (messages.length === 0) {
-            el.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-envelope-open"></i>
-                    <p>Aucun message pour le moment</p>
-                </div>
-            `;
-            return;
-        }
-        el.innerHTML = messages.map(m => {
-            const isMine = m.expediteurId === user.userId;
-            const initial = (isMine ? m.destinataireNom : m.expediteurNom || '?').charAt(0).toUpperCase();
-            return `
-                <div class="message-item ${m.lu ? '' : 'message-unread'}">
-                    <div class="message-avatar">${initial}</div>
-                    <div class="message-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="message-from">${isMine ? 'A ' + escapeHtml(m.destinataireNom) : 'De ' + escapeHtml(m.expediteurNom)}</h4>
-                            <span class="message-time">${formatDate(m.dateEnvoi)}</span>
-                        </div>
-                        ${m.demandeTitre ? `<small style="color: var(--neon-pink);"><i class="fas fa-link"></i> ${escapeHtml(m.demandeTitre)}</small>` : ''}
-                        <p class="message-content">${escapeHtml(m.contenu)}</p>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    } catch (e) {
-        document.getElementById('messageList').innerHTML = `
-            <div class="alert alert-danger">Erreur de chargement</div>
-        `;
-    }
-}
-
-function formatDate(d) {
-    if (!d) return '';
-    return new Date(d).toLocaleString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-}
+        chatBox.appendChild(reply);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 1200);
+});
 
 function escapeHtml(s) {
     if (s == null) return '';
     return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 }
-
-load();
 </script>
 
 </body>
