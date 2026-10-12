@@ -1,86 +1,96 @@
-# Prompt Tripo3D pour modèle 3D Hubpieces
+# 🎨 Prompts Tripo3D Hubpieces
 
-## 🎨 Prompt principal
+> **🎯 Voir aussi** : [PROMPT-TRIPO3D-MANQUANTS.md](./PROMPT-TRIPO3D-MANQUANTS.md) pour les **6 modèles 3D à générer** (les seuls qui manquent au projet).
 
-**Nom du fichier** : `repair-gear.glb`
+---
 
-**Prompt à utiliser sur Tripo3D** (https://www.tripo3d.ai/) :
+## 🌐 Où générer les modèles
 
-```
-A photorealistic 3D printable mechanical gear, smoothly rotating isolated on a dark purple gradient background with soft neon pink rim lighting. The gear is made of polished metallic material with subtle wear marks, featuring 12 perfectly cut teeth, a central axle hole, and engraved text "HUBPIECES" on its surface. Style: industrial design meets futurism, eco-friendly repair aesthetic. High detail, 4K textures, optimized for 3D printing in PLA/ABS materials. The lighting is dramatic with neon glow effects matching the Hubpieces brand colors (deep purple #9d4edd and pink #ff5eae).
-```
+**Site principal** : **https://www.tripo3d.ai/**
 
-## 📋 Variantes de prompt
+**Workflow** :
+1. Créez un compte gratuit (Google ou email)
+2. Cliquez sur **"Create"** → **"Text to 3D"**
+3. Collez le prompt
+4. Choisissez le style (Realistic ou Sci-Fi)
+5. Cliquez sur **"Generate"**
+6. Attendez 1-3 minutes
+7. Téléchargez en **.glb** (le plus compact)
 
-### Pour la page d'accueil (hero principal)
-- Fichier : `repair-gear.glb`
-- Position : Remplace ou complète `printer_logo.glb`
+**Alternatives gratuites** : Meshy.ai, Kaedim, Rodin, Genie (Luma AI)
 
-### Pour la section "Makers" (3D flottants)
-- Fichier : `printed-piece.glb`
-- Prompt :
-```
-A beautiful 3D printed replacement part, specifically a household appliance handle (door handle style) freshly printed, smooth ABS plastic finish in vibrant pink-purple gradient. The piece is shown on a clean dark surface with soft studio lighting. The model is clean, modern, with visible layer lines that emphasize the 3D printing process. Eco-friendly vibe, Hubpieces brand colors.
-```
+---
 
-### Pour la section "Experts CAO"
-- Fichier : `cao-model.glb`
-- Prompt :
-```
-A detailed 3D wireframe CAD model of a mechanical component (gear or bracket) with construction lines, measurement annotations, and technical dimensions floating in space. Neon purple and pink glowing edges on a dark background. The model shows both wireframe and solid render modes. Futuristic engineering aesthetic, perfect for showcasing 3D modeling expertise.
-```
+## 🎯 Charte graphique Hubpieces
 
-### Pour le login/auth
-- Fichier : `auth-blob.glb` (déjà présent : `auth_blob.glb`)
-- Prompt :
-```
-A fluid, organic metaball blob shape with iridescent purple-pink material, slowly morphing and rotating. Abstract and modern, evokes creativity and innovation. Smooth glossy surface with subtle reflections. Dark background, dramatic studio lighting. Perfect for a creative tech platform branding element.
-```
+| Couleur | Hex |
+|---------|-----|
+| Violet profond | `#9d4edd` |
+| Rose néon | `#ff5eae` |
+| Noir profond | `#0a0514` |
+| Violet sombre | `#1a0b33` |
+| Vert éco | `#6ee7b7` |
 
-### Pour le logo
-- Fichier : `logo-3d.glb` (déjà présent : `logo_hub_3d.glb`)
-- Prompt :
-```
-A stylized 3D logo mark featuring a hexagonal shape with the letter "H" integrated into it. The logo is made of polished metallic material with neon purple and pink gradient reflections. Floating on a dark background, slowly rotating. Modern, minimalist, tech-forward design suitable for a 3D printing platform.
-```
+**Style** : Futuriste, glassmorphism, économie circulaire, repair-tech, eco-friendly, industriel-moderne.
+
+---
+
+## ✅ Modèles EXISTANTS (déjà dans le projet)
+
+Ces 7 modèles sont déjà en place dans `src/main/resources/static/images/` :
+
+| Fichier | Utilisation |
+|---------|-------------|
+| `printer_logo.glb` | Hero page d'accueil (rotation auto) |
+| `logo_hub_3d.glb` | Logo flottant + sections |
+| `auth_blob.glb` | Login & Register (panneau droit) |
+| `model1.glb` à `model4.glb` | Catalogue STL + sections makers/experts |
+
+---
+
+## 🆕 Modèles MANQUANTS (6 à générer)
+
+Voir [PROMPT-TRIPO3D-MANQUANTS.md](./PROMPT-TRIPO3D-MANQUANTS.md) pour les prompts détaillés.
+
+| # | Fichier | Page cible | Prompt # |
+|---|---------|-----------|----------|
+| 1 | `repair-gear.glb` | dashboard-demandeur | Prompt 1 |
+| 2 | `printed-piece.glb` | dashboard-maker | Prompt 2 |
+| 3 | `cao-model.glb` | dashboard-expertcao | Prompt 3 |
+| 4 | `circuit-board.glb` | catalogue hero | Prompt 4 |
+| 5 | `admin-shield.glb` | dashboard-admin | Prompt 5 |
+| 6 | `eco-recycle.glb` | profil-public | Prompt 6 |
+
+---
 
 ## 🔧 Paramètres Tripo3D recommandés
 
-- **Format d'export** : `.glb` (GLB binaire)
-- **Qualité** : Haute (4K textures)
-- **Taille** : Modérée (< 10 MB pour le web)
-- **Poly count** : 50k-150k triangles (équilibre qualité/performance)
-- **Textures** : PBR (Metallic + Roughness)
-- **Animation** : Optionnelle, rotation lente si présente
+- **Format** : `.glb` (GLB binaire)
+- **Quality** : High (pas Ultra)
+- **Poly count** : 50k-150k
+- **Texture** : 2K
+- **Taille** : 3-8 MB
+- **Background** : Transparent
+- **Animation** : Pas (géré par model-viewer)
 
-## 📂 Où placer les fichiers
+---
 
-Une fois les fichiers `.glb` générés, placez-les dans :
-
-```
-src/main/resources/static/images/
-```
-
-Puis référencez-les dans le code HTML/JS :
+## 💻 Intégration HTML
 
 ```html
 <model-viewer
-    src="images/mon-nouveau-modele.glb"
+    src="images/nom-du-fichier.glb"
     alt="Description"
     auto-rotate
     camera-controls
-    shadow-intensity="1">
+    disable-zoom
+    shadow-intensity="1"
+    style="width:100%; height:400px;">
 </model-viewer>
 ```
 
-## 🎯 Où utiliser chaque modèle
+---
 
-| Fichier | Page | Section |
-|---------|------|---------|
-| `printer_logo.glb` | index.html | Hero (déjà en place) |
-| `logo_hub_3d.glb` | index.html | Logo flottant (déjà en place) |
-| `auth_blob.glb` | login.html, register.html | Panneau droit (déjà en place) |
-| `model1-4.glb` | index.html | Catalogue, sections (déjà en place) |
-| `repair-gear.glb` | dashboard-demandeur.html | Hero "Aperçu de votre pièce" |
-| `printed-piece.glb` | dashboard-maker.html | Section "Missions" |
-| `cao-model.glb` | dashboard-expertcao.html | Hero "Modélisation 3D" |
+## 📂 Où placer les fichiers
+
+Tous dans : `src/main/resources/static/images/`

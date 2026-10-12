@@ -85,7 +85,8 @@ Le serveur démarre sur le port **9090**.
 ## 📚 Documentation
 
 - [Documentation API REST complète](docs/API-REST-DOCUMENTATION.md) - Liste des endpoints, payloads, exemples Postman
-- [Prompt Tripo3D](docs/PROMPT-TRIPO3D.md) - Pour générer des modèles 3D custom
+- [Prompts Tripo3D (existants)](docs/PROMPT-TRIPO3D.md) - Modèles 3D déjà en place
+- [Prompts Tripo3D manquants](docs/PROMPT-TRIPO3D-MANQUANTS.md) - **6 modèles 3D à générer sur Tripo3D**
 
 ## 🧪 Tests
 
