@@ -7,5 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    Optional<Role> findByNom(RoleNom nom);
+    Optional<Role> findFirstByNom(RoleNom nom);
+
+    default Optional<Role> findByNom(RoleNom nom) {
+        return findFirstByNom(nom);
+    }
 }

@@ -54,6 +54,7 @@ public class ExpertCaoController {
     }
 
     @PostMapping("/demandes/{id}/modelisation")
+    @Transactional
     public ResponseEntity<DemandeDTO> soumettreModelisation(@PathVariable Long id,
                                                              @RequestBody FichierStlCreateRequest req,
                                                              HttpSession session) {
@@ -68,6 +69,7 @@ public class ExpertCaoController {
     }
 
     @PostMapping(value = "/demandes/{id}/modelisation/upload", consumes = "multipart/form-data")
+    @Transactional
     public ResponseEntity<DemandeDTO> uploadModelisation(
             @PathVariable Long id,
             @RequestParam("file") MultipartFile file,
