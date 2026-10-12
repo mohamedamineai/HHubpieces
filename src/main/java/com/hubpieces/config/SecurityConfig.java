@@ -1,8 +1,13 @@
 package com.hubpieces.config;
 
+import jakarta.servlet.Filter;
+
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +26,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @Order(1)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
@@ -62,7 +68,7 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable())
                 .logout(logout -> logout.disable())
-                // VERROU DECISIF CONTRE LA PAGE "Please sign in" (Spring Security 7.0.x).
+                // VERROU CONTRE LA PAGE "Please sign in" (Spring Security 7.0.x).
                 //
                 // Depuis Spring Security 7, HttpSecurityConfiguration applique TOUJOURS
                 // un DefaultLoginPageConfigurer par defaut (.with(new DefaultLoginPageConfigurer<>())).
@@ -72,23 +78,34 @@ public class SecurityConfig {
                 //
                 // Desactiver formLogin n'est donc plus un verrou suffisant : le seul moyen
                 // fiable de supprimer cette page est de declarer soi-meme un
-                // AuthenticationEntryPoint, ce qui rend "authenticationEntryPoint != null"
-                // et court-circuite l'ajout du filtre.
+                // AuthenticationEntryPoint (classe nommee HubpiecesAuthenticationEntryPoint,
+                // pas de lambda imbriquee : aucun risque d'inference de type), ce qui rend
+                // "authenticationEntryPoint != null" et court-circuite l'ajout du filtre.
                 //
                 // Comme tout est en permitAll(), ce point d'entree n'est de toute facon
                 // jamais declenche : il sert uniquement de verrou de configuration.
-                .exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, authException) -> {
-                    String uri = request.getRequestURI();
-                    if (uri != null && uri.startsWith("/api/")) {
-                        // API : reponse JSON 401, jamais de redirection HTML
-                        response.setStatus(401);
-                        response.setContentType("application/json;charset=UTF-8");
-                        response.getWriter().write("{\"message\":\"Non connecte\"}");
-                    } else {
-                        // Pages du site : on renvoie vers la VRAIE page de connexion Hubpieces
-                        response.sendRedirect(request.getContextPath() + "/login.html");
-                    }
-                }));
+                //
+                // NOTE : ce verrou seul ne suffit PAS si c'est la chaine PAR DEFAUT de
+                // Spring Boot (ServletWebSecurityAutoConfiguration.defaultSecurityFilterChain)
+                // qui sert les requetes. D'ou les deux autres verrous : exclusion de
+                // ServletWebSecurityAutoConfiguration dans application.properties et
+                // @Order(1) sur ce bean (sans ordre explicite la chaine est en
+                // LOWEST_PRECEDENCE et toute autre chaine placee devant sert les requetes).
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(new HubpiecesAuthenticationEntryPoint()));
         return http.build();
+    }
+
+    /**
+     * Garantie dure de redirection des URLs publiques sans extension, AVANT
+     * springSecurityFilterChain (Ordered.HIGHEST_PRECEDENCE) : /login -&gt; /login.html,
+     * /register -&gt; /register.html, /catalogue -&gt; /catalogue.html (302).
+     * Independante de la configuration interne des configurers.
+     */
+    @Bean
+    public FilterRegistrationBean<Filter> publicPageRedirectFilterRegistration() {
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>(new PublicPageRedirectFilter());
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        registration.addUrlPatterns("/login", "/register", "/catalogue");
+        return registration;
     }
 }
