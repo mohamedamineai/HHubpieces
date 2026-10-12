@@ -1,10 +1,17 @@
-// ==================== HUBPIECES - PROTECTION DES PAGES DASHBOARD ====================
+// ==================== HUBPIECES - PROTECTION DES PAGES ====================
 
-const DASHBOARD_ROLE_MAP = {
+// Pages par role
+const PAGE_ROLE_MAP = {
     "dashboard-demandeur.html": "DEMANDEUR",
     "dashboard-maker.html": "MAKER",
     "dashboard-expertcao.html": "EXPERT_CAO",
-    "dashboard-admin.html": "ADMIN"
+    "dashboard-admin.html": "ADMIN",
+    "mes-demandes.html": "DEMANDEUR",
+    "creer-demande.html": "DEMANDEUR",
+    "mes-offres.html": "MAKER",
+    "mes-modelisations.html": "EXPERT_CAO",
+    "gestion-admin.html": "ADMIN",
+    "mon-profil.html": null  // Tous les roles connectes
 };
 
 const REDIRECT_BY_ROLE = {
@@ -14,10 +21,12 @@ const REDIRECT_BY_ROLE = {
     ADMIN: "dashboard-admin.html"
 };
 
-async function guardDashboard() {
+async function guardPage() {
     const currentPage = window.location.pathname.split("/").pop();
-    const requiredRole = DASHBOARD_ROLE_MAP[currentPage];
-    if (!requiredRole) return;
+    const requiredRole = PAGE_ROLE_MAP[currentPage];
+
+    // Si la page n'est pas protegee, on sort
+    if (requiredRole === undefined) return;
 
     try {
         const res = await fetch("/api/auth/me", { credentials: "same-origin" });
@@ -29,7 +38,16 @@ async function guardDashboard() {
 
         const user = await res.json();
 
-        if (user.role !== requiredRole) {
+        // Si la page requiert un role specifique
+        if (requiredRole !== null && user.role !== requiredRole) {
+            // Si admin, on lui laisse l'acces a tout (mais il sera redirige vers son dashboard)
+            if (user.role === "ADMIN") {
+                // Admin peut acceder aux pages admin uniquement
+                if (requiredRole !== "ADMIN") {
+                    window.location.href = REDIRECT_BY_ROLE[user.role];
+                }
+                return;
+            }
             window.location.href = REDIRECT_BY_ROLE[user.role] || "index.html";
         }
     } catch (e) {
@@ -37,4 +55,4 @@ async function guardDashboard() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", guardDashboard);
+document.addEventListener("DOMContentLoaded", guardPage);

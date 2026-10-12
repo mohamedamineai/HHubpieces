@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes offres - hubpieces</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/header.css" rel="stylesheet">
+<link href="css/dashboard.css" rel="stylesheet">
+<style>
+.offre-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+.offre-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--offre-couleur, #9d4edd);
+}
+.offre-card:hover { transform: translateY(-2px); border-color: rgba(255,94,174,0.4); }
+.offre-title { color: #fff; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px; }
+.offre-meta { color: rgba(255,255,255,0.5); font-size: 0.85rem; display: flex; gap: 16px; flex-wrap: wrap; }
+.offre-meta i { color: var(--neon-pink); margin-right: 4px; }
+.offre-prix { color: var(--neon-pink); font-weight: 700; font-size: 1.3rem; }
+.etat-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.etat-EN_ATTENTE { background: rgba(255,193,7,0.2); color: #ffc107; }
+.etat-ACCEPTEE { background: rgba(110,231,183,0.2); color: #6ee7b7; }
+.etat-REFUSEE { background: rgba(255,94,174,0.2); color: #ff5eae; }
+.etat-ANNULEE { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+.empty-state { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.4); }
+.empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: 0.3; }
+.btn-neon {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(255,94,174,0.3);
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-neon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,94,174,0.5);
+    color: #fff;
+}
+.demande-dispo-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.3s;
+}
+.demande-dispo-card:hover { border-color: rgba(110,231,183,0.4); }
+.demande-dispo-title { color: #fff; font-weight: 600; font-size: 1.1rem; margin: 0 0 8px; }
+.budget-tag {
+    background: linear-gradient(135deg, rgba(157,78,221,0.2) 0%, rgba(255,94,174,0.2) 100%);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+.tab-pill {
+    padding: 10px 20px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+.tab-pill.active {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    color: #fff;
+    border-color: transparent;
+}
+</style>
+</head>
+<body class="dashboard-body">
+
+<div class="db-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="db-watermark">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+</div>
+
+<div id="navbar-placeholder"></div>
+
+<div class="dashboard-container" style="max-width: 1200px; margin: 0 auto;">
+
+    <div class="dashboard-welcome">
+        <div class="dashboard-welcome-text">
+            <h1>Tableau de bord Maker</h1>
+            <p>Consultez les demandes disponibles et gérez vos offres en cours</p>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <div class="tab-pill active" data-tab="disponibles">Demandes disponibles</div>
+        <div class="tab-pill" data-tab="offres">Mes offres</div>
+        <div class="tab-pill" data-tab="commandes">Mes commandes actives</div>
+    </div>
+
+    <div id="contenu">
+        <div style="text-align:center; padding: 40px;">
+            <i class="fas fa-spinner fa-spin" style="font-size:2rem; color: var(--neon-pink);"></i>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal pour deposer une offre -->
+<div class="modal fade" id="offreModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: #150a2e; color: #fff; border: 1px solid rgba(255,94,174,0.3);">
+            <div class="modal-header" style="border-bottom-color: rgba(255,255,255,0.1);">
+                <h5 class="modal-title">Deposer une offre</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="offreForm">
+                    <input type="hidden" id="demandeId">
+                    <div class="mb-3">
+                        <label class="form-label">Prix (EUR)</label>
+                        <input type="number" class="form-control" id="prix" min="1" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Delai (jours)</label>
+                        <input type="number" class="form-control" id="delaiJours" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mode de livraison</label>
+                        <select class="form-select" id="modeLivraison">
+                            <option value="REMISE_EN_MAIN">Remise en main propre</option>
+                            <option value="LIVRAISON_POSTALE">Livraison postale</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message (optionnel)</label>
+                        <textarea class="form-control" id="message" rows="3" placeholder="Details sur votre proposition..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-neon w-100">
+                        <i class="fas fa-paper-plane me-2"></i>Envoyer l'offre
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/header.js"></script>
+<script src="js/auth-guard.js"></script>
+<script>
+let currentTab = 'disponibles';
+
+document.querySelectorAll('.tab-pill').forEach(p => {
+    p.addEventListener('click', () => {
+        document.querySelectorAll('.tab-pill').forEach(x => x.classList.remove('active'));
+        p.classList.add('active');
+        currentTab = p.dataset.tab;
+        load();
+    });
+});
+
+async function load() {
+    const el = document.getElementById('contenu');
+    el.innerHTML = '<div style="text-align:center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="font-size:2rem; color: var(--neon-pink);"></i></div>';
+    if (currentTab === 'disponibles') {
+        const r = await fetch('/api/maker/demandes-disponibles', { credentials: 'include' });
+        if (r.status === 401) { location.href = 'login.html'; return; }
+        const data = await r.json();
+        renderDisponibles(data);
+    } else if (currentTab === 'offres') {
+        const r = await fetch('/api/maker/offres', { credentials: 'include' });
+        const data = await r.json();
+        renderOffres(data);
+    } else if (currentTab === 'commandes') {
+        const r = await fetch('/api/maker/commandes', { credentials: 'include' });
+        const data = await r.json();
+        renderCommandes(data);
+    }
+}
+
+function renderDisponibles(demandes) {
+    const el = document.getElementById('contenu');
+    if (demandes.length === 0) {
+        el.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p>Aucune demande disponible pour le moment</p>
+                <p style="font-size: 0.9rem;">Revenez bientôt pour découvrir de nouvelles opportunités !</p>
+            </div>
+        `;
+        return;
+    }
+    el.innerHTML = demandes.map(d => `
+        <div class="demande-dispo-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h3 class="demande-dispo-title">${escapeHtml(d.titre)}</h3>
+                    <p style="color: rgba(255,255,255,0.6); margin: 8px 0;">${escapeHtml((d.description || '').substring(0, 200))}${d.description && d.description.length > 200 ? '...' : ''}</p>
+                    <div class="offre-meta">
+                        ${d.marque ? `<span><i class="fas fa-tag"></i>${escapeHtml(d.marque)}</span>` : ''}
+                        ${d.materiauSouhaite ? `<span><i class="fas fa-cube"></i>${escapeHtml(d.materiauSouhaite)}</span>` : ''}
+                        ${d.ville ? `<span><i class="fas fa-map-marker-alt"></i>${escapeHtml(d.ville)}</span>` : ''}
+                    </div>
+                </div>
+                <div class="text-end">
+                    ${d.budgetMax ? `<div class="budget-tag">${d.budgetMax.toFixed(2)} EUR</div>` : ''}
+                    <button class="btn btn-neon mt-2" onclick="openOffreModal(${d.id}, '${escapeHtml(d.titre).replace(/'/g, "\\'")}')">
+                        <i class="fas fa-hand-holding-usd me-1"></i>Faire une offre
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderOffres(offres) {
+    const el = document.getElementById('contenu');
+    if (offres.length === 0) {
+        el.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-paper-plane"></i>
+                <p>Vous n'avez pas encore propose d'offres</p>
+            </div>
+        `;
+        return;
+    }
+    el.innerHTML = offres.map(o => `
+        <div class="offre-card" style="--offre-couleur: ${o.etat === 'ACCEPTEE' ? '#6ee7b7' : o.etat === 'REFUSEE' ? '#ff5eae' : '#ffc107'}">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h3 class="offre-title">${escapeHtml(o.demandeTitre || 'Demande #' + o.demandeId)}</h3>
+                    <div class="offre-meta">
+                        <span><i class="fas fa-calendar"></i>${formatDate(o.dateCreation)}</span>
+                        <span><i class="fas fa-truck"></i>${o.modeLivraison === 'LIVRAISON_POSTALE' ? 'Livraison postale' : 'Remise en main'}</span>
+                    </div>
+                    ${o.message ? `<p style="color: rgba(255,255,255,0.6); margin: 8px 0 0;">${escapeHtml(o.message)}</p>` : ''}
+                </div>
+                <div class="text-end">
+                    <span class="etat-badge etat-${o.etat}">${o.etat}</span>
+                    <div class="offre-prix mt-2">${o.prix.toFixed(2)} EUR</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Delai : ${o.delaiJours} jours</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderCommandes(offres) {
+    const el = document.getElementById('contenu');
+    if (offres.length === 0) {
+        el.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-print"></i>
+                <p>Aucune commande active</p>
+            </div>
+        `;
+        return;
+    }
+    el.innerHTML = offres.map(o => `
+        <div class="offre-card" style="--offre-couleur: #6ee7b7">
+            <h3 class="offre-title">${escapeHtml(o.demandeTitre)}</h3>
+            <p style="color: rgba(255,255,255,0.6);">Montant a recevoir : <strong style="color: #fff;">${o.prix.toFixed(2)} EUR</strong></p>
+            <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-sm btn-primary" onclick="lancerImpression(${o.id})">
+                    <i class="fas fa-play me-1"></i>Lancer l'impression
+                </button>
+                <button class="btn btn-sm btn-success" onclick="terminerImpression(${o.id})">
+                    <i class="fas fa-check me-1"></i>Marquer comme terminé
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openOffreModal(demandeId, titre) {
+    document.getElementById('demandeId').value = demandeId;
+    document.querySelector('#offreModal .modal-title').textContent = 'Offre pour : ' + titre;
+    new bootstrap.Modal(document.getElementById('offreModal')).show();
+}
+
+document.getElementById('offreForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = {
+        demandeId: parseInt(document.getElementById('demandeId').value),
+        prix: parseFloat(document.getElementById('prix').value),
+        delaiJours: parseInt(document.getElementById('delaiJours').value),
+        modeLivraison: document.getElementById('modeLivraison').value,
+        message: document.getElementById('message').value || null
+    };
+    const r = await fetch('/api/maker/offres', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(data)
+    });
+    if (r.ok) {
+        alert('Offre envoyée !');
+        bootstrap.Modal.getInstance(document.getElementById('offreModal')).hide();
+        e.target.reset();
+        load();
+    } else {
+        const err = await r.json();
+        alert(err.message || 'Erreur');
+    }
+});
+
+async function lancerImpression(offreId) {
+    if (!confirm('Lancer l\'impression de cette commande ?')) return;
+    const r = await fetch(`/api/maker/commandes/${offreId}/lancer-impression`, {
+        method: 'POST', credentials: 'include'
+    });
+    if (r.ok) { alert('Impression lancée'); load(); }
+    else { const err = await r.json(); alert(err.message || 'Erreur'); }
+}
+
+async function terminerImpression(offreId) {
+    if (!confirm('Marquer cette impression comme terminée et prête à valider ?')) return;
+    const r = await fetch(`/api/maker/commandes/${offreId}/terminer`, {
+        method: 'POST', credentials: 'include'
+    });
+    if (r.ok) { alert('Impression terminée'); load(); }
+    else { const err = await r.json(); alert(err.message || 'Erreur'); }
+}
+
+function formatDate(d) {
+    if (!d) return '';
+    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+load();
+</script>
+
+</body>
+</html>

@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Administration - hubpieces</title>
-<meta name="description" content="Tableau de bord administrateur hubpieces - Supervisez la plateforme de reparation par impression 3D">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,359 +11,228 @@
 <link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
+<style>
+.btn-neon {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(255,94,174,0.3);
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-neon:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,94,174,0.5); color: #fff; }
+.btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.08); color: #fff; }
+</style>
 </head>
 <body class="dashboard-body">
 
-<!-- Floating Particles -->
 <div class="db-particles">
     <span></span><span></span><span></span><span></span>
     <span></span><span></span><span></span><span></span>
 </div>
-
-<!-- Watermark (3 logos for rich effect) -->
 <div class="db-watermark">
     <img src="images/logo_hub.png" alt="">
     <img src="images/logo_hub.png" alt="">
     <img src="images/logo_hub.png" alt="">
 </div>
 
-<!-- Navbar -->
 <div id="navbar-placeholder"></div>
 
 <div class="dashboard-container">
 
-    <!-- ==================== WELCOME ==================== -->
     <div class="dashboard-welcome">
         <div class="dashboard-welcome-text">
-            <h1 id="welcomeTitle">Bienvenue, Admin !</h1>
-            <p>Supervisez l'ensemble de la plateforme hubpieces. Gerez les utilisateurs, validez les fichiers STL et suivez les litiges en temps reel.</p>
+            <h1 id="welcomeTitle">Administration</h1>
+            <p>Gerez la plateforme : utilisateurs, STL, litiges et transactions</p>
         </div>
         <span class="dashboard-role-pill"><i class="fas fa-shield-alt me-1"></i>Administrateur</span>
     </div>
 
-    <!-- ==================== STATS STRIP ==================== -->
-    <div class="dashboard-stats-strip">
+    <div class="dashboard-stats-strip" id="statsStrip">
         <div class="stat-mini-card">
-            <div class="stat-mini-icon orange"><i class="fas fa-users"></i></div>
+            <div class="stat-mini-icon blue"><i class="fas fa-users"></i></div>
             <div class="stat-mini-info">
-                <div class="stat-mini-number">248 <span class="stat-trend up"><i class="fas fa-arrow-up"></i> 12%</span></div>
-                <span class="stat-mini-label">Utilisateurs inscrits</span>
+                <div class="stat-mini-number" id="statUsers">-</div>
+                <span class="stat-mini-label">Utilisateurs</span>
             </div>
         </div>
         <div class="stat-mini-card">
-            <div class="stat-mini-icon blue"><i class="fas fa-cube"></i></div>
+            <div class="stat-mini-icon orange"><i class="fas fa-clipboard-list"></i></div>
             <div class="stat-mini-info">
-                <div class="stat-mini-number">156 <span class="stat-trend up"><i class="fas fa-arrow-up"></i> 8</span></div>
-                <span class="stat-mini-label">Fichiers STL valides</span>
+                <div class="stat-mini-number" id="statDemandes">-</div>
+                <span class="stat-mini-label">Demandes</span>
             </div>
         </div>
         <div class="stat-mini-card">
-            <div class="stat-mini-icon green"><i class="fas fa-handshake"></i></div>
+            <div class="stat-mini-icon green"><i class="fas fa-coins"></i></div>
             <div class="stat-mini-info">
-                <div class="stat-mini-number">89</div>
-                <span class="stat-mini-label">Transactions finalisees</span>
+                <div class="stat-mini-number" id="statCA">-</div>
+                <span class="stat-mini-label">CA total (EUR)</span>
             </div>
         </div>
         <div class="stat-mini-card">
-            <div class="stat-mini-icon red"><i class="fas fa-gavel"></i></div>
+            <div class="stat-mini-icon yellow"><i class="fas fa-gavel"></i></div>
             <div class="stat-mini-info">
-                <div class="stat-mini-number">5 <span class="stat-trend down"><i class="fas fa-arrow-down"></i> 2</span></div>
-                <span class="stat-mini-label">Litiges en cours</span>
+                <div class="stat-mini-number" id="statLitiges">-</div>
+                <span class="stat-mini-label">Litiges ouverts</span>
             </div>
         </div>
     </div>
 
-    <!-- ==================== CHARTS ROW ==================== -->
     <div class="dashboard-2col">
-
-        <!-- Bar Chart: Inscriptions par mois -->
         <div class="dashboard-chart-panel">
-            <div class="chart-panel-header">
-                <div>
-                    <div class="chart-panel-title"><i class="fas fa-chart-bar"></i> Inscriptions mensuelles</div>
-                    <div class="chart-panel-subtitle">Nouveaux utilisateurs — 6 derniers mois</div>
-                </div>
-            </div>
-            <div class="chart-bars">
-                <div class="chart-bar-col">
-                    <div class="chart-bar" style="height:35%"><span class="chart-bar-value">18</span></div>
-                    <span class="chart-bar-label">Mai</span>
-                </div>
-                <div class="chart-bar-col">
-                    <div class="chart-bar" style="height:50%"><span class="chart-bar-value">28</span></div>
-                    <span class="chart-bar-label">Juin</span>
-                </div>
-                <div class="chart-bar-col">
-                    <div class="chart-bar" style="height:42%"><span class="chart-bar-value">24</span></div>
-                    <span class="chart-bar-label">Juil</span>
-                </div>
-                <div class="chart-bar-col">
-                    <div class="chart-bar" style="height:65%"><span class="chart-bar-value">38</span></div>
-                    <span class="chart-bar-label">Aout</span>
-                </div>
-                <div class="chart-bar-col">
-                    <div class="chart-bar" style="height:78%"><span class="chart-bar-value">46</span></div>
-                    <span class="chart-bar-label">Sept</span>
-                </div>
-                <div class="chart-bar-col">
-                    <div class="chart-bar" style="height:90%"><span class="chart-bar-value">52</span></div>
-                    <span class="chart-bar-label">Oct</span>
-                </div>
+            <h4 style="color:#fff; margin-bottom:16px;">
+                <i class="fas fa-rocket me-2" style="color: var(--neon-pink);"></i>
+                Gestion
+            </h4>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="gestion-admin.html" class="btn btn-neon">
+                    <i class="fas fa-cog me-2"></i>Panel admin complet
+                </a>
+                <a href="mon-profil.html" class="btn btn-ghost">
+                    <i class="fas fa-user-shield me-2"></i>Mon profil
+                </a>
             </div>
         </div>
 
-        <!-- Donut: Repartition des roles -->
         <div class="dashboard-chart-panel">
-            <div class="chart-panel-header">
-                <div>
-                    <div class="chart-panel-title"><i class="fas fa-chart-pie"></i> Repartition par role</div>
-                    <div class="chart-panel-subtitle">248 utilisateurs au total</div>
-                </div>
-            </div>
-            <div class="chart-donut-container">
-                <div class="chart-donut">
-                    <svg width="150" height="150" viewBox="0 0 150 150">
-                        <circle cx="75" cy="75" r="58" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="20"/>
-                        <circle cx="75" cy="75" r="58" fill="none" stroke="#ff6b35" stroke-width="20"
-                                stroke-dasharray="145.8 364.4" stroke-dashoffset="0"
-                                transform="rotate(-90 75 75)" style="animation: dbDonutDraw 1.5s ease both;"/>
-                        <circle cx="75" cy="75" r="58" fill="none" stroke="#7986cb" stroke-width="20"
-                                stroke-dasharray="109.3 364.4" stroke-dashoffset="-145.8"
-                                transform="rotate(-90 75 75)" style="animation: dbDonutDraw 1.5s ease 0.2s both;"/>
-                        <circle cx="75" cy="75" r="58" fill="none" stroke="#4caf50" stroke-width="20"
-                                stroke-dasharray="72.9 364.4" stroke-dashoffset="-255.1"
-                                transform="rotate(-90 75 75)" style="animation: dbDonutDraw 1.5s ease 0.4s both;"/>
-                        <circle cx="75" cy="75" r="58" fill="none" stroke="#9d4edd" stroke-width="20"
-                                stroke-dasharray="36.4 364.4" stroke-dashoffset="-328.0"
-                                transform="rotate(-90 75 75)" style="animation: dbDonutDraw 1.5s ease 0.6s both;"/>
-                    </svg>
-                    <div class="chart-donut-inner" style="position:absolute;">
-                        <span class="chart-donut-value">248</span>
-                        <span class="chart-donut-label">total</span>
-                    </div>
-                </div>
-                <div class="chart-donut-legend">
-                    <div class="legend-item"><span class="legend-dot orange"></span>Demandeurs (40%)</div>
-                    <div class="legend-item"><span class="legend-dot blue"></span>Makers (30%)</div>
-                    <div class="legend-item"><span class="legend-dot green"></span>Experts CAO (20%)</div>
-                    <div class="legend-item"><span class="legend-dot purple"></span>Admins (10%)</div>
-                </div>
+            <h4 style="color:#fff; margin-bottom:16px;">
+                <i class="fas fa-chart-bar me-2" style="color: var(--neon-pink);"></i>
+                Repartition des roles
+            </h4>
+            <div id="repartition" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                <i class="fas fa-spinner fa-spin"></i>
             </div>
         </div>
     </div>
 
-    <style>
-        @keyframes dbDonutDraw { from { stroke-dasharray: 0 364.4; } }
-    </style>
-
-    <!-- ==================== PERFORMANCE STRIP ==================== -->
-    <h2 class="dashboard-section-title"><i class="fas fa-tachometer-alt"></i>Performance plateforme</h2>
-    <div class="dashboard-full-panel">
-        <div class="progress-list">
-            <div class="progress-item">
-                <div class="progress-item-header">
-                    <span class="progress-item-label">Taux de satisfaction global</span>
-                    <span class="progress-item-value">94%</span>
-                </div>
-                <div class="progress-bar-track"><div class="progress-bar-fill green" style="width:94%"></div></div>
-            </div>
-            <div class="progress-item">
-                <div class="progress-item-header">
-                    <span class="progress-item-label">Fichiers STL valides vs soumis</span>
-                    <span class="progress-item-value">78%</span>
-                </div>
-                <div class="progress-bar-track"><div class="progress-bar-fill" style="width:78%"></div></div>
-            </div>
-            <div class="progress-item">
-                <div class="progress-item-header">
-                    <span class="progress-item-label">Resolution de litiges (< 48h)</span>
-                    <span class="progress-item-value">86%</span>
-                </div>
-                <div class="progress-bar-track"><div class="progress-bar-fill blue" style="width:86%"></div></div>
-            </div>
-            <div class="progress-item">
-                <div class="progress-item-header">
-                    <span class="progress-item-label">Taux de retention des makers</span>
-                    <span class="progress-item-value">91%</span>
-                </div>
-                <div class="progress-bar-track"><div class="progress-bar-fill purple" style="width:91%"></div></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== TABLE: UTILISATEURS ==================== -->
-    <h2 class="dashboard-section-title" id="utilisateurs"><i class="fas fa-users-cog"></i>Derniers utilisateurs</h2>
-    <div class="dashboard-full-panel">
-        <div class="dashboard-table-wrap">
-            <table class="dashboard-table">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Role</th>
-                        <th>Ville</th>
-                        <th>Date inscription</th>
-                        <th>Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Ahmed B.</strong></td>
-                        <td>Maker</td>
-                        <td>Tetouan</td>
-                        <td>12 Sept 2026</td>
-                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> Actif</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sara K.</strong></td>
-                        <td>Expert CAO</td>
-                        <td>Rabat</td>
-                        <td>28 Sept 2026</td>
-                        <td><span class="table-status pending"><i class="fas fa-circle" style="font-size:6px"></i> En attente</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Youssef M.</strong></td>
-                        <td>Maker</td>
-                        <td>Tanger</td>
-                        <td>03 Oct 2026</td>
-                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> Actif</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nadia R.</strong></td>
-                        <td>Demandeur</td>
-                        <td>Casablanca</td>
-                        <td>01 Oct 2026</td>
-                        <td><span class="table-status active"><i class="fas fa-circle" style="font-size:6px"></i> Actif</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Omar T.</strong></td>
-                        <td>Expert CAO</td>
-                        <td>Fes</td>
-                        <td>04 Oct 2026</td>
-                        <td><span class="table-status pending"><i class="fas fa-circle" style="font-size:6px"></i> En attente</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- ==================== 3D MODEL + LITIGES ==================== -->
+    <h2 class="dashboard-section-title">
+        <i class="fas fa-bell"></i>Actions requises
+    </h2>
     <div class="dashboard-2col">
-
-        <!-- 3D Model -->
-        <div class="dashboard-3d-panel">
-            <div class="model-header">
-                <h4><i class="fas fa-cube"></i> Apercu modele 3D</h4>
-                <span class="model-tag">Interactif</span>
-            </div>
-            <model-viewer
-                src="images/model1.glb"
-                alt="modele 3d administration"
-                auto-rotate
-                auto-rotate-delay="0"
-                rotation-per-second="25deg"
-                camera-controls
-                shadow-intensity="0.6"
-                class="dashboard-3d-viewer">
-            </model-viewer>
-            <div class="model-3d-footer">
-                <span>Dernier fichier STL soumis</span>
-                <span class="model-interact-hint"><i class="fas fa-hand-pointer"></i> Glisser pour tourner</span>
+        <div class="dashboard-chart-panel">
+            <h4 style="color:#fff; margin-bottom:16px;">
+                <i class="fas fa-cube me-2" style="color: var(--neon-pink);"></i>
+                STL a valider
+            </h4>
+            <div id="stlEnAttente">
+                <p style="color: rgba(255,255,255,0.5);">Chargement...</p>
             </div>
         </div>
-
-        <!-- Litiges -->
-        <div class="dashboard-chart-panel" id="litiges">
-            <div class="chart-panel-header">
-                <div>
-                    <div class="chart-panel-title"><i class="fas fa-gavel"></i> Litiges recents</div>
-                    <div class="chart-panel-subtitle">5 litiges en attente de resolution</div>
-                </div>
-            </div>
-            <div class="activity-timeline">
-                <div class="activity-item">
-                    <div class="activity-dot yellow"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Litige #042</strong> — Piece non conforme, demandeur conteste la qualite</div>
-                        <div class="activity-time">Il y a 2 heures</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-dot orange"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Litige #041</strong> — Retard de livraison, maker indisponible</div>
-                        <div class="activity-time">Il y a 8 heures</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-dot green"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Litige #040</strong> — Resolu en faveur du demandeur</div>
-                        <div class="activity-time">Hier, 15:30</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-dot yellow"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Litige #039</strong> — Fichier STL corrompu, en cours d'analyse</div>
-                        <div class="activity-time">Hier, 10:12</div>
-                    </div>
-                </div>
-                <div class="activity-item">
-                    <div class="activity-dot blue"></div>
-                    <div class="activity-content">
-                        <div class="activity-text"><strong>Litige #038</strong> — Communication rompue entre les parties</div>
-                        <div class="activity-time">03 Oct 2026</div>
-                    </div>
-                </div>
+        <div class="dashboard-chart-panel">
+            <h4 style="color:#fff; margin-bottom:16px;">
+                <i class="fas fa-gavel me-2" style="color: var(--neon-pink);"></i>
+                Litiges en cours
+            </h4>
+            <div id="litigesEnCours">
+                <p style="color: rgba(255,255,255,0.5);">Chargement...</p>
             </div>
         </div>
-
-    </div>
-
-    <!-- ==================== VALIDATION STL ==================== -->
-    <h2 class="dashboard-section-title" id="validation-stl"><i class="fas fa-check-double"></i>Validation des fichiers STL</h2>
-    <div class="dashboard-grid">
-        <div class="dashboard-card">
-            <div class="dashboard-card-icon"><i class="fas fa-user-check"></i></div>
-            <h5>Validation des comptes</h5>
-            <p>Approuvez ou suspendez les comptes demandeurs, makers et experts CAO.</p>
-            <span class="dashboard-card-badge soon">Bientot disponible</span>
-        </div>
-        <div class="dashboard-card">
-            <div class="dashboard-card-icon"><i class="fas fa-file-alt"></i></div>
-            <h5>Fichiers STL en attente</h5>
-            <p>7 fichiers soumis par les experts CAO sont en attente de moderation.</p>
-            <span class="dashboard-card-badge soon">Bientot disponible</span>
-        </div>
-        <div class="dashboard-card">
-            <div class="dashboard-card-icon"><i class="fas fa-chart-line"></i></div>
-            <h5>Rapports et statistiques</h5>
-            <p>Consultez les rapports detailles sur l'activite de la plateforme.</p>
-            <span class="dashboard-card-badge soon">Bientot disponible</span>
-        </div>
-    </div>
-
-    <!-- ==================== QUICK ACTIONS ==================== -->
-    <h2 class="dashboard-section-title"><i class="fas fa-bolt"></i>Actions rapides</h2>
-    <div class="quick-actions">
-        <a href="index.html" class="quick-action-btn"><i class="fas fa-home"></i> Voir le site</a>
-        <a href="#utilisateurs" class="quick-action-btn"><i class="fas fa-user-plus"></i> Gerer les comptes</a>
-        <a href="#litiges" class="quick-action-btn"><i class="fas fa-gavel"></i> Voir les litiges</a>
-        <a href="#validation-stl" class="quick-action-btn"><i class="fas fa-cube"></i> Valider STL</a>
     </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>
-    document.addEventListener("userLoaded", (e) => {
-        const user = e.detail;
-        if (user) {
-            document.getElementById("welcomeTitle").textContent = "Bienvenue, " + (user.prenom || "") + " !";
+async function loadAll() {
+    // Stats globales
+    try {
+        const r = await fetch('/api/admin/stats', { credentials: 'include' });
+        if (r.status === 401) { location.href = 'login.html'; return; }
+        if (r.status === 403) { alert('Acces reserve aux administrateurs'); location.href = 'index.html'; return; }
+        if (r.ok) {
+            const s = await r.json();
+            document.getElementById('statUsers').textContent = s.totalUtilisateurs || 0;
+            document.getElementById('statDemandes').textContent = s.totalDemandes || 0;
+            document.getElementById('statCA').textContent = (s.montantTotalTransactions || 0).toFixed(0);
+            document.getElementById('statLitiges').textContent = s.litigesOuverts || 0;
+            document.getElementById('repartition').innerHTML = `
+                <div style="padding: 16px; background: rgba(0,0,0,0.3); border-radius: 12px; text-align: center;">
+                    <div style="color: #0dcaf0; font-size: 2rem; font-weight: 800;">${s.totalDemandeurs}</div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Demandeurs</div>
+                </div>
+                <div style="padding: 16px; background: rgba(0,0,0,0.3); border-radius: 12px; text-align: center;">
+                    <div style="color: #6ee7b7; font-size: 2rem; font-weight: 800;">${s.totalMakers}</div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Makers</div>
+                </div>
+                <div style="padding: 16px; background: rgba(0,0,0,0.3); border-radius: 12px; text-align: center;">
+                    <div style="color: #9d4edd; font-size: 2rem; font-weight: 800;">${s.totalExpertsCao}</div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Experts CAO</div>
+                </div>
+            `;
         }
-    });
+    } catch (e) {}
+
+    // Nom
+    try {
+        const r = await fetch('/api/utilisateurs/me', { credentials: 'include' });
+        if (r.ok) {
+            const u = await r.json();
+            document.getElementById('welcomeTitle').textContent = 'Bienvenue ' + u.prenom;
+        }
+    } catch (e) {}
+
+    // STL en attente
+    try {
+        const r = await fetch('/api/admin/fichiers-stl/en-attente', { credentials: 'include' });
+        if (r.ok) {
+            const data = await r.json();
+            const el = document.getElementById('stlEnAttente');
+            if (data.length === 0) {
+                el.innerHTML = '<p style="color: rgba(110,231,183,0.7); text-align: center; padding: 20px;">Aucun fichier en attente</p>';
+            } else {
+                el.innerHTML = data.slice(0, 5).map(f => `
+                    <div style="padding: 12px; background: rgba(0,0,0,0.3); border-radius: 8px; margin-bottom: 8px;">
+                        <div style="color: #fff; font-weight: 600;">${escapeHtml(f.nom)}</div>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">par ${escapeHtml(f.uploadeurNom || 'Inconnu')}</div>
+                    </div>
+                `).join('') + `<div class="text-center mt-3"><a href="gestion-admin.html" class="btn btn-neon btn-sm">Gerer</a></div>`;
+            }
+        }
+    } catch (e) {}
+
+    // Litiges en cours
+    try {
+        const r = await fetch('/api/admin/litiges/ouverts', { credentials: 'include' });
+        if (r.ok) {
+            const data = await r.json();
+            const el = document.getElementById('litigesEnCours');
+            if (data.length === 0) {
+                el.innerHTML = '<p style="color: rgba(110,231,183,0.7); text-align: center; padding: 20px;">Aucun litige en cours</p>';
+            } else {
+                el.innerHTML = data.slice(0, 5).map(l => `
+                    <div style="padding: 12px; background: rgba(0,0,0,0.3); border-radius: 8px; margin-bottom: 8px;">
+                        <div style="color: #fff; font-weight: 600;">${escapeHtml(l.demandeTitre || 'Litige #' + l.id)}</div>
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">par ${escapeHtml(l.demandeurNom || 'Inconnu')}</div>
+                    </div>
+                `).join('') + `<div class="text-center mt-3"><a href="gestion-admin.html" class="btn btn-neon btn-sm">Resoudre</a></div>`;
+            }
+        }
+    } catch (e) {}
+}
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+loadAll();
 </script>
+
 </body>
 </html>

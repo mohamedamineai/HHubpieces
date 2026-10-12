@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalogue STL - hubpieces</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link href="css/header.css" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at 20% 20%, #1a0b33 0%, #0a0514 60%);
+    min-height: 100vh;
+    color: #fff;
+}
+.catalogue-hero {
+    background: linear-gradient(135deg, rgba(157,78,221,0.18) 0%, rgba(255,94,174,0.10) 100%);
+    border-radius: 24px;
+    padding: 48px 32px;
+    margin: 32px auto;
+    max-width: 1200px;
+    border: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.catalogue-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 12px;
+}
+.catalogue-hero .gradient-text {
+    background: linear-gradient(135deg, #c89bf0 0%, #ff5eae 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.stl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 24px;
+}
+.stl-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+.stl-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,94,174,0.5);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+.stl-preview {
+    height: 200px;
+    background: linear-gradient(135deg, #150a2e 0%, #0a0514 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.stl-preview model-viewer {
+    width: 100%;
+    height: 100%;
+    --progress-bar-color: transparent;
+}
+.stl-info {
+    padding: 16px 20px;
+}
+.stl-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0 0 8px;
+}
+.stl-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+}
+.stl-meta i { color: var(--neon-pink); margin-right: 4px; }
+.filtre-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 24px auto 32px;
+    max-width: 1200px;
+    padding: 0 24px;
+}
+.filtre-pill {
+    padding: 8px 18px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+.filtre-pill.active, .filtre-pill:hover {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    color: #fff;
+    border-color: transparent;
+}
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255,255,255,0.4);
+    grid-column: 1 / -1;
+}
+.empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: 0.3; }
+.btn-neon {
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-neon:hover { transform: translateY(-2px); color: #fff; box-shadow: 0 8px 30px rgba(255,94,174,0.5); }
+.db-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.db-particles span {
+    position: absolute;
+    display: block;
+    width: 6px; height: 6px;
+    background: rgba(255,94,174,0.4);
+    border-radius: 50%;
+    animation: float 20s infinite linear;
+}
+.db-particles span:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.db-particles span:nth-child(2) { top: 60%; left: 80%; animation-delay: 4s; }
+.db-particles span:nth-child(3) { top: 80%; left: 20%; animation-delay: 8s; }
+.db-particles span:nth-child(4) { top: 30%; left: 60%; animation-delay: 12s; }
+.db-particles span:nth-child(5) { top: 10%; left: 50%; animation-delay: 16s; }
+.db-particles span:nth-child(6) { top: 50%; left: 30%; animation-delay: 2s; }
+.db-particles span:nth-child(7) { top: 70%; left: 70%; animation-delay: 6s; }
+.db-particles span:nth-child(8) { top: 40%; left: 90%; animation-delay: 10s; }
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.4; }
+    50% { transform: translateY(-100px) translateX(50px); opacity: 1; }
+    100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+}
+.db-watermark { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.025; }
+.db-watermark img { position: absolute; width: 280px; height: 280px; }
+.db-watermark img:nth-child(1) { top: 10%; left: 5%; }
+.db-watermark img:nth-child(2) { top: 50%; left: 70%; transform: rotate(45deg); }
+.db-watermark img:nth-child(3) { top: 80%; left: 30%; transform: rotate(-30deg); }
+</style>
+</head>
+<body>
+
+<div class="db-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+</div>
+<div class="db-watermark">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+    <img src="images/logo_hub.png" alt="">
+</div>
+
+<div id="navbar-placeholder"></div>
+
+<div style="position: relative; z-index: 1;">
+
+    <div class="catalogue-hero">
+        <h1>
+            <i class="fas fa-cubes" style="color: var(--neon-pink);"></i>
+            Catalogue <span class="gradient-text">STL</span>
+        </h1>
+        <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+            Découvrez les modèles 3D validés par nos experts CAO. Téléchargez-les ou utilisez-les directement pour vos réparations.
+        </p>
+    </div>
+
+    <div class="filtre-bar" id="filtres">
+        <div class="filtre-pill active" data-categorie="">Toutes categories</div>
+        <div class="filtre-pill" data-categorie="electromenager">Electromenager</div>
+        <div class="filtre-pill" data-categorie="automobile">Automobile</div>
+        <div class="filtre-pill" data-categorie="quotidien">Quotidien</div>
+        <div class="filtre-pill" data-categorie="decoration">Decoration</div>
+        <div class="filtre-pill" data-categorie="jouet">Jouets</div>
+    </div>
+
+    <div class="stl-grid" id="grid">
+        <div class="empty-state" style="grid-column: 1/-1;">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Chargement du catalogue...</p>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/header.js"></script>
+<script>
+let catalogue = [];
+let categorieActif = '';
+
+async function load() {
+    try {
+        const r = await fetch('/api/public/catalogue-stl', { credentials: 'include' });
+        if (!r.ok) throw new Error('Erreur chargement');
+        catalogue = await r.json();
+        render();
+    } catch (e) {
+        document.getElementById('grid').innerHTML = `<div class="alert alert-danger">Erreur de chargement du catalogue</div>`;
+    }
+}
+
+function render() {
+    const filtered = categorieActif === ''
+        ? catalogue
+        : catalogue.filter(f => (f.categorie || '').toLowerCase() === categorieActif.toLowerCase());
+    const grid = document.getElementById('grid');
+    if (filtered.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><i class="fas fa-cube"></i><p>Aucun fichier STL pour cette categorie</p></div>`;
+        return;
+    }
+    grid.innerHTML = filtered.map(f => `
+        <div class="stl-card" onclick="telecharger(${f.id})">
+            <div class="stl-preview">
+                ${f.cheminFichier && f.cheminFichier.endsWith('.glb')
+                    ? `<model-viewer src="${f.cheminFichier}" alt="${escapeHtml(f.nom)}" auto-rotate camera-controls disable-zoom shadow-intensity="0.5"></model-viewer>`
+                    : `<i class="fas fa-cube" style="font-size: 4rem; color: rgba(255,94,174,0.4);"></i>`}
+            </div>
+            <div class="stl-info">
+                <h3 class="stl-name">${escapeHtml(f.nom)}</h3>
+                <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin: 0 0 12px;">
+                    ${escapeHtml((f.description || '').substring(0, 100))}${f.description && f.description.length > 100 ? '...' : ''}
+                </p>
+                <div class="stl-meta">
+                    ${f.marque ? `<span><i class="fas fa-tag"></i>${escapeHtml(f.marque)}</span>` : ''}
+                    ${f.materiauRecommande ? `<span><i class="fas fa-cube"></i>${escapeHtml(f.materiauRecommande)}</span>` : ''}
+                    <span><i class="fas fa-download"></i>${f.nombreTelechargements || 0}</span>
+                    <span><i class="fas fa-star"></i>${(f.noteMoyenne || 0).toFixed(1)}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function telecharger(id) {
+    await fetch(`/api/public/catalogue-stl/${id}/telecharger`, { method: 'POST', credentials: 'include' });
+    const fichier = catalogue.find(f => f.id === id);
+    if (fichier) {
+        alert('Téléchargement de "' + fichier.nom + '" lancé !');
+    }
+}
+
+document.getElementById('filtres').addEventListener('click', e => {
+    const pill = e.target.closest('.filtre-pill');
+    if (!pill) return;
+    document.querySelectorAll('.filtre-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    categorieActif = pill.dataset.categorie;
+    render();
+});
+
+function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+load();
+</script>
+
+</body>
+</html>
