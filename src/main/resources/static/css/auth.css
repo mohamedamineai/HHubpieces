@@ -218,3 +218,30 @@ body.auth-body {
     .auth-right { display: none; }
     .auth-left { flex: 1 1 100%; }
 }
+
+/* ==================== GRILLE DES FORMULAIRES ====================
+   login.html et register.html n'embarquent pas Bootstrap : on definit ici
+   les classes de grille utilisees dans les formulaires (.row / .col-6)
+   afin que les champs "Nom / Prenom" et "Telephone / Ville" restent cote a cote. */
+#registerForm .row,
+#loginForm .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+#registerForm .row.g-2,
+#loginForm .row.g-2 {
+    gap: 0.5rem;
+}
+
+#registerForm .col-6,
+#loginForm .col-6 {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+@media (max-width: 520px) {
+    #registerForm .col-6,
+    #loginForm .col-6 { flex: 1 1 100%; }
+}

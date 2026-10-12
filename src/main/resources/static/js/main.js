@@ -1,4 +1,4 @@
-﻿// ==================== HUBPIÈCES — MAIN.JS ====================
+// ==================== HUBPIÈCES — MAIN.JS ====================
 
 // ==================== AOS INIT ====================
 document.addEventListener('DOMContentLoaded', () => {

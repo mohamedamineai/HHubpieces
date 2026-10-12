@@ -57,8 +57,12 @@ public class SecurityConfig {
                 )
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                // On desactive TOUT mecanisme de login/logout par defaut de Spring Security :
+                // l'authentification est geree par AuthController (/api/auth/login) + HttpSession.
+                // -> plus jamais de page "Please sign in" ni de Basic Auth.
                 .formLogin(form -> form.disable())
-                .httpBasic(basic -> basic.disable());
+                .httpBasic(basic -> basic.disable())
+                .logout(logout -> logout.disable());
         return http.build();
     }
 }

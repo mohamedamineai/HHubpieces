@@ -68,11 +68,16 @@ bash mvnw spring-boot:run
 Le serveur démarre sur le port **9090**.
 
 ### URLs importantes
-- **Accueil** : http://localhost:9090/index.html
+- **Accueil** : http://localhost:9090/ (ou http://localhost:9090/index.html)
 - **Swagger UI** : http://localhost:9090/swagger-ui.html
 - **OpenAPI JSON** : http://localhost:9090/v3/api-docs
-- **Connexion** : http://localhost:9090/login.html
-- **Inscription** : http://localhost:9090/register.html
+- **Connexion** : http://localhost:9090/login (ou http://localhost:9090/login.html)
+- **Inscription** : http://localhost:9090/register (ou http://localhost:9090/register.html)
+- **Catalogue** : http://localhost:9090/catalogue (ou http://localhost:9090/catalogue.html)
+
+> Les URLs sans extension (`/`, `/login`, `/register`, `/catalogue`) sont gérées par
+> `WebMvcConfig#addViewControllers` : elles ouvrent toujours les vraies pages du site,
+> jamais le formulaire par défaut de Spring Security.
 
 ### Comptes de test
 | Role | Email | Mot de passe |
