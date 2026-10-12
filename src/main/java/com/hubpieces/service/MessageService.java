@@ -6,6 +6,7 @@ import com.hubpieces.exception.ResourceNotFoundException;
 import com.hubpieces.model.Demande;
 import com.hubpieces.model.Message;
 import com.hubpieces.model.RoleNom;
+import com.hubpieces.model.TypeNotification;
 import com.hubpieces.model.Utilisateur;
 import com.hubpieces.repository.DemandeRepository;
 import com.hubpieces.repository.MessageRepository;
