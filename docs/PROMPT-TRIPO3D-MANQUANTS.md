@@ -1,8 +1,10 @@
-# 🎨 Prompts Tripo3D — Modèles 3D manquants pour Hubpieces
+# 🎨 Prompts Tripo3D — visuels de rôle Hubpieces
 
+> **État vérifié le 13 octobre 2026** : les six modèles décrits dans ce fichier sont tous présents dans `src/main/resources/static/images/` et sont intégrés sur leurs pages dédiées. Les prompts ci-dessous sont conservés comme références de conception, pas comme une liste d'assets manquants. Aucun modèle n'est à régénérer ou à dupliquer.
+>
 > **Site Tripo3D** : https://www.tripo3d.ai/  
 > **Compte gratuit** suffit. Connectez-vous avec Google ou email.  
-> **Workflow** : New → Text to 3D → coller le prompt → Generate → Download en `.glb`
+> **Workflow futur** : New → Text to 3D → coller le prompt → Generate → Download en `.glb`.
 
 ---
 
@@ -14,51 +16,52 @@
 | Rose néon | `#ff5eae` | Boutons, glow, dégradés |
 | Noir profond | `#0a0514` | Background, ambiance |
 | Violet sombre | `#1a0b33` | Backgrounds secondaires |
+| Vert éco | `#6ee7b7` | Identité écoresponsable |
 | Blanc | `#ffffff` | Textes |
 
-**Style général** : Futuriste, glassmorphism, économie circulaire, repair-tech, eco-friendly, industriel-moderne.
+**Style général** : Futuriste, glassmorphism, économie circulaire, repair-tech, eco-friendly, industriel-moderne. Les fonds sont ajoutés en CSS; les modèles GLB ne doivent pas contenir de fond opaque.
 
 ---
 
-## 📋 Les 6 modèles 3D à générer
+## 📋 Prompts de référence — les 6 fichiers sont présents
 
 ### 1️⃣ `repair-gear.glb` — Dashboard Demandeur (Aperçu pièce)
 
-**Usage** : Remplace le placeholder du dashboard-demandeur.html (section "Aperçu de votre pièce"). Animation rotation lente.
+**Usage réel** : Décoration liée à la réparation dans `dashboard-demandeur.html`. Elle ne représente pas une demande ni une pièce de catalogue. Rotation lente avec `model-viewer` (désactivée en mode réduction des animations).
 
 **À ouvrir dans Tripo3D** : https://www.tripo3d.ai/app/creation/text-to-3d
 
 **Prompt à copier-coller** :
 
 ```
-A photorealistic 3D printable mechanical gear, 12 perfectly cut teeth, central axle hole, polished metallic finish in deep purple #9d4edd with neon pink #ff5eae rim lighting and glowing edges. The gear is slightly worn, with subtle use marks and engraved text "HUBPIECES" on its flat surface. Floating isolated on a dark gradient background from #0a0514 to #1a0b33. Cinematic studio lighting with soft volumetric fog, dramatic rim light, and bokeh particles. Industrial design meets futurism, eco-friendly repair aesthetic. 4K PBR textures (metallic + roughness), high detail, optimized for web GLB format. Centered composition, slight tilt angle. No people, no text overlay.
+A photorealistic 3D printable mechanical gear, 12 perfectly cut teeth, central axle hole, polished metallic finish in deep purple #9d4edd with neon pink #ff5eae rim lighting and glowing edges. The gear is slightly worn, with subtle use marks and engraved text "HUBPIECES" on its flat surface. Floating isolated on a transparent alpha background. Do not include a floor, backdrop, card, or background geometry; the dark gradient and particles will be supplied by CSS. Use cinematic studio lighting, soft volumetric fog, and dramatic rim light on the object. Industrial design meets futurism, eco-friendly repair aesthetic. 4K PBR textures (metallic + roughness), high detail, optimized for web GLB format. Centered composition, slight tilt angle. No people, no text overlay.
 ```
 
 **Paramètres recommandés** :
 - Style : Realistic
 - Quality : High
 - Format : GLB
-- Size : Moderate (~5-10 MB)
+- Size : Moderate (cible 3-8 MB, plafond conseillé 10 MB)
 - Background : Transparent (puis ajouter le fond noir en CSS)
 
-**Une fois téléchargé** : Renommer en `repair-gear.glb` et placer dans :
+**Si le modèle est régénéré à l’avenir** : utiliser le nom exact `repair-gear.glb` et placer dans :
 ```
 /home/user/HHubpieces/src/main/resources/static/images/repair-gear.glb
 ```
 
 ---
 
-### 2️⃣ `printed-piece.glb` — Dashboard Maker (Mes commandes)
+### 2️⃣ `printed-piece.glb` — Dashboard Maker (illustration de l’espace)
 
 **Usage** : Modèle 3D flottant dans la sidebar ou le hero du dashboard-maker.html. Représente une pièce imprimée.
 
 **Prompt à copier-coller** :
 
 ```
-A beautifully 3D printed mechanical replacement part, specifically a freshly printed door handle bracket for a home appliance, in vibrant ABS plastic with a smooth purple-to-pink gradient color transition from #9d4edd to #ff5eae. The piece shows visible but clean 3D printing layer lines (0.2mm), slightly glossy surface, and rests on a soft dark velvet surface. Soft studio lighting from above with subtle pink and purple neon rim lights reflecting on the plastic. Modern eco-friendly product photography style. Minimalist composition with a single object centered. High detail 4K textures, photorealistic PBR material. Dark moody atmosphere with bokeh. No text, no people, no other objects.
+A beautifully 3D printed mechanical replacement part, specifically a freshly printed door handle bracket for a home appliance, in vibrant ABS plastic with a smooth purple-to-pink gradient color transition from #9d4edd to #ff5eae. The piece shows visible but clean 3D printing layer lines (0.2mm), slightly glossy surface, floating as one isolated object on a transparent alpha background. Do not include a floor, surface, backdrop, or background geometry; the dark atmosphere will be supplied by CSS. Use soft studio lighting from above with subtle pink and purple neon rim lights reflecting on the plastic. Modern eco-friendly product photography style. Minimalist composition with a single object centered. High detail 4K textures, photorealistic PBR material. No text, no people, no other objects.
 ```
 
-**Une fois téléchargé** : Renommer en `printed-piece.glb` et placer dans :
+**Si le modèle est régénéré à l’avenir** : utiliser le nom exact `printed-piece.glb` et placer dans :
 ```
 /home/user/HHubpieces/src/main/resources/static/images/printed-piece.glb
 ```
@@ -67,15 +70,15 @@ A beautifully 3D printed mechanical replacement part, specifically a freshly pri
 
 ### 3️⃣ `cao-model.glb` — Dashboard Expert CAO (Modélisation)
 
-**Usage** : Hero 3D du dashboard-expertcao.html. Représente un modèle CAO en cours.
+**Usage réel** : Illustration technique de l’espace Expert CAO dans `dashboard-expertcao.html`; ne représente pas un modèle lié à une demande réelle ni un fichier fabriqué.
 
 **Prompt à copier-coller** :
 
 ```
-A detailed 3D wireframe CAD model of a complex mechanical component (a turbine housing with curved surfaces, mounting holes, and technical features), displayed in two simultaneous render modes: solid translucent glass-like body in deep purple #9d4edd with internal structure visible, overlaid with bright neon pink #ff5eae glowing wireframe edges and construction lines. Floating technical measurement annotations and dimension arrows appear around the model. Dark space background #0a0514 with subtle grid floor. Dramatic studio lighting with magenta and purple volumetric beams. Futuristic engineering aesthetic, professional CAD software visualization style. High detail, 4K textures, clean and minimal composition. No real-world background, no people.
+A detailed 3D wireframe CAD model of a complex mechanical component (a turbine housing with curved surfaces, mounting holes, and technical features), displayed in two simultaneous render modes: solid translucent glass-like body in deep purple #9d4edd with internal structure visible, overlaid with bright neon pink #ff5eae glowing wireframe edges and construction lines. Floating technical measurement annotations and dimension arrows appear around the model. Transparent alpha background: show only the isolated CAD model and its attached measurement annotations. No floor, backdrop, or background geometry; the dark #0a0514 grid environment will be supplied by CSS. Dramatic studio lighting with magenta and purple volumetric beams. Futuristic engineering aesthetic, professional CAD software visualization style. High detail, 4K textures, clean and minimal composition. No real-world background, no people.
 ```
 
-**Une fois téléchargé** : Renommer en `cao-model.glb` et placer dans :
+**Si le modèle est régénéré à l’avenir** : utiliser le nom exact `cao-model.glb` et placer dans :
 ```
 /home/user/HHubpieces/src/main/resources/static/images/cao-model.glb
 ```
@@ -89,10 +92,10 @@ A detailed 3D wireframe CAD model of a complex mechanical component (a turbine h
 **Prompt à copier-coller** :
 
 ```
-A futuristic 3D printed circuit board motherboard replacement part, a small rectangular PCB fragment with visible micro-components (resistors, capacitors, traces) elegantly integrated into a 3D printed plastic carrier frame. The carrier frame is in glossy deep purple #9d4edd plastic with soft pink #ff5eae LED indicator lights glowing on the corners. The piece floats in the center of the frame with subtle anti-gravity effect. Dark cyberpunk background with deep purple gradient #0a0514 to #1a0b33, faint hexagonal grid pattern floor, soft volumetric fog. Cinematic lighting with neon rim lights, bokeh particles in the background. Eco-tech repair aesthetic. 4K photorealistic PBR textures, web-optimized GLB format. No people, no text overlay.
+A futuristic 3D printed circuit board motherboard replacement part, a small rectangular PCB fragment with visible micro-components (resistors, capacitors, traces) elegantly integrated into a 3D printed plastic carrier frame. The carrier frame is in glossy deep purple #9d4edd plastic with soft pink #ff5eae LED indicator lights glowing on the corners. The piece floats in the center of the frame with subtle anti-gravity effect. Transparent alpha background: isolate the circuit-board object with no floor, backdrop, or background geometry. The dark cyberpunk gradient, hexagonal grid, and fog belong in CSS. Use cinematic neon rim lighting and subtle specular highlights on the isolated object. Eco-tech repair aesthetic. 4K photorealistic PBR textures, web-optimized GLB format. No people, no text overlay.
 ```
 
-**Une fois téléchargé** : Renommer en `circuit-board.glb` et placer dans :
+**Si le modèle est régénéré à l’avenir** : utiliser le nom exact `circuit-board.glb` et placer dans :
 ```
 /home/user/HHubpieces/src/main/resources/static/images/circuit-board.glb
 ```
@@ -106,10 +109,10 @@ A futuristic 3D printed circuit board motherboard replacement part, a small rect
 **Prompt à copier-coller** :
 
 ```
-A futuristic 3D holographic shield icon, low-poly geometric design with hexagonal facets, glowing neon pink #ff5eae edges and deep purple #9d4edd body. The shield is semi-transparent with internal glowing energy lines and a small 3D gear or chip in its center representing technology and protection. Floating on a dark gradient background #0a0514 to #1a0b33. Cinematic studio lighting with magenta volumetric beams, soft particles floating around. Cybersecurity and admin control aesthetic. High detail 4K textures, PBR materials with emissive glow. Web-optimized GLB. Centered composition with slight rotation angle. No text, no people.
+A futuristic 3D holographic shield icon, low-poly geometric design with hexagonal facets, glowing neon pink #ff5eae edges and deep purple #9d4edd body. The shield is semi-transparent with internal glowing energy lines and a small 3D gear or chip in its center representing technology and protection. Floating isolated on a transparent alpha background, with no floor, backdrop, or background geometry. Add the dark #0a0514-to-#1a0b33 gradient and any ambient particles in CSS. Cinematic studio lighting with magenta rim light on the shield. Cybersecurity and admin control aesthetic. High detail 4K textures, PBR materials with emissive glow. Web-optimized GLB. Centered composition with slight rotation angle. No text, no people.
 ```
 
-**Une fois téléchargé** : Renommer en `admin-shield.glb` et placer dans :
+**Si le modèle est régénéré à l’avenir** : utiliser le nom exact `admin-shield.glb` et placer dans :
 ```
 /home/user/HHubpieces/src/main/resources/static/images/admin-shield.glb
 ```
@@ -123,10 +126,10 @@ A futuristic 3D holographic shield icon, low-poly geometric design with hexagona
 **Prompt à copier-coller** :
 
 ```
-A beautiful 3D printed eco-friendly symbol: a stylized circular arrow loop (recycle symbol) made of glossy 3D printed plastic in vibrant pink #ff5eae and deep purple #9d4edd, with small green leaves #6ee7b7 growing organically from one of the arrows. The symbol floats elegantly in the center with a subtle anti-gravity effect. Soft dark purple gradient background #0a0514 to #1a0b33, with floating bokeh particles and soft volumetric fog. Cinematic studio lighting with pink and purple rim lights. Eco-friendly, sustainable design aesthetic, modern and minimal. 4K PBR textures, photorealistic finish. Web-optimized GLB format. No people, no text overlay, centered composition.
+A beautiful 3D printed eco-friendly symbol: a stylized circular arrow loop (recycle symbol) made of glossy 3D printed plastic in vibrant pink #ff5eae and deep purple #9d4edd, with small green leaves #6ee7b7 growing organically from one of the arrows. The symbol floats elegantly in the center with a subtle anti-gravity effect on a transparent alpha background. No floor, backdrop, or background geometry; create the dark purple gradient, bokeh, and fog in CSS. Cinematic studio lighting with pink and purple rim lights. Eco-friendly, sustainable design aesthetic, modern and minimal. 4K PBR textures, photorealistic finish. Web-optimized GLB format. No people, no text overlay, centered composition.
 ```
 
-**Une fois téléchargé** : Renommer en `eco-recycle.glb` et placer dans :
+**Si le modèle est régénéré à l’avenir** : utiliser le nom exact `eco-recycle.glb` et placer dans :
 ```
 /home/user/HHubpieces/src/main/resources/static/images/eco-recycle.glb
 ```
@@ -155,14 +158,14 @@ Tous les fichiers `.glb` vont dans :
 /home/user/HHubpieces/src/main/resources/static/images/
 ```
 
-| Fichier | Page cible | Code HTML à ajouter |
-|---------|-----------|---------------------|
-| `repair-gear.glb` | dashboard-demandeur.html | Section "Aperçu de votre pièce" |
-| `printed-piece.glb` | dashboard-maker.html | Hero / sidebar |
-| `cao-model.glb` | dashboard-expertcao.html | Hero / sidebar |
-| `circuit-board.glb` | catalogue.html | Hero de la page |
-| `admin-shield.glb` | dashboard-admin.html | Hero / sidebar |
-| `eco-recycle.glb` | profil-public.html | Hero décoratif |
+| Fichier | Page cible | Rôle intégré |
+|---------|-----------|----------------|
+| `repair-gear.glb` | `dashboard-demandeur.html` | Décoration de réparation, sans demande réelle |
+| `printed-piece.glb` | `dashboard-maker.html` | Illustration Maker, sans commande réelle |
+| `cao-model.glb` | `dashboard-expertcao.html` | Visuel technique, sans demande CAO réelle |
+| `circuit-board.glb` | `catalogue.html` | Hero décoratif, hors catalogue fabricable |
+| `admin-shield.glb` | `dashboard-admin.html` | Visuel décoratif de l’espace admin |
+| `eco-recycle.glb` | `profil-public.html` | Décoration écoresponsable du profil public |
 
 ---
 
@@ -201,10 +204,11 @@ Pour chaque modèle, le code HTML à utiliser est :
 3. **Rodin** (https://hyperhuman.deemos.com/rodin) — excellent pour les pièces techniques
 4. **Genie by Luma AI** (https://lumalabs.ai/genie) — rapide et bon
 
-**Si tu n'arrives pas à générer un visuel** :
-- Garde les modèles existants (`model1.glb` à `model4.glb`) sous leurs vrais noms et pour les entrées du catalogue auxquelles ils correspondent.
-- Ne renomme pas un mesh d'engrenage ou de support en `admin-shield.glb`, `cao-model.glb`, etc. : cela afficherait le mauvais objet dans le mauvais rôle.
-- Laisse le visuel optionnel absent et ne l'ajoute pas aux pages tant que le GLB correspondant n'existe pas.
+**Si un fichier manque dans un futur checkout** :
+- Vérifie le vrai chemin dans `src/main/resources/static/images/`; un nom dans ce document ne prouve pas que l'asset est présent.
+- Garde `model1.glb` à `model4.glb` sous leurs vrais noms et leurs usages actuels.
+- Ne renomme pas un engrenage, un support ou un autre mesh en `admin-shield.glb`, `cao-model.glb`, etc.
+- N'ajoute une référence de page qu'après avoir récupéré et vérifié le bon GLB. Dans le checkout vérifié le 13 octobre 2026, les six fichiers de rôle ci-dessus sont présents.
 
 ---
 
@@ -229,14 +233,14 @@ Pour chaque fichier `.glb` :
 │  ✓ printer_logo.glb     (index - hero)     │ ← EXISTE
 │  ✓ logo_hub_3d.glb      (index - logo)     │ ← EXISTE
 │  ✓ auth_blob.glb        (login/register)   │ ← EXISTE
-│  ✓ model1-4.glb         (catalogue/UI)     │ ← EXISTE
-│  ✗ repair-gear.glb      (demandeur)        │ ← À CRÉER (prompt 1)
-│  ✗ printed-piece.glb    (maker)            │ ← À CRÉER (prompt 2)
-│  ✗ cao-model.glb        (expert CAO)       │ ← À CRÉER (prompt 3)
-│  ✗ circuit-board.glb    (catalogue hero)   │ ← À CRÉER (prompt 4)
-│  ✗ admin-shield.glb     (admin)            │ ← À CRÉER (prompt 5)
-│  ✗ eco-recycle.glb      (profil)           │ ← À CRÉER (prompt 6)
+│  ✓ model1-4.glb         (pièces catalogue) │ ← PRÉSENTS
+│  ✓ repair-gear.glb      (dashboard-demandeur) │ ← PRÉSENT, INTÉGRÉ
+│  ✓ printed-piece.glb    (dashboard-maker)    │ ← PRÉSENT, INTÉGRÉ
+│  ✓ cao-model.glb        (dashboard-expertcao)│ ← PRÉSENT, INTÉGRÉ
+│  ✓ circuit-board.glb    (catalogue hero)     │ ← PRÉSENT, DÉCORATIF
+│  ✓ admin-shield.glb     (dashboard-admin)    │ ← PRÉSENT, INTÉGRÉ
+│  ✓ eco-recycle.glb      (profil-public)      │ ← PRÉSENT, INTÉGRÉ
 └─────────────────────────────────────────────┘
 ```
 
-**6 modèles à générer, ~30 minutes de travail total sur Tripo3D** (gratuit).
+**État du checkout contrôlé : les six fichiers sont présents et intégrés.** `auth_blob.glb` est réutilisé sans duplication sur `login.html` et `register.html`. Les tailles actuelles des six assets de rôle sont comprises entre 58,48 et 67,71 MiB, très au-dessus de la cible de 3–8 MB : prévoir une optimisation avant production; ne pas remplacer un original sans revalider le GLB.

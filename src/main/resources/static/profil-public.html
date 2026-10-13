@@ -131,10 +131,37 @@
         <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--neon-pink);"></i>
     </div>
 
+    <aside class="dashboard-visual-panel dashboard-visual-panel--eco" aria-labelledby="profile-eco-title">
+        <div class="dashboard-visual-copy">
+            <p class="dashboard-visual-eyebrow"><i class="fas fa-leaf" aria-hidden="true"></i>Économie circulaire</p>
+            <h2 class="dashboard-visual-title" id="profile-eco-title">Réparer, réutiliser, faire durer</h2>
+            <p class="dashboard-visual-description">Chaque pièce remise en service contribue à limiter le gaspillage et à prolonger la vie des objets.</p>
+            <p class="dashboard-visual-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Visuel décoratif du profil public — ce symbole n’est pas un fichier de fabrication.</span></p>
+        </div>
+        <div class="dashboard-visual-stage">
+            <model-viewer
+                class="dashboard-visual-model"
+                src="images/eco-recycle.glb"
+                alt="Symbole 3D décoratif de recyclage avec feuilles vertes, pour illustrer l’économie circulaire"
+                data-motion-auto-rotate
+                auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="15deg"
+                camera-controls
+                disable-zoom
+                loading="lazy"
+                tabindex="0"
+                shadow-intensity="0.5"
+                exposure="1.05">
+            </model-viewer>
+        </div>
+    </aside>
+
     <div id="details"></div>
 
 </div>
 
+<script src="js/model-viewer-motion.js"></script>
 <script src="js/header.js"></script>
 <script>
 const params = new URLSearchParams(location.search);
