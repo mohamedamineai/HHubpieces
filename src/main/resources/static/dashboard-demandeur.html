@@ -42,6 +42,32 @@
         <span class="dashboard-role-pill"><i class="fas fa-user me-1"></i>Demandeur</span>
     </div>
 
+    <aside class="dashboard-visual-panel" aria-labelledby="demandeur-visual-title">
+        <div class="dashboard-visual-copy">
+            <p class="dashboard-visual-eyebrow"><i class="fas fa-recycle" aria-hidden="true"></i>Réparer plutôt que jeter</p>
+            <h2 class="dashboard-visual-title" id="demandeur-visual-title">Une nouvelle vie pour les pièces cassées</h2>
+            <p class="dashboard-visual-description">Hubpieces relie votre besoin à des spécialistes de la modélisation et de l’impression 3D.</p>
+            <p class="dashboard-visual-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Illustration décorative : cet engrenage ne représente aucune demande réelle.</span></p>
+        </div>
+        <div class="dashboard-visual-stage">
+            <model-viewer
+                class="dashboard-visual-model"
+                src="images/repair-gear.glb"
+                alt="Engrenage 3D décoratif pour illustrer la réparation d’une pièce, sans lien avec une demande réelle"
+                data-motion-auto-rotate
+                auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="18deg"
+                camera-controls
+                disable-zoom
+                loading="lazy"
+                tabindex="0"
+                shadow-intensity="0.55"
+                exposure="1.05">
+            </model-viewer>
+        </div>
+    </aside>
+
     <!-- ==================== STATS STRIP ==================== -->
     <div class="dashboard-stats-strip" id="statsStrip">
         <div class="stat-mini-card">
@@ -146,6 +172,7 @@
 
 </div>
 
+<script src="js/model-viewer-motion.js"></script>
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>

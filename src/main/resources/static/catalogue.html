@@ -13,15 +13,25 @@
 <link href="css/dashboard.css" rel="stylesheet">
 <style>
 .catalogue-hero {
-    background: linear-gradient(135deg, rgba(255,107,53,0.12) 0%, rgba(157,78,221,0.18) 100%);
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(250px, 0.75fr);
+    align-items: center;
+    gap: clamp(20px, 4vw, 52px);
+    background:
+        radial-gradient(ellipse at 82% 40%, rgba(255,94,174,0.12), transparent 45%),
+        linear-gradient(135deg, rgba(157,78,221,0.14) 0%, rgba(10,5,20,0.92) 100%);
     border-radius: 24px;
-    padding: 44px 32px;
+    padding: clamp(24px, 4vw, 44px) clamp(20px, 4vw, 40px);
     margin: 20px auto 32px;
     max-width: 1200px;
     border: 1px solid rgba(255,255,255,0.08);
-    text-align: center;
+    text-align: left;
     position: relative;
     backdrop-filter: blur(16px);
+}
+.catalogue-hero-copy {
+    position: relative;
+    z-index: 1;
 }
 .catalogue-hero h1 {
     font-size: 2.5rem;
@@ -29,10 +39,46 @@
     margin: 0 0 12px;
 }
 .catalogue-hero .gradient-text {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff5eae 50%, #9d4edd 100%);
+    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 72%, #ffffff 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+}
+.catalogue-hero-art {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+.catalogue-hero-art-stage {
+    display: grid;
+    place-items: center;
+    min-height: 250px;
+    overflow: hidden;
+    border: 1px solid rgba(255,94,174,0.18);
+    border-radius: 20px;
+    background:
+        radial-gradient(ellipse at center, rgba(157,78,221,0.16), transparent 68%),
+        linear-gradient(145deg, rgba(10,5,20,0.2), rgba(26,11,51,0.28));
+}
+.catalogue-hero-model {
+    display: block;
+    width: 100%;
+    max-width: 380px;
+    height: clamp(210px, 26vw, 300px);
+    background: transparent;
+    --progress-bar-color: transparent;
+    --poster-color: transparent;
+}
+.catalogue-hero-art figcaption {
+    margin-top: 9px;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    text-align: center;
+}
+.catalogue-hero-art figcaption i {
+    margin-right: 5px;
+    color: #ff5eae;
 }
 .stl-grid {
     display: grid;
@@ -121,6 +167,23 @@
     border-color: transparent;
     box-shadow: 0 4px 15px rgba(255,107,53,0.35);
 }
+@media (max-width: 760px) {
+    .catalogue-hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+        text-align: center;
+    }
+    .catalogue-hero-copy { text-align: center; }
+    .catalogue-hero-art {
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+}
+@media (max-width: 420px) {
+    .catalogue-hero-art-stage { min-height: 205px; }
+    .catalogue-hero-model { height: 210px; }
+}
 </style>
 </head>
 <body class="dashboard-body">
@@ -139,15 +202,37 @@
 
 <div style="position: relative; z-index: 1;">
 
-    <div class="catalogue-hero">
-        <h1>
-            <i class="fas fa-cubes me-2" style="color: var(--orange-main);"></i>
-            Catalogue <span class="gradient-text">STL & 3D</span>
-        </h1>
-        <p style="color: rgba(255,255,255,0.75); font-size: 1.1rem; max-width: 650px; margin: 0 auto; line-height: 1.6;">
-            Explorez notre bibliothèque de modèles 3D vérifiés par nos experts CAO. Téléchargez les fichiers ou demandez leur impression à un maker local.
-        </p>
-    </div>
+    <section class="catalogue-hero" aria-labelledby="catalogue-title">
+        <div class="catalogue-hero-copy">
+            <h1 id="catalogue-title">
+                <i class="fas fa-cubes me-2" style="color: #ff5eae;" aria-hidden="true"></i>
+                Catalogue <span class="gradient-text">STL & 3D</span>
+            </h1>
+            <p style="color: rgba(255,255,255,0.75); font-size: 1.1rem; max-width: 650px; margin: 0; line-height: 1.6;">
+                Explorez notre bibliothèque de modèles 3D vérifiés par nos experts CAO. Téléchargez les fichiers ou demandez leur impression à un maker local.
+            </p>
+        </div>
+        <figure class="catalogue-hero-art">
+            <div class="catalogue-hero-art-stage">
+                <model-viewer
+                    class="catalogue-hero-model"
+                    src="images/circuit-board.glb"
+                    alt="Carte électronique 3D décorative qui évoque la réparation numérique, non disponible comme article du catalogue"
+                    data-motion-auto-rotate
+                    auto-rotate
+                    auto-rotate-delay="0"
+                    rotation-per-second="16deg"
+                    camera-controls
+                    disable-zoom
+                    loading="lazy"
+                    tabindex="0"
+                    shadow-intensity="0.55"
+                    exposure="1.05">
+                </model-viewer>
+            </div>
+            <figcaption><i class="fas fa-circle-info" aria-hidden="true"></i>Illustration du catalogue — visuel décoratif, non téléchargeable.</figcaption>
+        </figure>
+    </section>
 
     <div class="filtre-bar" id="filtres">
         <div class="filtre-pill active" data-categorie="">Toutes catégories</div>
@@ -166,9 +251,11 @@
 
 </div>
 
+<script src="js/model-viewer-motion.js"></script>
 <script src="js/header.js"></script>
 <script>
-// Modèles 3D avec les fichiers GLB existants dans images/
+// Modèles fabricables de secours avec les fichiers GLB de pièces réellement listées.
+// circuit-board.glb reste uniquement une illustration du hero : ce n’est pas un FichierStl.
 const FALLBACK_STL = [
     {
         id: 1,

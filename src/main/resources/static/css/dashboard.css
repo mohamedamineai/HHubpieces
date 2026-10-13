@@ -1393,10 +1393,169 @@ select.form-select option {
     color: #ff5eae;
 }
 
+/* ==================== DECORATIVE 3D ROLE VISUALS ==================== */
+.dashboard-visual-panel {
+    --dashboard-visual-accent-rgb: 255, 94, 174;
+    --dashboard-visual-secondary-rgb: 157, 78, 221;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.72fr);
+    align-items: center;
+    gap: clamp(18px, 3vw, 36px);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(20px, 3vw, 34px);
+    margin: 0 0 28px;
+    border: 1px solid rgba(var(--dashboard-visual-accent-rgb), 0.25);
+    border-radius: var(--db-radius);
+    background:
+        radial-gradient(ellipse at 85% 35%, rgba(var(--dashboard-visual-secondary-rgb), 0.16), transparent 48%),
+        linear-gradient(120deg, rgba(10,5,20,0.88), rgba(26,11,51,0.72));
+    box-shadow: 0 16px 44px rgba(0,0,0,0.28);
+}
+
+.dashboard-visual-panel::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: -110px;
+    right: 8%;
+    width: 260px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--dashboard-visual-accent-rgb), 0.16), transparent 70%);
+    filter: blur(12px);
+    pointer-events: none;
+}
+
+.dashboard-visual-panel--maker {
+    --dashboard-visual-accent-rgb: 255, 94, 174;
+    --dashboard-visual-secondary-rgb: 157, 78, 221;
+}
+
+.dashboard-visual-panel--expert {
+    --dashboard-visual-accent-rgb: 157, 78, 221;
+    --dashboard-visual-secondary-rgb: 255, 94, 174;
+}
+
+.dashboard-visual-panel--admin {
+    --dashboard-visual-accent-rgb: 255, 94, 174;
+    --dashboard-visual-secondary-rgb: 157, 78, 221;
+}
+
+.dashboard-visual-panel--eco {
+    --dashboard-visual-accent-rgb: 110, 231, 183;
+    --dashboard-visual-secondary-rgb: 157, 78, 221;
+}
+
+.dashboard-visual-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 660px;
+}
+
+.dashboard-visual-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 12px;
+    color: rgba(var(--dashboard-visual-accent-rgb), 1);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.dashboard-visual-eyebrow i {
+    font-size: 0.9rem;
+}
+
+.dashboard-visual-title {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: clamp(1.2rem, 2.1vw, 1.65rem);
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.dashboard-visual-description {
+    max-width: 56ch;
+    margin: 0;
+    color: rgba(255,255,255,0.72);
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.dashboard-visual-note {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 60ch;
+    margin: 18px 0 0;
+    padding: 8px 12px;
+    border: 1px solid rgba(var(--dashboard-visual-accent-rgb), 0.22);
+    border-radius: 12px;
+    background: rgba(var(--dashboard-visual-accent-rgb), 0.08);
+    color: rgba(255,255,255,0.84);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.dashboard-visual-note i {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    color: rgba(var(--dashboard-visual-accent-rgb), 1);
+}
+
+.dashboard-visual-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 225px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    background:
+        radial-gradient(ellipse at center, rgba(var(--dashboard-visual-accent-rgb), 0.12), transparent 70%),
+        linear-gradient(145deg, rgba(10,5,20,0.22), rgba(26,11,51,0.24));
+}
+
+.dashboard-visual-model {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    height: clamp(205px, 24vw, 290px);
+    background: transparent;
+    --progress-bar-color: transparent;
+    --poster-color: transparent;
+}
+
+.dashboard-visual-model:focus-visible {
+    outline: 2px solid rgba(var(--dashboard-visual-accent-rgb), 1);
+    outline-offset: -4px;
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 900px) {
     .dashboard-2col {
         grid-template-columns: 1fr;
+    }
+    .dashboard-visual-panel {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+    .dashboard-visual-copy {
+        max-width: 100%;
+    }
+    .dashboard-visual-stage {
+        min-height: 200px;
+    }
+    .dashboard-visual-model {
+        max-width: 320px;
+        height: clamp(190px, 34vw, 250px);
     }
     .dashboard-stats-strip {
         grid-template-columns: repeat(2, 1fr);

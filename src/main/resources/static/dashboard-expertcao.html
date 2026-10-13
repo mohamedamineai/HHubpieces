@@ -62,6 +62,32 @@
         <span class="dashboard-role-pill"><i class="fas fa-drafting-compass me-1"></i>Expert CAO</span>
     </div>
 
+    <aside class="dashboard-visual-panel dashboard-visual-panel--expert" aria-labelledby="expert-visual-title">
+        <div class="dashboard-visual-copy">
+            <p class="dashboard-visual-eyebrow"><i class="fas fa-compass-drafting" aria-hidden="true"></i>Studio de conception</p>
+            <h2 class="dashboard-visual-title" id="expert-visual-title">De l’idée au modèle prêt à fabriquer</h2>
+            <p class="dashboard-visual-description">Votre espace rassemble les demandes à modéliser et les fichiers soumis pour validation.</p>
+            <p class="dashboard-visual-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Illustration décorative de l’espace CAO, sans lien avec une demande réelle.</span></p>
+        </div>
+        <div class="dashboard-visual-stage">
+            <model-viewer
+                class="dashboard-visual-model"
+                src="images/cao-model.glb"
+                alt="Modèle mécanique CAO décoratif pour l’espace Expert CAO, sans lien avec une demande réelle"
+                data-motion-auto-rotate
+                auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="16deg"
+                camera-controls
+                disable-zoom
+                loading="lazy"
+                tabindex="0"
+                shadow-intensity="0.55"
+                exposure="1.05">
+            </model-viewer>
+        </div>
+    </aside>
+
     <div class="dashboard-stats-strip">
         <div class="stat-mini-card">
             <div class="stat-mini-icon orange"><i class="fas fa-cube"></i></div>
@@ -135,6 +161,7 @@
 
 </div>
 
+<script src="js/model-viewer-motion.js"></script>
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>

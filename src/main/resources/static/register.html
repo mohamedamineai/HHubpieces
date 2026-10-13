@@ -110,12 +110,15 @@
         <span class="neon-title">After...</span>
         <model-viewer
             src="images/auth_blob.glb"
-            alt="objet 3d hubpieces"
+            alt="Illustration 3D décorative de l’identité Hubpieces, sans lien avec un fichier de fabrication"
+            data-motion-auto-rotate
             auto-rotate
             auto-rotate-delay="0"
             rotation-per-second="20deg"
             camera-controls
             disable-zoom
+            loading="lazy"
+            tabindex="0"
             shadow-intensity="1"
             exposure="1.1"
             class="auth-3d-model">
@@ -123,6 +126,7 @@
     </div>
 
 </div>
+<script src="js/model-viewer-motion.js"></script>
 <script src="js/auth.js"></script>
 </body>
 </html>
