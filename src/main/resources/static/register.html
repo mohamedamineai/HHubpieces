@@ -6,7 +6,8 @@
 <title>Inscription — hubpieces</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-<link href="css/auth.css" rel="stylesheet">
+<link href="css/auth.css?v=20261013" rel="stylesheet">
+<link href="css/holo-3d.css?v=20261013" rel="stylesheet">
 </head>
 <body class="auth-body">
 <div class="auth-wrapper">
@@ -106,27 +107,61 @@
         </div>
     </div>
 
-    <div class="auth-right">
+    <div class="auth-right" data-holo>
         <span class="neon-title">After...</span>
-        <model-viewer
-            src="images/auth_blob.glb"
-            alt="Illustration 3D décorative de l’identité Hubpieces, sans lien avec un fichier de fabrication"
-            data-motion-auto-rotate
-            auto-rotate
-            auto-rotate-delay="0"
-            rotation-per-second="20deg"
-            camera-controls
-            disable-zoom
-            loading="lazy"
-            tabindex="0"
-            shadow-intensity="1"
-            exposure="1.1"
-            class="auth-3d-model">
-        </model-viewer>
+        <div class="holo-stage holo-stage--auth">
+            <div class="holo-stage-inner">
+                <div class="holo-decor" aria-hidden="true">
+                    <span class="holo-floor"></span>
+                    <span class="holo-halo"></span>
+                    <span class="holo-ring holo-ring--3"></span>
+                    <span class="holo-ring holo-ring--1"></span>
+                    <span class="holo-ring holo-ring--2"></span>
+                    <span class="holo-beam"></span>
+                    <span class="holo-pedestal"></span>
+                    <span class="holo-particles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+                <div class="holo-float">
+                    <model-viewer
+                        class="holo-model"
+                        src="images/auth_blob.glb"
+                        alt="Illustration 3D décorative de l’identité Hubpieces, sans lien avec un fichier de fabrication"
+                        data-motion-auto-rotate
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="20deg"
+                        camera-controls
+                        disable-zoom
+                        interaction-prompt="none"
+                        loading="eager"
+                        reveal="auto"
+                        tabindex="0"
+                        shadow-intensity="0"
+                        environment-image="neutral"
+                        tone-mapping="aces"
+                        exposure="1.15">
+                    </model-viewer>
+                </div>
+                <div class="holo-loader" role="status" aria-live="polite">
+                    <div class="holo-loader-ring"></div>
+                    <div class="holo-loader-core">
+                        <span class="holo-loader-pct" data-holo-pct>0%</span>
+                        <span class="holo-loader-text">Matérialisation</span>
+                    </div>
+                </div>
+                <div class="holo-fallback" aria-hidden="true"><div><i class="fas fa-cube"></i>Aperçu 3D indisponible</div></div>
+                <span class="holo-scan" aria-hidden="true"></span>
+                <div class="holo-hud" aria-hidden="true">
+                    <span class="holo-hud-corners"></span>
+                    <span class="holo-hud-label">HUB/3D · Identité</span>
+                </div>
+            </div>
+        </div>
+        <p class="holo-auth-tagline" aria-hidden="true">Réparer <b>·</b> Modéliser <b>·</b> Imprimer</p>
     </div>
 
 </div>
-<script src="js/model-viewer-motion.js"></script>
+<script src="js/model-viewer-motion.js?v=20261013"></script>
 <script src="js/auth.js"></script>
 </body>
 </html>

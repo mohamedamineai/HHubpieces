@@ -58,14 +58,6 @@ body.auth-body {
     50%      { transform: scale(1.2); opacity: 1; }
 }
 
-.auth-3d-model {
-    width: 90%;
-    height: 480px;
-    --progress-bar-color: transparent;
-    z-index: 2;
-    position: relative;
-}
-
 .neon-title {
     position: absolute;
     top: 30px;

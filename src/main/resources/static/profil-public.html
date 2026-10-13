@@ -10,7 +10,8 @@
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 <link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
-<link href="css/dashboard.css" rel="stylesheet">
+<link href="css/dashboard.css?v=20261013" rel="stylesheet">
+<link href="css/holo-3d.css?v=20261013" rel="stylesheet">
 <style>
 .profil-hero {
     background: linear-gradient(135deg, rgba(255,107,53,0.12) 0%, rgba(157,78,221,0.15) 100%);
@@ -131,29 +132,67 @@
         <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--neon-pink);"></i>
     </div>
 
-    <aside class="dashboard-visual-panel dashboard-visual-panel--eco" aria-labelledby="profile-eco-title">
-        <div class="dashboard-visual-copy">
-            <p class="dashboard-visual-eyebrow"><i class="fas fa-leaf" aria-hidden="true"></i>Économie circulaire</p>
-            <h2 class="dashboard-visual-title" id="profile-eco-title">Réparer, réutiliser, faire durer</h2>
-            <p class="dashboard-visual-description">Chaque pièce remise en service contribue à limiter le gaspillage et à prolonger la vie des objets.</p>
-            <p class="dashboard-visual-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Visuel décoratif du profil public — ce symbole n’est pas un fichier de fabrication.</span></p>
+    <aside class="holo-panel holo-panel--eco" data-holo aria-labelledby="profile-eco-title">
+        <div class="holo-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="holo-copy">
+            <p class="holo-eyebrow"><span class="holo-live" aria-hidden="true"></span><i class="fas fa-leaf" aria-hidden="true"></i>Économie circulaire</p>
+            <h2 class="holo-title" id="profile-eco-title">Réparer, réutiliser, <span class="holo-glow-word">faire durer</span></h2>
+            <p class="holo-desc">Chaque pièce remise en service contribue à limiter le gaspillage et à prolonger la vie des objets.</p>
+            <ul class="holo-chips" aria-label="Points clés">
+                <li><i class="fas fa-seedling" aria-hidden="true"></i>Moins de déchets</li>
+                <li><i class="fas fa-people-group" aria-hidden="true"></i>Savoir-faire local</li>
+                <li><i class="fas fa-infinity" aria-hidden="true"></i>Objets durables</li>
+            </ul>
+            <p class="holo-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Visuel décoratif du profil public — ce symbole n’est pas un fichier de fabrication.</span></p>
         </div>
-        <div class="dashboard-visual-stage">
-            <model-viewer
-                class="dashboard-visual-model"
-                src="images/eco-recycle.glb"
-                alt="Symbole 3D décoratif de recyclage avec feuilles vertes, pour illustrer l’économie circulaire"
-                data-motion-auto-rotate
-                auto-rotate
-                auto-rotate-delay="0"
-                rotation-per-second="15deg"
-                camera-controls
-                disable-zoom
-                loading="lazy"
-                tabindex="0"
-                shadow-intensity="0.5"
-                exposure="1.05">
-            </model-viewer>
+        <div class="holo-stage">
+            <div class="holo-stage-inner">
+                <div class="holo-decor" aria-hidden="true">
+                    <span class="holo-floor"></span>
+                    <span class="holo-halo"></span>
+                    <span class="holo-ring holo-ring--3"></span>
+                    <span class="holo-ring holo-ring--1"></span>
+                    <span class="holo-ring holo-ring--2"></span>
+                    <span class="holo-beam"></span>
+                    <span class="holo-pedestal"></span>
+                    <span class="holo-particles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+                <div class="holo-float">
+                    <model-viewer
+                        class="holo-model"
+                        src="images/eco-recycle.glb"
+                        alt="Symbole 3D décoratif de recyclage avec feuilles vertes, pour illustrer l’économie circulaire"
+                        data-motion-auto-rotate
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="15deg"
+                        camera-controls
+                        disable-zoom
+                        interaction-prompt="none"
+                        loading="eager"
+                        reveal="auto"
+                        tabindex="0"
+                        shadow-intensity="0"
+                        environment-image="neutral"
+                        tone-mapping="aces"
+                        exposure="1.15">
+                    </model-viewer>
+                </div>
+                <div class="holo-loader" role="status" aria-live="polite">
+                    <div class="holo-loader-ring"></div>
+                    <div class="holo-loader-core">
+                        <span class="holo-loader-pct" data-holo-pct>0%</span>
+                        <span class="holo-loader-text">Matérialisation</span>
+                    </div>
+                </div>
+                <div class="holo-fallback" aria-hidden="true"><div><i class="fas fa-cube"></i>Aperçu 3D indisponible</div></div>
+                <span class="holo-scan" aria-hidden="true"></span>
+                <div class="holo-hud" aria-hidden="true">
+                    <span class="holo-hud-corners"></span>
+                    <span class="holo-hud-label">HUB/3D · Économie circulaire</span>
+                    <span class="holo-hud-hint"><i class="fas fa-hand-pointer" aria-hidden="true"></i>Glissez pour pivoter</span>
+                </div>
+            </div>
         </div>
     </aside>
 
@@ -161,7 +200,7 @@
 
 </div>
 
-<script src="js/model-viewer-motion.js"></script>
+<script src="js/model-viewer-motion.js?v=20261013"></script>
 <script src="js/header.js"></script>
 <script>
 const params = new URLSearchParams(location.search);
