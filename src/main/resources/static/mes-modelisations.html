@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mes modélisations - hubpieces</title>
+<title>Mes modélisations CAO - Hubpieces</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,147 +12,102 @@
 <link href="css/header.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <style>
-.demande-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 16px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(14px);
-}
-.demande-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px; height: 100%;
-    background: #9d4edd;
-}
-.demande-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(157, 78, 221, 0.45);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-.demande-title { color: #fff; font-weight: 700; font-size: 1.15rem; margin: 0 0 8px; }
-.demande-meta { color: rgba(255, 255, 255, 0.55); font-size: 0.86rem; display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
-.demande-meta i { color: var(--neon-pink); margin-right: 4px; }
-.tab-pill {
-    padding: 10px 22px;
-    border-radius: 30px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    display: inline-block;
-    font-weight: 500;
-}
-.tab-pill.active {
-    background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
-    color: #fff;
-    border-color: transparent;
-    box-shadow: 0 4px 15px rgba(157, 78, 221, 0.35);
-}
+.btn-neon{background:linear-gradient(135deg,#9d4edd,#ff5eae);border:0;color:#fff;padding:11px 20px;border-radius:12px;font-weight:600;box-shadow:0 4px 20px rgba(255,94,174,.25)}
+.btn-neon:hover{color:#fff;transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;padding:9px 16px;border-radius:10px}
+.btn-ghost:hover{background:rgba(255,255,255,.08);color:#fff}
+.tab-pill{padding:10px 20px;border-radius:30px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.72);cursor:pointer;margin:0 8px 8px 0;font-weight:600}
+.tab-pill.active{background:linear-gradient(135deg,#9d4edd,#ff5eae);color:#fff;border-color:transparent}
+.demande-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:22px;margin-bottom:16px;position:relative;overflow:hidden}
+.demande-card:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:#9d4edd}
+.demande-card:hover{border-color:rgba(157,78,221,.45);box-shadow:0 10px 30px rgba(0,0,0,.24)}
+.demande-title{color:#fff;font-weight:750;font-size:1.12rem;margin:0 0 8px}
+.demande-meta{color:rgba(255,255,255,.62);font-size:.86rem;display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.demande-meta i{color:#ff5eae;margin-right:5px}
+.status-badge{border-radius:999px;padding:5px 10px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.status-pending{background:rgba(255,193,7,.15);color:#ffd76a}.status-valid{background:rgba(110,231,183,.14);color:#6ee7b7}.status-rejected{background:rgba(255,99,132,.15);color:#ff879e}
+.model-preview{width:100%;height:190px;background:rgba(0,0,0,.18);border-radius:12px;--poster-color:transparent}
+.empty-state,.error-state{padding:36px 22px;text-align:center;color:rgba(255,255,255,.68)}
+.empty-state i{font-size:2.4rem;color:#6ee7b7;margin-bottom:12px}
+.loading-state{text-align:center;padding:38px;color:rgba(255,255,255,.65)}
+#feedback{display:none}
+.modal-content{background:#170d25;border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:18px}
+.form-control,.form-select{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16);color:#fff}
+.form-control:focus,.form-select:focus{background:rgba(255,255,255,.09);color:#fff;border-color:#c268ed;box-shadow:0 0 0 .2rem rgba(157,78,221,.2)}
+.form-select option{background:#170d25;color:#fff}
+.form-text{color:rgba(255,255,255,.55)}
 </style>
 </head>
 <body class="dashboard-body">
-
-<div class="db-particles">
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-</div>
-<div class="db-watermark">
-    <img src="images/logo_hub.png" alt="">
-    <img src="images/logo_hub.png" alt="">
-    <img src="images/logo_hub.png" alt="">
-</div>
-
+<div class="db-particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="db-watermark"><img src="images/logo_hub.png" alt=""><img src="images/logo_hub.png" alt=""><img src="images/logo_hub.png" alt=""></div>
 <div id="navbar-placeholder"></div>
 
-<div class="dashboard-container" style="max-width: 1100px; margin: 0 auto; position: relative; z-index: 2;">
-
-    <div class="dashboard-welcome">
+<main class="dashboard-container" style="max-width:1120px;margin:0 auto;position:relative;z-index:2">
+    <section class="dashboard-welcome">
         <div class="dashboard-welcome-text">
             <h1>Mes modélisations CAO</h1>
-            <p>Espace Expert CAO : créez les modèles 3D pour les demandeurs et enrichissez le catalogue</p>
+            <p>Traitez les demandes, transmettez vos vrais fichiers 3D, puis suivez la validation de l'administrateur.</p>
         </div>
-        <a href="catalogue.html" class="btn btn-neon">
-            <i class="fas fa-cubes me-2"></i>Catalogue STL
-        </a>
+        <a href="catalogue.html" class="btn btn-neon"><i class="fas fa-cubes me-2"></i>Catalogue validé</a>
+    </section>
+
+    <div id="feedback" class="alert" role="status"></div>
+    <div class="dashboard-stats-strip mb-4">
+        <div class="stat-mini-card"><div class="stat-mini-icon orange"><i class="fas fa-drafting-compass"></i></div><div class="stat-mini-info"><div class="stat-mini-number" id="countDemandes">—</div><span class="stat-mini-label">À modéliser</span></div></div>
+        <div class="stat-mini-card"><div class="stat-mini-icon yellow"><i class="fas fa-hourglass-half"></i></div><div class="stat-mini-info"><div class="stat-mini-number" id="countPending">—</div><span class="stat-mini-label">En attente admin</span></div></div>
+        <div class="stat-mini-card"><div class="stat-mini-icon green"><i class="fas fa-cubes"></i></div><div class="stat-mini-info"><div class="stat-mini-number" id="countValid">—</div><span class="stat-mini-label">Modèles validés</span></div></div>
+        <div class="stat-mini-card"><div class="stat-mini-icon blue"><i class="fas fa-download"></i></div><div class="stat-mini-info"><div class="stat-mini-number" id="countDownloads">—</div><span class="stat-mini-label">Téléchargements</span></div></div>
     </div>
 
-    <div class="mb-4">
-        <div class="tab-pill active" data-tab="a-modeliser">Demandes à modéliser (<span id="c1">2</span>)</div>
-        <div class="tab-pill" data-tab="mes-fichiers">Mes fichiers STL validés (<span id="c2">4</span>)</div>
+    <div class="mb-3" role="tablist" aria-label="Mes contenus CAO">
+        <button type="button" class="tab-pill" data-tab="a-modeliser">Demandes à modéliser <span id="tabCountDemandes">0</span></button>
+        <button type="button" class="tab-pill" data-tab="mes-fichiers">Mes fichiers <span id="tabCountFichiers">0</span></button>
+        <button type="button" class="tab-pill" data-tab="catalogue">Catalogue validé</button>
     </div>
+    <section id="contenu" aria-live="polite"><div class="loading-state"><i class="fas fa-spinner fa-spin me-2"></i>Chargement des données réelles…</div></section>
+</main>
 
-    <div id="contenu">
-        <div style="text-align:center; padding: 40px;">
-            <i class="fas fa-spinner fa-spin" style="font-size:2rem; color: var(--neon-pink);"></i>
-        </div>
-    </div>
-
-</div>
-
-<!-- Modal Formulaire Modélisation STL -->
-<div class="modal fade" id="stlModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal fade" id="stlModal" tabindex="-1" aria-labelledby="stlModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color: #fff; font-weight: 700;">
-                    <i class="fas fa-magic me-2" style="color: var(--neon-pink);"></i>
-                    Transmettre le modèle 3D
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <h2 class="modal-title fs-5" id="stlModalTitle"><i class="fas fa-cube me-2" style="color:#ff5eae"></i>Soumettre le modèle de la demande</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
             <form id="stlForm">
                 <div class="modal-body">
+                    <div id="modalFeedback" class="alert d-none" role="alert"></div>
                     <input type="hidden" id="demandeIdModelisation">
+                    <p id="modalDemandeTitle" class="text-white-50 mb-3"></p>
                     <div class="row g-3">
-                        <div class="col-md-6 form-floating">
-                            <input type="text" class="form-control" id="stlNom" required placeholder="Nom">
-                            <label for="stlNom">Nom de la pièce *</label>
+                        <div class="col-md-6">
+                            <label for="stlNom" class="form-label">Nom du modèle *</label>
+                            <input type="text" class="form-control" id="stlNom" maxlength="200" required>
                         </div>
-                        <div class="col-md-6 form-floating">
-                            <select class="form-select" id="stlCategorie">
-                                <option value="electromenager">Électroménager</option>
-                                <option value="automobile">Automobile</option>
-                                <option value="quotidien">Quotidien</option>
-                                <option value="bricolage">Bricolage</option>
-                            </select>
-                            <label for="stlCategorie">Catégorie</label>
+                        <div class="col-md-6">
+                            <label for="stlCategorie" class="form-label">Catégorie</label>
+                            <select class="form-select" id="stlCategorie"><option value="electromenager">Électroménager</option><option value="automobile">Automobile</option><option value="quotidien">Quotidien</option><option value="bricolage">Bricolage</option><option value="autre">Autre</option></select>
                         </div>
-                        <div class="col-12 form-floating">
-                            <textarea class="form-control" id="stlDescription" style="height: 90px;" placeholder="Description"></textarea>
-                            <label for="stlDescription">Description technique et tolérances</label>
+                        <div class="col-12">
+                            <label for="stlFile" class="form-label">Fichier CAO à transmettre *</label>
+                            <input type="file" class="form-control" id="stlFile" accept=".stl,.obj,.3mf,.step,.stp" required>
+                            <div class="form-text">Formats de fabrication acceptés : STL, OBJ, 3MF, STEP/STP. 50 Mo maximum. Un GLB décoratif du site n'est pas un fichier de fabrication.</div>
                         </div>
-                        <div class="col-md-6 form-floating">
-                            <input type="text" class="form-control" id="stlMarque" placeholder="Marque">
-                            <label for="stlMarque">Marque de l'appareil</label>
+                        <div class="col-12">
+                            <label for="stlDescription" class="form-label">Description technique</label>
+                            <textarea class="form-control" id="stlDescription" rows="3" maxlength="4000" placeholder="Tolérances, orientation d'impression, points à contrôler…"></textarea>
                         </div>
-                        <div class="col-md-6 form-floating">
-                            <input type="text" class="form-control" id="stlModele" placeholder="Modèle">
-                            <label for="stlModele">Modèle de l'appareil</label>
-                        </div>
-                        <div class="col-md-6 form-floating">
-                            <input type="text" class="form-control" id="stlMateriau" value="PETG" placeholder="Matériau">
-                            <label for="stlMateriau">Matériau recommandé</label>
-                        </div>
-                        <div class="col-md-6 form-floating">
-                            <input type="text" class="form-control" id="stlChemin" value="images/model1.glb" placeholder="Fichier">
-                            <label for="stlChemin">Fichier 3D (.glb / .stl)</label>
-                        </div>
+                        <div class="col-md-6"><label for="stlMarque" class="form-label">Marque</label><input type="text" class="form-control" id="stlMarque" maxlength="100"></div>
+                        <div class="col-md-6"><label for="stlModele" class="form-label">Modèle de l'appareil</label><input type="text" class="form-control" id="stlModele" maxlength="100"></div>
+                        <div class="col-md-6"><label for="stlMateriau" class="form-label">Matériau recommandé</label><input type="text" class="form-control" id="stlMateriau" maxlength="50" placeholder="PETG, ABS…"></div>
+                        <div class="col-md-6"><label for="stlDimensions" class="form-label">Dimensions</label><input type="text" class="form-control" id="stlDimensions" maxlength="100" placeholder="120 × 40 × 25 mm"></div>
+                        <div class="col-12"><label for="stlTags" class="form-label">Mots-clés</label><input type="text" class="form-control" id="stlTags" maxlength="255" placeholder="poignée, Samsung, lave-linge"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-neon">
-                        <i class="fas fa-check me-2"></i>Valider la modélisation
-                    </button>
+                    <button type="submit" id="submitModelisation" class="btn btn-neon"><i class="fas fa-paper-plane me-2"></i>Envoyer à l'administrateur</button>
                 </div>
             </form>
         </div>
@@ -163,169 +118,232 @@
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>
-const DEMO_A_MODELISER = [
-    {
-        id: 4,
-        titre: 'Support filtre aspirateur sans fil Dyson V8',
-        description: 'Pattes de verrouillage brisées. Photos prises avec pied à coulisse fournies. Besoin d\'un fichier 3D étanche.',
-        marque: 'Dyson',
-        modeleAppareil: 'V8 Absolute',
-        materiauSouhaite: 'PLA ou PETG',
-        budgetMax: 25.00,
-        ville: 'Lyon',
-        dateCreation: '2026-10-11T11:20:00'
-    },
-    {
-        id: 7,
-        titre: 'Bague de fixation blender Philips Viva',
-        description: 'Filetage abîmé lors du vissage. Dimensions intérieures : diamètre 68mm, pas de vis 2.5mm.',
-        marque: 'Philips',
-        modeleAppareil: 'HR2162',
-        materiauSouhaite: 'PETG alimentaire',
-        budgetMax: 18.00,
-        ville: 'Bordeaux',
-        dateCreation: '2026-10-09T16:40:00'
-    }
-];
+const API = '/api/expert-cao';
+const contenu = document.getElementById('contenu');
+const modalElement = document.getElementById('stlModal');
+const stlModal = new bootstrap.Modal(modalElement);
+let activeTab = new URLSearchParams(location.search).get('tab') === 'catalogue' ? 'catalogue' : 'a-modeliser';
+let demandes = [];
+let mesFichiers = [];
+let catalogFiles = [];
 
-const DEMO_MES_FICHIERS = [
-    {
-        id: 1,
-        nom: 'Engrenage denté précision Moulinex',
-        description: 'Pignon d\'entraînement hélicoïdal à haute résistance mécanique.',
-        categorie: 'electromenager',
-        marque: 'Moulinex',
-        materiauRecommande: 'PETG / Nylon',
-        nombreTelechargements: 48,
-        noteMoyenne: 4.9,
-        etatValidation: 'VALIDE'
-    },
-    {
-        id: 2,
-        nom: 'Support articulé multi-axe universel',
-        description: 'Rotule orientable à double serrage pour lampes et caméras.',
-        categorie: 'quotidien',
-        marque: 'Universel',
-        materiauRecommande: 'PLA haute densité',
-        nombreTelechargements: 76,
-        noteMoyenne: 4.8,
-        etatValidation: 'VALIDE'
-    },
-    {
-        id: 3,
-        nom: 'Molette crantée de réglage Peugeot',
-        description: 'Bouton moleté intérieur méplat pour tableau de bord.',
-        categorie: 'automobile',
-        marque: 'Peugeot / Renault',
-        materiauRecommande: 'ABS',
-        nombreTelechargements: 35,
-        noteMoyenne: 5.0,
-        etatValidation: 'VALIDE'
-    },
-    {
-        id: 4,
-        nom: 'Embout adaptateur turbine Dyson',
-        description: 'Raccord conique étanche pour flux d\'air haute vélocité.',
-        categorie: 'electromenager',
-        marque: 'Dyson',
-        materiauRecommande: 'PETG',
-        nombreTelechargements: 92,
-        noteMoyenne: 4.9,
-        etatValidation: 'VALIDE'
-    }
-];
-
-let tabActif = 'a-modeliser';
-
-async function load() {
-    render();
+function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
-function render() {
-    const el = document.getElementById('contenu');
-    if (tabActif === 'a-modeliser') {
-        if (DEMO_A_MODELISER.length === 0) {
-            el.innerHTML = `<div class="empty-state"><i class="fas fa-check-circle"></i><p>Toutes les demandes ont été modélisées !</p></div>`;
-            return;
-        }
-        el.innerHTML = DEMO_A_MODELISER.map(d => `
-            <div class="demande-card">
-                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
-                    <div>
-                        <h3 class="demande-title">${escapeHtml(d.titre)}</h3>
-                        <p style="color: rgba(255,255,255,0.7); margin: 0 0 10px; line-height: 1.6;">${escapeHtml(d.description)}</p>
-                        <div class="demande-meta">
-                            ${d.marque ? `<span><i class="fas fa-tag"></i>${escapeHtml(d.marque)}</span>` : ''}
-                            ${d.materiauSouhaite ? `<span><i class="fas fa-cube"></i>${escapeHtml(d.materiauSouhaite)}</span>` : ''}
-                            ${d.ville ? `<span><i class="fas fa-map-marker-alt"></i>${escapeHtml(d.ville)}</span>` : ''}
-                            <span><i class="fas fa-clock"></i>${formatDate(d.dateCreation)}</span>
-                            <span style="color:#6ee7b7; font-weight:700;"><i class="fas fa-coins"></i>${d.budgetMax.toFixed(2)} EUR</span>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="btn btn-neon" onclick="openSTLModal(${d.id}, '${escapeHtml(d.titre).replace(/'/g, "\\'")}', '${escapeHtml(d.marque || '')}', '${escapeHtml(d.modeleAppareil || '')}')">
-                            <i class="fas fa-magic me-1"></i>Modéliser en 3D
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    } else {
-        el.innerHTML = DEMO_MES_FICHIERS.map(f => `
-            <div class="demande-card" style="--etat-couleur: #6ee7b7;">
-                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
-                    <div>
-                        <h3 class="demande-title">${escapeHtml(f.nom)}</h3>
-                        <p style="color: rgba(255,255,255,0.7); margin: 0 0 10px;">${escapeHtml(f.description)}</p>
-                        <div class="demande-meta">
-                            <span><i class="fas fa-tag"></i>${escapeHtml(f.marque)}</span>
-                            <span><i class="fas fa-cube"></i>${escapeHtml(f.materiauRecommande)}</span>
-                            <span><i class="fas fa-download"></i>${f.nombreTelechargements} téléchargements</span>
-                            <span><i class="fas fa-star" style="color:#ffc107;"></i>${f.noteMoyenne}/5</span>
-                        </div>
-                    </div>
-                    <span class="etat-badge etat-CLOTUREE">Validé par admin</span>
-                </div>
-            </div>
-        `).join('');
-    }
+function safeFileUrl(value) {
+    if (!value || typeof value !== 'string') return null;
+    if (!/^\/?(?:uploads\/stl|images)\/[A-Za-z0-9._/-]+\.(?:stl|obj|3mf|step|stp|glb|gltf)$/i.test(value)) return null;
+    if (value.split('/').some(part => part === '..')) return null;
+    const url = new URL(value.startsWith('/') ? value : '/' + value, location.origin);
+    return url.origin === location.origin ? url.pathname : null;
 }
-
-function openSTLModal(demandeId, titre, marque, modele) {
-    document.getElementById('demandeIdModelisation').value = demandeId;
-    document.getElementById('stlNom').value = titre;
-    document.getElementById('stlMarque').value = marque;
-    document.getElementById('stlModele').value = modele;
-    new bootstrap.Modal(document.getElementById('stlModal')).show();
+function formatDate(value) {
+    if (!value) return '—';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? '—' : date.toLocaleDateString('fr-FR', {day:'2-digit',month:'short',year:'numeric'});
 }
-
-document.getElementById('stlForm').addEventListener('submit', e => {
-    e.preventDefault();
-    alert('Modélisation enregistrée avec succès ! Le demandeur est notifié.');
-    bootstrap.Modal.getInstance(document.getElementById('stlModal')).hide();
-});
-
-document.querySelectorAll('.tab-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-        document.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        tabActif = pill.dataset.tab;
-        render();
+function euro(value) {
+    return value == null ? 'Non précisé' : new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(value);
+}
+function showFeedback(message, type='info') {
+    const el = document.getElementById('feedback');
+    el.className = 'alert alert-' + type;
+    el.textContent = message;
+    el.style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+async function api(url, options={}) {
+    const response = await fetch(url, {credentials:'same-origin', ...options});
+    if (response.status === 401) { location.href = 'login.html'; throw new Error('Session expirée.'); }
+    if (response.status === 403) throw new Error('Accès réservé au rôle Expert CAO.');
+    const contentType = response.headers.get('content-type') || '';
+    const body = contentType.includes('application/json') ? await response.json() : null;
+    if (!response.ok) throw new Error(body?.message || `Erreur ${response.status} lors de l’appel à l’API.`);
+    return body;
+}
+function setActiveTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.tab-pill').forEach(button => {
+        const selected = button.dataset.tab === tab;
+        button.classList.toggle('active', selected);
+        button.setAttribute('aria-selected', String(selected));
     });
+    const url = new URL(location.href);
+    if (tab === 'a-modeliser') url.searchParams.delete('tab');
+    else url.searchParams.set('tab', tab);
+    history.replaceState({}, '', url);
+    loadActiveTab();
+}
+function updateCounts() {
+    const pending = mesFichiers.filter(file => file.etatValidation === 'EN_ATTENTE').length;
+    const valid = mesFichiers.filter(file => file.etatValidation === 'VALIDE').length;
+    const downloads = mesFichiers.reduce((sum, file) => sum + (Number(file.nombreTelechargements) || 0), 0);
+    document.getElementById('countDemandes').textContent = demandes.length;
+    document.getElementById('countPending').textContent = pending;
+    document.getElementById('countValid').textContent = valid;
+    document.getElementById('countDownloads').textContent = downloads;
+    document.getElementById('tabCountDemandes').textContent = demandes.length;
+    document.getElementById('tabCountFichiers').textContent = mesFichiers.length;
+}
+async function loadBaseData() {
+    try {
+        const results = await Promise.all([
+            api(API + '/demandes-a-modeliser'),
+            api(API + '/fichiers-stl')
+        ]);
+        demandes = results[0] || [];
+        mesFichiers = results[1] || [];
+        updateCounts();
+    } catch (error) {
+        contenu.innerHTML = `<div class="error-state"><i class="fas fa-triangle-exclamation me-2"></i>${escapeHtml(error.message)}</div>`;
+    }
+}
+async function loadActiveTab() {
+    contenu.innerHTML = '<div class="loading-state"><i class="fas fa-spinner fa-spin me-2"></i>Chargement…</div>';
+    if (activeTab === 'catalogue') {
+        await loadBaseData();
+        if (contenu.querySelector('.error-state')) return;
+        try {
+            catalogFiles = await api(API + '/fichiers-stl/valides') || [];
+            renderFiles(catalogFiles, 'Aucun modèle validé pour le moment.', false);
+        } catch (error) { renderError(error); }
+        return;
+    }
+    await loadBaseData();
+    if (contenu.querySelector('.error-state')) return;
+    if (activeTab === 'a-modeliser') {
+        renderDemandes();
+        const demandeId = new URLSearchParams(location.search).get('demandeId');
+        const demande = demandes.find(item => Number(item.id) === Number(demandeId));
+        if (demande) openModelModal(demande);
+    } else renderFiles(mesFichiers, 'Vous n’avez encore transmis aucun fichier 3D.', true);
+}
+function renderDemandes() {
+    if (!demandes.length) {
+        contenu.innerHTML = '<div class="empty-state"><i class="fas fa-circle-check d-block"></i><p>Toutes les demandes disponibles sont traitées ou attendent la validation de l’administrateur.</p></div>';
+        return;
+    }
+    contenu.innerHTML = demandes.map(d => `
+        <article class="demande-card">
+            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                <div class="flex-grow-1">
+                    <h2 class="demande-title">${escapeHtml(d.titre)}</h2>
+                    <p class="text-white-50 mb-2">${escapeHtml(d.description || 'Aucune description complémentaire.')}</p>
+                    <div class="demande-meta">
+                        <span><i class="fas fa-user"></i>${escapeHtml((d.demandeurPrenom || '') + ' ' + (d.demandeurNom || ''))}</span>
+                        <span><i class="fas fa-tag"></i>${escapeHtml(d.marque || 'Marque non précisée')} · ${escapeHtml(d.modeleAppareil || 'Modèle non précisé')}</span>
+                        <span><i class="fas fa-cube"></i>${escapeHtml(d.materiauSouhaite || 'Matériau à proposer')}</span>
+                        <span><i class="fas fa-location-dot"></i>${escapeHtml(d.ville || 'Ville non précisée')}</span>
+                        <span><i class="fas fa-coins"></i>${euro(d.budgetMax)}</span>
+                        <span><i class="fas fa-calendar"></i>${formatDate(d.dateCreation)}</span>
+                    </div>
+                </div>
+                <button class="btn btn-neon" type="button" data-action="modeliser" data-id="${Number(d.id)}"><i class="fas fa-cube me-2"></i>Transmettre un modèle</button>
+            </div>
+            ${d.photos?.length ? `<div class="small text-white-50 mt-3"><i class="fas fa-images me-1"></i>${d.photos.length} photo(s) de référence fournies</div>` : ''}
+        </article>`).join('');
+}
+function statusClass(status) {
+    if (status === 'VALIDE') return 'status-valid';
+    if (status === 'REJETE') return 'status-rejected';
+    return 'status-pending';
+}
+function statusLabel(status) {
+    return ({EN_ATTENTE:'En attente de validation admin',VALIDE:'Validé',REJETE:'Rejeté — correction à prévoir'})[status] || status || 'Inconnu';
+}
+function renderFiles(files, emptyMessage, isMine) {
+    if (!files.length) {
+        contenu.innerHTML = `<div class="empty-state"><i class="fas fa-cubes d-block"></i><p>${escapeHtml(emptyMessage)}</p></div>`;
+        return;
+    }
+    contenu.innerHTML = files.map(file => {
+        const fileUrl = safeFileUrl(file.cheminFichier);
+        const isGlb = fileUrl && /\.glb$/i.test(fileUrl);
+        const badge = isMine ? `<span class="status-badge ${statusClass(file.etatValidation)}">${escapeHtml(statusLabel(file.etatValidation))}</span>` : '<span class="status-badge status-valid">Validé</span>';
+        return `<article class="demande-card">
+            <div class="row g-3 align-items-center">
+                ${isGlb ? `<div class="col-md-4"><model-viewer class="model-preview" src="${escapeHtml(fileUrl)}" alt="Aperçu 3D : ${escapeHtml(file.nom)}" camera-controls auto-rotate disable-zoom shadow-intensity="0.7"></model-viewer></div>` : ''}
+                <div class="${isGlb ? 'col-md-8' : 'col-12'}">
+                    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap"><h2 class="demande-title">${escapeHtml(file.nom)}</h2>${badge}</div>
+                    <p class="text-white-50 mb-2">${escapeHtml(file.description || 'Aucune description technique renseignée.')}</p>
+                    <div class="demande-meta">
+                        <span><i class="fas fa-tag"></i>${escapeHtml(file.categorie || 'Sans catégorie')}</span>
+                        <span><i class="fas fa-industry"></i>${escapeHtml([file.marque,file.modeleAppareil].filter(Boolean).join(' · ') || 'Modèle universel')}</span>
+                        <span><i class="fas fa-cube"></i>${escapeHtml(file.materiauRecommande || 'Matériau non précisé')}</span>
+                        <span><i class="fas fa-ruler-combined"></i>${escapeHtml(file.dimensions || 'Dimensions non renseignées')}</span>
+                        <span><i class="fas fa-download"></i>${Number(file.nombreTelechargements)||0} téléchargement(s)</span>
+                        <span><i class="fas fa-calendar"></i>${formatDate(file.dateUpload)}</span>
+                    </div>
+                    ${fileUrl ? `<a class="btn btn-ghost btn-sm mt-3" href="${escapeHtml(fileUrl)}" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square me-1"></i>${isGlb ? 'Ouvrir l’aperçu' : 'Télécharger le fichier'}</a>` : '<span class="small text-warning d-inline-block mt-3">Adresse de fichier non reconnue — contactez un administrateur.</span>'}
+                    ${!isMine && file.uploadeurNom ? `<span class="small text-white-50 ms-2">Par ${escapeHtml(file.uploadeurNom)}</span>` : ''}
+                </div>
+            </div>
+        </article>`;
+    }).join('');
+}
+function renderError(error) {
+    contenu.innerHTML = `<div class="error-state"><i class="fas fa-triangle-exclamation me-2"></i>${escapeHtml(error.message)}</div>`;
+}
+function openModelModal(demande) {
+    document.getElementById('stlForm').reset();
+    document.getElementById('demandeIdModelisation').value = demande.id;
+    document.getElementById('stlNom').value = demande.titre || '';
+    document.getElementById('stlMarque').value = demande.marque || '';
+    document.getElementById('stlModele').value = demande.modeleAppareil || '';
+    document.getElementById('stlMateriau').value = demande.materiauSouhaite || '';
+    document.getElementById('modalDemandeTitle').textContent = `Demande #${demande.id} · ${demande.titre}`;
+    const modalFeedback = document.getElementById('modalFeedback');
+    modalFeedback.className = 'alert d-none';
+    stlModal.show();
+}
+
+document.querySelectorAll('.tab-pill').forEach(button => button.addEventListener('click', () => setActiveTab(button.dataset.tab)));
+contenu.addEventListener('click', event => {
+    const button = event.target.closest('[data-action="modeliser"]');
+    if (!button) return;
+    const demande = demandes.find(item => Number(item.id) === Number(button.dataset.id));
+    if (demande) openModelModal(demande);
+});
+document.getElementById('stlForm').addEventListener('submit', async event => {
+    event.preventDefault();
+    const submit = document.getElementById('submitModelisation');
+    const feedback = document.getElementById('modalFeedback');
+    const id = document.getElementById('demandeIdModelisation').value;
+    const file = document.getElementById('stlFile').files[0];
+    if (!file) return;
+    if (file.size > 50 * 1024 * 1024) {
+        feedback.textContent = 'Le fichier dépasse la limite de 50 Mo.';
+        feedback.className = 'alert alert-danger';
+        return;
+    }
+    const body = new FormData();
+    body.append('file', file);
+    body.append('nom', document.getElementById('stlNom').value.trim());
+    body.append('categorie', document.getElementById('stlCategorie').value);
+    body.append('description', document.getElementById('stlDescription').value.trim());
+    body.append('marque', document.getElementById('stlMarque').value.trim());
+    body.append('modeleAppareil', document.getElementById('stlModele').value.trim());
+    body.append('materiauRecommande', document.getElementById('stlMateriau').value.trim());
+    body.append('dimensions', document.getElementById('stlDimensions').value.trim());
+    body.append('tags', document.getElementById('stlTags').value.trim());
+    submit.disabled = true;
+    submit.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Envoi…';
+    feedback.className = 'alert d-none';
+    try {
+        await api(`${API}/demandes/${encodeURIComponent(id)}/modelisation/upload`, {method:'POST',body});
+        stlModal.hide();
+        showFeedback('Modèle transmis. La demande reste en CAO jusqu’à la validation de l’administrateur ; le demandeur et l’expert recevront une notification.', 'success');
+        await loadActiveTab();
+    } catch (error) {
+        feedback.textContent = error.message;
+        feedback.className = 'alert alert-danger';
+    } finally {
+        submit.disabled = false;
+        submit.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Envoyer à l’administrateur';
+    }
 });
 
-function formatDate(d) {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
-}
-
-function escapeHtml(s) {
-    if (s == null) return '';
-    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
-}
-
-load();
+setActiveTab(activeTab);
 </script>
-
 </body>
 </html>

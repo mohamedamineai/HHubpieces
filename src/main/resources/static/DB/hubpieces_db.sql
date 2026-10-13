@@ -57,7 +57,7 @@ CREATE TABLE `demande` (
   `code_postal` varchar(10) DEFAULT NULL,
   `latitude` double DEFAULT NULL,
   `longitude` double DEFAULT NULL,
-  `etat` enum('NOUVELLE','MODELISATION_REQUISE','RECHERCHE_MAKER','ATTENTE_VALIDATION','EN_COURS_IMPRESSION','ANNULEE','CLOTUREE') DEFAULT 'NOUVELLE',
+  `etat` enum('NOUVELLE','MODELISATION_REQUISE','RECHERCHE_MAKER','ATTENTE_IMPRESSION','EN_COURS_IMPRESSION','ATTENTE_VALIDATION','ANNULEE','CLOTUREE') DEFAULT 'NOUVELLE',
   `date_creation` datetime DEFAULT current_timestamp(),
   `date_modification` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `demandeur_id` bigint(20) NOT NULL,

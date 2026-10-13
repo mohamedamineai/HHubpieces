@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Locale;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LitigeService {
@@ -34,7 +35,8 @@ public class LitigeService {
     }
 
     public List<Litige> findOuverts() {
-        return litigeRepository.findByEtatOrderByDateOuvertureDesc(EtatLitige.OUVERT);
+        return litigeRepository.findByEtatInOrderByDateOuvertureDesc(
+                Arrays.asList(EtatLitige.OUVERT, EtatLitige.EN_COURS));
     }
 
     public Litige findById(Long id) {
@@ -44,6 +46,9 @@ public class LitigeService {
 
     @Transactional
     public Litige ouvrir(LitigeCreateRequest req, Utilisateur demandeur) {
+        if (req == null || req.getTransactionId() == null) {
+            throw new BadRequestException("L'identifiant de la transaction est obligatoire");
+        }
         if (req.getRaison() == null || req.getRaison().isBlank()) {
             throw new BadRequestException("La raison est obligatoire");
         }
@@ -51,20 +56,22 @@ public class LitigeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction introuvable"));
         Utilisateur owner = transaction.getOffreMaker().getDemande().getDemandeur();
         if (!owner.getId().equals(demandeur.getId())) {
-            throw new ForbiddenException("Vous n'etes pas le demandeur de cette transaction");
+            throw new ForbiddenException("Vous n'êtes pas le demandeur de cette transaction");
+        }
+        if (litigeRepository.existsByTransaction_IdAndEtatIn(transaction.getId(),
+                Arrays.asList(EtatLitige.OUVERT, EtatLitige.EN_COURS))) {
+            throw new BadRequestException("Un litige est déjà ouvert pour cette transaction");
         }
 
-        Litige litige = new Litige(transaction, demandeur, req.getRaison());
+        Litige litige = new Litige(transaction, demandeur, req.getRaison().trim());
         Litige saved = litigeRepository.save(litige);
 
         transaction.setEtatPaiement(EtatPaiement.LITIGE);
         transactionRepository.save(transaction);
 
-        // Notifier l'admin (premier admin trouve)
-        // En production, on notifierait tous les admins. Pour le MVP, on notifie le maker
         notificationService.envoyer(transaction.getOffreMaker().getMaker(),
                 "Litige ouvert",
-                "Un litige a ete ouvert concernant votre commande. L'admin va intervenir.",
+                "Un litige a été ouvert concernant votre commande. L'administrateur va intervenir.",
                 TypeNotification.WARNING);
 
         return saved;
@@ -74,33 +81,49 @@ public class LitigeService {
     public Litige resoudre(Long id, LitigeResolutionRequest req, Utilisateur admin) {
         Litige litige = findById(id);
         if (litige.getEtat() == EtatLitige.RESOLU || litige.getEtat() == EtatLitige.FERME) {
-            throw new BadRequestException("Ce litige est deja cloture");
+            throw new BadRequestException("Ce litige est déjà clôturé");
         }
-        if (req.getDecision() == null || req.getDecision().isBlank()) {
-            throw new BadRequestException("La decision est obligatoire");
+        if (req == null || req.getDecision() == null || req.getDecision().isBlank()) {
+            throw new BadRequestException("La décision de l'administrateur est obligatoire");
         }
 
-        litige.setDecision(req.getDecision());
+        EtatLitige nouvelEtat = req.getEtat() == null ? EtatLitige.RESOLU : req.getEtat();
+        if (nouvelEtat == EtatLitige.OUVERT) {
+            throw new BadRequestException("Un litige pris en charge ne peut pas revenir à l'état OUVERT");
+        }
+
+        litige.setDecision(req.getDecision().trim());
         litige.setAdmin(admin);
-        litige.setEtat(req.getEtat() != null ? req.getEtat() : EtatLitige.RESOLU);
-        if (litige.getEtat() == EtatLitige.RESOLU || litige.getEtat() == EtatLitige.FERME) {
-            litige.setDateResolution(LocalDateTime.now());
+        litige.setEtat(nouvelEtat);
 
-            // Si resolu en faveur du demandeur -> remboursement
-            if (req.getDecision().toLowerCase().contains("rembours")) {
-                litige.getTransaction().setEtatPaiement(EtatPaiement.REMBOURSE);
+        Transaction transaction = litige.getTransaction();
+        boolean cloture = nouvelEtat == EtatLitige.RESOLU || nouvelEtat == EtatLitige.FERME;
+        if (cloture) {
+            litige.setDateResolution(LocalDateTime.now());
+            if (req.getDecision().toLowerCase(Locale.ROOT).contains("rembours")) {
+                transaction.setEtatPaiement(EtatPaiement.REMBOURSE);
             } else {
-                litige.getTransaction().setEtatPaiement(EtatPaiement.LIBERE);
-                litige.getTransaction().setDateLiberaion(LocalDateTime.now());
+                transaction.setEtatPaiement(EtatPaiement.LIBERE);
+                transaction.setDateLiberaion(LocalDateTime.now());
             }
-            transactionRepository.save(litige.getTransaction());
+        } else {
+            // La transaction reste bloquée en séquestre pendant l'instruction.
+            transaction.setEtatPaiement(EtatPaiement.LITIGE);
+            litige.setDateResolution(null);
         }
+        transactionRepository.save(transaction);
         Litige saved = litigeRepository.save(litige);
 
-        notificationService.envoyer(litige.getDemandeur(),
-                "Litige resolu",
-                "Votre litige a ete resolu : " + req.getDecision(),
-                TypeNotification.INFO);
+        String titreNotification = cloture ? "Litige résolu" : "Litige pris en charge";
+        String messageNotification = cloture
+                ? "Votre litige est clôturé : " + req.getDecision().trim()
+                : "Votre litige est en cours d'instruction par l'administrateur.";
+        notificationService.envoyer(litige.getDemandeur(), titreNotification, messageNotification,
+                cloture ? TypeNotification.SUCCESS : TypeNotification.INFO);
+        notificationService.envoyer(transaction.getOffreMaker().getMaker(), titreNotification,
+                cloture ? "Décision concernant le litige : " + req.getDecision().trim()
+                        : "L'administrateur a pris en charge le litige de votre commande.",
+                cloture ? TypeNotification.INFO : TypeNotification.WARNING);
         return saved;
     }
 }

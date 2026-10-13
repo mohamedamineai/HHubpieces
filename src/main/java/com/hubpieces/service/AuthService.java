@@ -7,6 +7,7 @@ import com.hubpieces.model.ProfilExpertCao;
 import com.hubpieces.model.ProfilMaker;
 import com.hubpieces.model.Role;
 import com.hubpieces.model.RoleNom;
+import com.hubpieces.model.StatutUtilisateur;
 import com.hubpieces.model.Utilisateur;
 import com.hubpieces.repository.ProfilExpertCaoRepository;
 import com.hubpieces.repository.ProfilMakerRepository;
@@ -41,8 +42,18 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
-        if (request.getRole() == null) {
+        if (request == null || request.getRole() == null) {
             return new AuthResponse(false, "Veuillez choisir un rôle", null, null, null, null, null);
+        }
+        if (request.getRole() == RoleNom.ADMIN) {
+            return new AuthResponse(false, "La création d'un compte administrateur est réservée à la configuration de la plateforme", null, null, null, null, null);
+        }
+
+        if (request.getEmail() == null || request.getEmail().isBlank()
+                || request.getMotDePasse() == null || request.getMotDePasse().isBlank()
+                || request.getNom() == null || request.getNom().isBlank()
+                || request.getPrenom() == null || request.getPrenom().isBlank()) {
+            return new AuthResponse(false, "Nom, prénom, email et mot de passe sont obligatoires", null, null, null, null, null);
         }
 
         if (utilisateurRepository.existsByEmail(request.getEmail())) {
@@ -95,10 +106,14 @@ public class AuthService {
         }
 
         Utilisateur utilisateur = opt.get();
-        String role = utilisateur.getRoles().stream()
-                .findFirst()
-                .map(r -> r.getNom().name())
-                .orElse("DEMANDEUR");
+        if (utilisateur.getStatut() != StatutUtilisateur.ACTIF) {
+            return new AuthResponse(false, "Ce compte est suspendu ou en attente d'activation", null, null, null, null, null);
+        }
+
+        String role = RoleNom.principal(utilisateur.getRoles().stream()
+                .map(Role::getNom)
+                .collect(java.util.stream.Collectors.toSet()))
+                .name();
 
         return new AuthResponse(true, "Connexion réussie", utilisateur.getId(), utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getEmail(), role);
     }

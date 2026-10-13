@@ -1,11 +1,14 @@
 {
   "info": {
     "name": "Hubpieces API",
-    "description": "Collection complète pour tester l'API Hubpieces (4 acteurs, ~70 endpoints)",
+    "description": "Collection de smoke tests pour l'API Hubpieces (sessions par rôle; compléter les identifiants et fichiers pour les mutations)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:9090" }
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:9090"
+    }
   ],
   "item": [
     {
@@ -16,7 +19,12 @@
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/auth/login",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\"email\": \"demandeur@hubpieces.fr\", \"motDePasse\": \"demo1234\"}"
@@ -88,7 +96,10 @@
       "item": [
         {
           "name": "Mes demandes",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/demandeur/demandes" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/demandeur/demandes"
+          }
         },
         {
           "name": "Créer une demande",
@@ -103,11 +114,17 @@
         },
         {
           "name": "Notifications",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/demandeur/notifications" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/demandeur/notifications"
+          }
         },
         {
           "name": "Stats",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/demandeur/stats" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/demandeur/stats"
+          }
         }
       ]
     },
@@ -116,15 +133,24 @@
       "item": [
         {
           "name": "Demandes disponibles",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/maker/demandes-disponibles" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/maker/demandes-disponibles"
+          }
         },
         {
           "name": "Mes offres",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/maker/offres" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/maker/offres"
+          }
         },
         {
           "name": "Mes commandes",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/maker/commandes" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/maker/commandes"
+          }
         },
         {
           "name": "Déposer une offre",
@@ -144,11 +170,17 @@
       "item": [
         {
           "name": "Demandes à modéliser",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/expert-cao/demandes-a-modeliser" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/expert-cao/demandes-a-modeliser"
+          }
         },
         {
           "name": "Mes fichiers STL",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/expert-cao/fichiers-stl" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/expert-cao/fichiers-stl"
+          }
         }
       ]
     },
@@ -157,23 +189,38 @@
       "item": [
         {
           "name": "Statistiques globales",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/stats" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/admin/stats"
+          }
         },
         {
           "name": "Tous les utilisateurs",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/utilisateurs" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/admin/utilisateurs"
+          }
         },
         {
           "name": "STL en attente",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/fichiers-stl/en-attente" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/admin/fichiers-stl/en-attente"
+          }
         },
         {
           "name": "Litiges",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/litiges" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/admin/litiges"
+          }
         },
         {
           "name": "Transactions",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/admin/transactions" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/admin/transactions"
+          }
         }
       ]
     },
@@ -182,15 +229,24 @@
       "item": [
         {
           "name": "Catalogue STL",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/public/catalogue-stl" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/public/catalogue-stl"
+          }
         },
         {
           "name": "Makers",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/public/makers" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/public/makers"
+          }
         },
         {
           "name": "Experts CAO",
-          "request": { "method": "GET", "url": "{{baseUrl}}/api/public/experts-cao" }
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/public/experts-cao"
+          }
         }
       ]
     }

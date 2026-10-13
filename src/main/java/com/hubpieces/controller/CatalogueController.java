@@ -66,7 +66,7 @@ public class CatalogueController {
     public ResponseEntity<FichierStlDTO> getFichierStl(@PathVariable Long id) {
         FichierStl f = fichierStlService.findById(id);
         if (f.getEtatValidation() != com.hubpieces.model.EtatValidation.VALIDE) {
-            // Seuls admin/expert voient les non valides -> pour l'instant on autorise tout
+            throw new ResourceNotFoundException("Fichier 3D introuvable dans le catalogue public");
         }
         return ResponseEntity.ok(FichierStlDTO.fromEntity(f));
     }

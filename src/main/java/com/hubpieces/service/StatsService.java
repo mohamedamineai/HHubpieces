@@ -66,7 +66,8 @@ public class StatsService {
         stats.setDemandesNouvelles(demandeRepository.countByEtat(EtatDemande.NOUVELLE)
                 + demandeRepository.countByEtat(EtatDemande.MODELISATION_REQUISE)
                 + demandeRepository.countByEtat(EtatDemande.RECHERCHE_MAKER));
-        stats.setDemandesEnCours(demandeRepository.countByEtat(EtatDemande.EN_COURS_IMPRESSION)
+        stats.setDemandesEnCours(demandeRepository.countByEtat(EtatDemande.ATTENTE_IMPRESSION)
+                + demandeRepository.countByEtat(EtatDemande.EN_COURS_IMPRESSION)
                 + demandeRepository.countByEtat(EtatDemande.ATTENTE_VALIDATION));
         stats.setDemandesCloturees(demandeRepository.countByEtat(EtatDemande.CLOTUREE));
 

@@ -9,12 +9,12 @@ D'après le **cahier des charges** (les 2 images Excel des séances 3 et 4), voi
 ## 🎯 Séance 3 — Modélisation des données avec JPA/Hibernate
 
 ### ✅ Livrables du cahier des charges
-- ✅ **22 entités JPA** identifiées et mappées avec annotations
+- ✅ **13 entités JPA et 10 énumérations métier** identifiées et mappées avec annotations
 - ✅ **Diagramme de classes** : relations OneToOne, ManyToOne, OneToMany, ManyToMany
 - ✅ **Base MySQL** fonctionnelle (`hubpieces_db`)
 - ✅ **Premiers formulaires/pages** adaptés au modèle
 
-### Entités créées (22)
+### Entités créées (13)
 | Entité | Relations clés |
 |--------|---------------|
 | `Utilisateur` | ManyToMany ↔ Role |
@@ -175,7 +175,7 @@ HHubpieces/
 │   ├── controller/            (7 controllers REST)
 │   ├── dto/                   (21 DTOs)
 │   ├── exception/             (4 exceptions + GlobalExceptionHandler)
-│   ├── model/                 (22 entités JPA)
+│   ├── model/                 (13 entités JPA et 10 énumérations métier)
 │   ├── repository/            (13 repositories)
 │   └── service/               (11 services métier)
 ├── src/main/resources/

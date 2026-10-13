@@ -3,7 +3,7 @@
 ## 🎯 Objectifs Cahier des charges
 
 ### Séance 3 — Modélisation JPA/Hibernate
-- ✅ 22 entités JPA déjà présentes (Utilisateur, Demande, OffreMaker, Transaction, etc.)
+- ✅ 13 entités JPA et 10 énumérations métier déjà présentes (Utilisateur, Demande, OffreMaker, Transaction, etc.)
 - ✅ Mappings : @OneToOne, @ManyToOne, @ManyToMany
 - ✅ MySQL + ddl-auto=update
 
