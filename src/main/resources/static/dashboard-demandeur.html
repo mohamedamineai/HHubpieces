@@ -11,7 +11,8 @@
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 <link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
-<link href="css/dashboard.css" rel="stylesheet">
+<link href="css/dashboard.css?v=20261013" rel="stylesheet">
+<link href="css/holo-3d.css?v=20261013" rel="stylesheet">
 </head>
 <body class="dashboard-body">
 
@@ -42,29 +43,67 @@
         <span class="dashboard-role-pill"><i class="fas fa-user me-1"></i>Demandeur</span>
     </div>
 
-    <aside class="dashboard-visual-panel" aria-labelledby="demandeur-visual-title">
-        <div class="dashboard-visual-copy">
-            <p class="dashboard-visual-eyebrow"><i class="fas fa-recycle" aria-hidden="true"></i>Réparer plutôt que jeter</p>
-            <h2 class="dashboard-visual-title" id="demandeur-visual-title">Une nouvelle vie pour les pièces cassées</h2>
-            <p class="dashboard-visual-description">Hubpieces relie votre besoin à des spécialistes de la modélisation et de l’impression 3D.</p>
-            <p class="dashboard-visual-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Illustration décorative : cet engrenage ne représente aucune demande réelle.</span></p>
+    <aside class="holo-panel holo-panel--demandeur" data-holo aria-labelledby="demandeur-visual-title">
+        <div class="holo-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="holo-copy">
+            <p class="holo-eyebrow"><span class="holo-live" aria-hidden="true"></span><i class="fas fa-recycle" aria-hidden="true"></i>Réparer plutôt que jeter</p>
+            <h2 class="holo-title" id="demandeur-visual-title">Une nouvelle vie pour les <span class="holo-glow-word">pièces cassées</span></h2>
+            <p class="holo-desc">Hubpieces relie votre besoin à des spécialistes de la modélisation et de l’impression 3D.</p>
+            <ul class="holo-chips" aria-label="Points clés">
+                <li><i class="fas fa-pen-to-square" aria-hidden="true"></i>Décrivez la panne</li>
+                <li><i class="fas fa-compass-drafting" aria-hidden="true"></i>Modélisation</li>
+                <li><i class="fas fa-print" aria-hidden="true"></i>Impression</li>
+            </ul>
+            <p class="holo-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Illustration décorative : cet engrenage ne représente aucune demande réelle.</span></p>
         </div>
-        <div class="dashboard-visual-stage">
-            <model-viewer
-                class="dashboard-visual-model"
-                src="images/repair-gear.glb"
-                alt="Engrenage 3D décoratif pour illustrer la réparation d’une pièce, sans lien avec une demande réelle"
-                data-motion-auto-rotate
-                auto-rotate
-                auto-rotate-delay="0"
-                rotation-per-second="18deg"
-                camera-controls
-                disable-zoom
-                loading="lazy"
-                tabindex="0"
-                shadow-intensity="0.55"
-                exposure="1.05">
-            </model-viewer>
+        <div class="holo-stage">
+            <div class="holo-stage-inner">
+                <div class="holo-decor" aria-hidden="true">
+                    <span class="holo-floor"></span>
+                    <span class="holo-halo"></span>
+                    <span class="holo-ring holo-ring--3"></span>
+                    <span class="holo-ring holo-ring--1"></span>
+                    <span class="holo-ring holo-ring--2"></span>
+                    <span class="holo-beam"></span>
+                    <span class="holo-pedestal"></span>
+                    <span class="holo-particles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+                <div class="holo-float">
+                    <model-viewer
+                        class="holo-model"
+                        src="images/repair-gear.glb"
+                        alt="Engrenage 3D décoratif pour illustrer la réparation d’une pièce, sans lien avec une demande réelle"
+                        data-motion-auto-rotate
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="18deg"
+                        camera-controls
+                        disable-zoom
+                        interaction-prompt="none"
+                        loading="eager"
+                        reveal="auto"
+                        tabindex="0"
+                        shadow-intensity="0"
+                        environment-image="neutral"
+                        tone-mapping="aces"
+                        exposure="1.15">
+                    </model-viewer>
+                </div>
+                <div class="holo-loader" role="status" aria-live="polite">
+                    <div class="holo-loader-ring"></div>
+                    <div class="holo-loader-core">
+                        <span class="holo-loader-pct" data-holo-pct>0%</span>
+                        <span class="holo-loader-text">Matérialisation</span>
+                    </div>
+                </div>
+                <div class="holo-fallback" aria-hidden="true"><div><i class="fas fa-cube"></i>Aperçu 3D indisponible</div></div>
+                <span class="holo-scan" aria-hidden="true"></span>
+                <div class="holo-hud" aria-hidden="true">
+                    <span class="holo-hud-corners"></span>
+                    <span class="holo-hud-label">HUB/3D · Réparation</span>
+                    <span class="holo-hud-hint"><i class="fas fa-hand-pointer" aria-hidden="true"></i>Glissez pour pivoter</span>
+                </div>
+            </div>
         </div>
     </aside>
 
@@ -172,7 +211,7 @@
 
 </div>
 
-<script src="js/model-viewer-motion.js"></script>
+<script src="js/model-viewer-motion.js?v=20261013"></script>
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>

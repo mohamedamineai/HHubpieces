@@ -10,7 +10,8 @@
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 <link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
-<link href="css/dashboard.css" rel="stylesheet">
+<link href="css/dashboard.css?v=20261013" rel="stylesheet">
+<link href="css/holo-3d.css?v=20261013" rel="stylesheet">
 <style>
 .btn-neon {
     background: linear-gradient(135deg, #9d4edd 0%, #ff5eae 100%);
@@ -62,29 +63,67 @@
         <span class="dashboard-role-pill"><i class="fas fa-drafting-compass me-1"></i>Expert CAO</span>
     </div>
 
-    <aside class="dashboard-visual-panel dashboard-visual-panel--expert" aria-labelledby="expert-visual-title">
-        <div class="dashboard-visual-copy">
-            <p class="dashboard-visual-eyebrow"><i class="fas fa-compass-drafting" aria-hidden="true"></i>Studio de conception</p>
-            <h2 class="dashboard-visual-title" id="expert-visual-title">De l’idée au modèle prêt à fabriquer</h2>
-            <p class="dashboard-visual-description">Votre espace rassemble les demandes à modéliser et les fichiers soumis pour validation.</p>
-            <p class="dashboard-visual-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Illustration décorative de l’espace CAO, sans lien avec une demande réelle.</span></p>
+    <aside class="holo-panel holo-panel--expert" data-holo aria-labelledby="expert-visual-title">
+        <div class="holo-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="holo-copy">
+            <p class="holo-eyebrow"><span class="holo-live" aria-hidden="true"></span><i class="fas fa-compass-drafting" aria-hidden="true"></i>Studio de conception</p>
+            <h2 class="holo-title" id="expert-visual-title">De l’idée au modèle <span class="holo-glow-word">prêt à fabriquer</span></h2>
+            <p class="holo-desc">Votre espace rassemble les demandes à modéliser et les fichiers soumis pour validation.</p>
+            <ul class="holo-chips" aria-label="Points clés">
+                <li><i class="fas fa-pen-ruler" aria-hidden="true"></i>Modélisation CAO</li>
+                <li><i class="fas fa-cloud-arrow-up" aria-hidden="true"></i>Soumission</li>
+                <li><i class="fas fa-circle-check" aria-hidden="true"></i>Validation Admin</li>
+            </ul>
+            <p class="holo-note"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Illustration décorative de l’espace CAO, sans lien avec une demande réelle.</span></p>
         </div>
-        <div class="dashboard-visual-stage">
-            <model-viewer
-                class="dashboard-visual-model"
-                src="images/cao-model.glb"
-                alt="Modèle mécanique CAO décoratif pour l’espace Expert CAO, sans lien avec une demande réelle"
-                data-motion-auto-rotate
-                auto-rotate
-                auto-rotate-delay="0"
-                rotation-per-second="16deg"
-                camera-controls
-                disable-zoom
-                loading="lazy"
-                tabindex="0"
-                shadow-intensity="0.55"
-                exposure="1.05">
-            </model-viewer>
+        <div class="holo-stage">
+            <div class="holo-stage-inner">
+                <div class="holo-decor" aria-hidden="true">
+                    <span class="holo-floor"></span>
+                    <span class="holo-halo"></span>
+                    <span class="holo-ring holo-ring--3"></span>
+                    <span class="holo-ring holo-ring--1"></span>
+                    <span class="holo-ring holo-ring--2"></span>
+                    <span class="holo-beam"></span>
+                    <span class="holo-pedestal"></span>
+                    <span class="holo-particles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+                <div class="holo-float">
+                    <model-viewer
+                        class="holo-model"
+                        src="images/cao-model.glb"
+                        alt="Modèle mécanique CAO décoratif pour l’espace Expert CAO, sans lien avec une demande réelle"
+                        data-motion-auto-rotate
+                        auto-rotate
+                        auto-rotate-delay="0"
+                        rotation-per-second="16deg"
+                        camera-controls
+                        disable-zoom
+                        interaction-prompt="none"
+                        loading="eager"
+                        reveal="auto"
+                        tabindex="0"
+                        shadow-intensity="0"
+                        environment-image="neutral"
+                        tone-mapping="aces"
+                        exposure="1.15">
+                    </model-viewer>
+                </div>
+                <div class="holo-loader" role="status" aria-live="polite">
+                    <div class="holo-loader-ring"></div>
+                    <div class="holo-loader-core">
+                        <span class="holo-loader-pct" data-holo-pct>0%</span>
+                        <span class="holo-loader-text">Matérialisation</span>
+                    </div>
+                </div>
+                <div class="holo-fallback" aria-hidden="true"><div><i class="fas fa-cube"></i>Aperçu 3D indisponible</div></div>
+                <span class="holo-scan" aria-hidden="true"></span>
+                <div class="holo-hud" aria-hidden="true">
+                    <span class="holo-hud-corners"></span>
+                    <span class="holo-hud-label">HUB/3D · Studio CAO</span>
+                    <span class="holo-hud-hint"><i class="fas fa-hand-pointer" aria-hidden="true"></i>Glissez pour pivoter</span>
+                </div>
+            </div>
         </div>
     </aside>
 
@@ -161,7 +200,7 @@
 
 </div>
 
-<script src="js/model-viewer-motion.js"></script>
+<script src="js/model-viewer-motion.js?v=20261013"></script>
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>

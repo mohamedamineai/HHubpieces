@@ -48,9 +48,25 @@ Workflow conseillé : `Create` → `Text to 3D` → coller le prompt → choisir
 
 Les nouveaux visuels de rôle sont conservés uniquement sur leurs pages de destination. `auth_blob.glb` est la seule exception de partage, voulue entre connexion et inscription. Le hero `circuit-board.glb` est séparé de la grille et du parcours de téléchargement du catalogue.
 
-### Alerte de poids
+### Poids et optimisation web (octobre 2026)
 
-La cible de génération des prompts est de **3 à 8 MB**, avec un plafond recommandé de 10 MB. Les fichiers contrôlés sont lourds : `repair-gear.glb` (60,80 MiB), `printed-piece.glb` (58,48 MiB), `cao-model.glb` (67,71 MiB), `circuit-board.glb` (61,61 MiB), `admin-shield.glb` (60,52 MiB) et `eco-recycle.glb` (58,79 MiB). L'asset partagé `auth_blob.glb` pèse 62,61 MiB. Ils dépassent tous très largement la cible; dix des treize GLB du dépôt dépassent 10 MB (base décimale). Ils n'ont pas été altérés ici : prévoir une optimisation des maillages/textures avant une mise en production à fort trafic, puis refaire les contrôles.
+Les exports Tripo3D bruts pesaient 58–68 MiB chacun (~2 millions de triangles, textures 4096 px), ce qui laissait la zone 3D vide pendant de longues secondes. Les sept visuels décoratifs ont été optimisés avec `scripts/optimize-glb.mjs` (simplification meshoptimizer, textures WebP 2048 px, quantification) et sont désormais **dans la cible 3–8 MB** :
+
+| Fichier | Avant | Après | Triangles conservés |
+|---|---|---|---|
+| `admin-shield.glb` | 60,52 MiB | 4,96 MiB | ~195 k |
+| `auth_blob.glb` | 62,61 MiB | 5,03 MiB | ~197 k |
+| `cao-model.glb` | 67,71 MiB | 7,53 MiB | ~256 k (ratio 0,13 pour garder les ailettes) |
+| `circuit-board.glb` | 61,61 MiB | 5,20 MiB | ~192 k |
+| `eco-recycle.glb` | 58,79 MiB | 4,72 MiB | ~197 k |
+| `printed-piece.glb` | 58,48 MiB | 5,29 MiB | ~188 k |
+| `repair-gear.glb` | 60,80 MiB | 5,00 MiB | ~192 k |
+
+Les originaux restent récupérables dans l'historique Git (`git show 1158999:src/main/resources/static/images/<fichier>.glb > original.glb`). Les modèles de démonstration du catalogue (`model1–4.glb`, `printer_logo.glb`, `logo_hub_3d.glb`, 8–11 MiB) n'ont pas été modifiés : quatre d'entre eux restent légèrement au-dessus de la cible.
+
+### Mise en scène « holo 3D »
+
+Tous les visuels décoratifs utilisent le composant partagé `css/holo-3d.css` + `js/model-viewer-motion.js` : bordure lumineuse animée, aurores, anneaux orbitaux, halo, socle et faisceau lumineux, particules, HUD, anneau de chargement en pourcentage, matérialisation du modèle au chargement, parallaxe au survol et pause hors écran. `prefers-reduced-motion` coupe toutes les animations et l'auto-rotation. Le fond est 100 % CSS (aucun fond dans les GLB).
 
 ---
 

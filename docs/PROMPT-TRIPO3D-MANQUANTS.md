@@ -243,4 +243,4 @@ Pour chaque fichier `.glb` :
 └─────────────────────────────────────────────┘
 ```
 
-**État du checkout contrôlé : les six fichiers sont présents et intégrés.** `auth_blob.glb` est réutilisé sans duplication sur `login.html` et `register.html`. Les tailles actuelles des six assets de rôle sont comprises entre 58,48 et 67,71 MiB, très au-dessus de la cible de 3–8 MB : prévoir une optimisation avant production; ne pas remplacer un original sans revalider le GLB.
+**État du checkout contrôlé : les six fichiers sont présents et intégrés.** `auth_blob.glb` est réutilisé sans duplication sur `login.html` et `register.html`. Les six assets de rôle et `auth_blob.glb` ont été optimisés pour le web (4,72 à 7,53 MiB, dans la cible 3–8 MB) avec `scripts/optimize-glb.mjs`, puis revalidés par `scripts/check-3d-models.sh`. Les originaux Tripo3D (58–68 MiB) restent dans l'historique Git (commit `1158999`).
