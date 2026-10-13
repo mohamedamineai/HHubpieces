@@ -28,8 +28,10 @@ public class OpenApiConfig {
                         .license(new License()
                                 .name("MIT")
                                 .url("https://opensource.org/licenses/MIT")))
+                // URL relative : Swagger fonctionne sur localhost comme derrière le proxy
+                // de prévisualisation Arena, sans forcer le navigateur à appeler localhost.
                 .servers(List.of(
-                        new Server().url("http://localhost:9090").description("Serveur local")
+                        new Server().url("/").description("Serveur courant")
                 ));
     }
 }

@@ -1,10 +1,12 @@
 package com.hubpieces.dto;
 
+import com.hubpieces.model.Role;
 import com.hubpieces.model.RoleNom;
 import com.hubpieces.model.StatutUtilisateur;
 import com.hubpieces.model.Utilisateur;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UtilisateurDTO {
@@ -42,10 +44,13 @@ public class UtilisateurDTO {
             dto.photoProfil = u.getPhotoProfil();
         }
         if (u.getRoles() != null) {
-            dto.roles = u.getRoles().stream()
-                    .map(r -> r.getNom().name())
+            Set<RoleNom> roleNames = u.getRoles().stream()
+                    .map(Role::getNom)
                     .collect(Collectors.toSet());
-            dto.rolePrincipal = dto.roles.stream().findFirst().orElse(RoleNom.DEMANDEUR.name());
+            dto.roles = roleNames.stream()
+                    .map(RoleNom::name)
+                    .collect(Collectors.toSet());
+            dto.rolePrincipal = RoleNom.principal(roleNames).name();
         }
         return dto;
     }

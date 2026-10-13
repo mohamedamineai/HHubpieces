@@ -2,7 +2,6 @@ package com.hubpieces.controller;
 
 import com.hubpieces.dto.UtilisateurDTO;
 import com.hubpieces.dto.UtilisateurUpdateRequest;
-import com.hubpieces.exception.UnauthorizedException;
 import com.hubpieces.model.Utilisateur;
 import com.hubpieces.repository.UtilisateurRepository;
 import com.hubpieces.service.SessionService;

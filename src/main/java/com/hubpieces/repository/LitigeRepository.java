@@ -11,6 +11,10 @@ public interface LitigeRepository extends JpaRepository<Litige, Long> {
 
     List<Litige> findByEtatOrderByDateOuvertureDesc(EtatLitige etat);
 
+    List<Litige> findByEtatInOrderByDateOuvertureDesc(List<EtatLitige> etats);
+
+    boolean existsByTransaction_IdAndEtatIn(Long transactionId, List<EtatLitige> etats);
+
     @Query("SELECT l FROM Litige l ORDER BY l.dateOuverture DESC")
     List<Litige> findByOrderByDateOuvertureDesc();
 

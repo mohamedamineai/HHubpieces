@@ -201,9 +201,10 @@ Pour chaque modèle, le code HTML à utiliser est :
 3. **Rodin** (https://hyperhuman.deemos.com/rodin) — excellent pour les pièces techniques
 4. **Genie by Luma AI** (https://lumalabs.ai/genie) — rapide et bon
 
-**Workaround si tu n'arrives pas à générer** :
-- Utilise les modèles existants `model1.glb` à `model4.glb` qui sont déjà de très bonne qualité
-- Renomme-les selon les besoins (ex: `model1.glb` → `repair-gear.glb`)
+**Si tu n'arrives pas à générer un visuel** :
+- Garde les modèles existants (`model1.glb` à `model4.glb`) sous leurs vrais noms et pour les entrées du catalogue auxquelles ils correspondent.
+- Ne renomme pas un mesh d'engrenage ou de support en `admin-shield.glb`, `cao-model.glb`, etc. : cela afficherait le mauvais objet dans le mauvais rôle.
+- Laisse le visuel optionnel absent et ne l'ajoute pas aux pages tant que le GLB correspondant n'existe pas.
 
 ---
 

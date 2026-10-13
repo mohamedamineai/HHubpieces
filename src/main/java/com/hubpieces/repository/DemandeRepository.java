@@ -15,6 +15,17 @@ public interface DemandeRepository extends JpaRepository<Demande, Long> {
 
     List<Demande> findByEtatOrderByDateCreationDesc(EtatDemande etat);
 
+    @Query("SELECT d FROM Demande d " +
+            "WHERE d.etat = :etat " +
+            "AND (d.fichierStl IS NULL OR d.fichierStl.etatValidation = :etatValidation) " +
+            "ORDER BY d.dateCreation DESC")
+    List<Demande> findDisponiblesPourModelisation(@Param("etat") EtatDemande etat,
+                                                   @Param("etatValidation") com.hubpieces.model.EtatValidation etatValidation);
+
+    List<Demande> findByFichierStl_Id(Long fichierStlId);
+
+    boolean existsByFichierStl_Id(Long fichierStlId);
+
     @Query("SELECT d FROM Demande d WHERE d.etat IN :etats ORDER BY d.dateCreation DESC")
     List<Demande> findByEtatIn(@Param("etats") List<EtatDemande> etats);
 

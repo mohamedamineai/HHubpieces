@@ -20,27 +20,21 @@ public class DemandeService {
     private final FichierStlRepository fichierStlRepository;
     private final OffreMakerRepository offreMakerRepository;
     private final TransactionRepository transactionRepository;
-    private final MessageRepository messageRepository;
     private final PhotoDemandeRepository photoDemandeRepository;
     private final NotificationService notificationService;
-    private final SessionService sessionService;
 
     public DemandeService(DemandeRepository demandeRepository,
                           FichierStlRepository fichierStlRepository,
                           OffreMakerRepository offreMakerRepository,
                           TransactionRepository transactionRepository,
-                          MessageRepository messageRepository,
                           PhotoDemandeRepository photoDemandeRepository,
-                          NotificationService notificationService,
-                          SessionService sessionService) {
+                          NotificationService notificationService) {
         this.demandeRepository = demandeRepository;
         this.fichierStlRepository = fichierStlRepository;
         this.offreMakerRepository = offreMakerRepository;
         this.transactionRepository = transactionRepository;
-        this.messageRepository = messageRepository;
         this.photoDemandeRepository = photoDemandeRepository;
         this.notificationService = notificationService;
-        this.sessionService = sessionService;
     }
 
     public List<Demande> findAll() {
@@ -63,7 +57,36 @@ public class DemandeService {
     }
 
     public List<Demande> findAValiderParExpert() {
-        return demandeRepository.findByEtatOrderByDateCreationDesc(EtatDemande.MODELISATION_REQUISE);
+        // Une demande reste en file CAO tant qu'aucun modèle n'a été soumis ou que
+        // le dernier modèle a été rejeté. Un fichier en attente d'admin ne ressort
+        // pas ici, ce qui évite à l'expert de créer des doublons.
+        return demandeRepository.findDisponiblesPourModelisation(
+                EtatDemande.MODELISATION_REQUISE, EtatValidation.REJETE);
+    }
+
+    public Demande verifierDemandeAModeliser(Long demandeId) {
+        Demande demande = findById(demandeId);
+        if (demande.getEtat() != EtatDemande.MODELISATION_REQUISE) {
+            throw new BadRequestException("Cette demande n'est pas en attente de modélisation");
+        }
+        if (demande.getFichierStl() != null
+                && demande.getFichierStl().getEtatValidation() == EtatValidation.EN_ATTENTE) {
+            throw new BadRequestException("Un modèle est déjà soumis et attend la validation de l'administrateur");
+        }
+        return demande;
+    }
+
+    @Transactional
+    public Demande soumettreModelisation(Long demandeId, FichierStl fichier, Utilisateur expertCao) {
+        Demande demande = verifierDemandeAModeliser(demandeId);
+        if (fichier.getEtatValidation() != EtatValidation.EN_ATTENTE) {
+            throw new BadRequestException("Le modèle doit être en attente de validation administrative");
+        }
+        if (fichier.getUploadeur() == null || !fichier.getUploadeur().getId().equals(expertCao.getId())) {
+            throw new ForbiddenException("Vous ne pouvez associer que votre propre fichier 3D");
+        }
+        demande.setFichierStl(fichier);
+        return demandeRepository.save(demande);
     }
 
     @Transactional
@@ -106,8 +129,12 @@ public class DemandeService {
         if (!demande.getDemandeur().getId().equals(demandeur.getId())) {
             throw new ForbiddenException("Vous ne pouvez modifier que vos propres demandes");
         }
-        if (demande.getEtat() == EtatDemande.EN_COURS_IMPRESSION || demande.getEtat() == EtatDemande.CLOTUREE) {
-            throw new BadRequestException("Cette demande ne peut plus etre modifiee");
+        if (demande.getEtat() == EtatDemande.ATTENTE_IMPRESSION
+                || demande.getEtat() == EtatDemande.EN_COURS_IMPRESSION
+                || demande.getEtat() == EtatDemande.ATTENTE_VALIDATION
+                || demande.getEtat() == EtatDemande.CLOTUREE
+                || demande.getEtat() == EtatDemande.ANNULEE) {
+            throw new BadRequestException("Cette demande ne peut plus être modifiée à cette étape");
         }
         if (req.getTitre() != null) demande.setTitre(req.getTitre());
         if (req.getDescription() != null) demande.setDescription(req.getDescription());
@@ -121,8 +148,14 @@ public class DemandeService {
         if (req.getLongitude() != null) demande.setLongitude(req.getLongitude());
         if (req.getFichierStlId() != null) {
             FichierStl fichier = fichierStlRepository.findById(req.getFichierStlId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Fichier STL introuvable"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Fichier 3D introuvable"));
+            if (fichier.getEtatValidation() != EtatValidation.VALIDE) {
+                throw new BadRequestException("Seuls les modèles validés peuvent être associés à une demande");
+            }
             demande.setFichierStl(fichier);
+            if (demande.getEtat() == EtatDemande.MODELISATION_REQUISE) {
+                demande.setEtat(EtatDemande.RECHERCHE_MAKER);
+            }
         }
         return demandeRepository.save(demande);
     }
@@ -133,31 +166,16 @@ public class DemandeService {
         if (!demande.getDemandeur().getId().equals(demandeur.getId())) {
             throw new ForbiddenException("Vous ne pouvez annuler que vos propres demandes");
         }
-        if (demande.getEtat() == EtatDemande.EN_COURS_IMPRESSION) {
-            throw new BadRequestException("Impossible d'annuler une demande en cours d'impression");
+        if (demande.getEtat() == EtatDemande.ATTENTE_IMPRESSION
+                || demande.getEtat() == EtatDemande.EN_COURS_IMPRESSION
+                || demande.getEtat() == EtatDemande.ATTENTE_VALIDATION) {
+            throw new BadRequestException("Impossible d'annuler une commande après acceptation d'une offre");
         }
-        if (demande.getEtat() == EtatDemande.CLOTUREE) {
-            throw new BadRequestException("Impossible d'annuler une demande cloturee");
+        if (demande.getEtat() == EtatDemande.CLOTUREE || demande.getEtat() == EtatDemande.ANNULEE) {
+            throw new BadRequestException("Cette demande est déjà clôturée ou annulée");
         }
         demande.setEtat(EtatDemande.ANNULEE);
         return demandeRepository.save(demande);
-    }
-
-    @Transactional
-    public Demande basculerEnRechercheMaker(Long demandeId, Utilisateur expertCao) {
-        Demande demande = findById(demandeId);
-        if (demande.getEtat() != EtatDemande.MODELISATION_REQUISE) {
-            throw new BadRequestException("La demande n'est pas en attente de modelisation");
-        }
-        demande.setEtat(EtatDemande.RECHERCHE_MAKER);
-        Demande saved = demandeRepository.save(demande);
-
-        notificationService.envoyer(demande.getDemandeur(),
-                "Demaine prete",
-                "Votre demande \"" + demande.getTitre() + "\" est maintenant recherche de maker",
-                TypeNotification.SUCCESS);
-
-        return saved;
     }
 
     @Transactional
@@ -168,11 +186,16 @@ public class DemandeService {
         if (!isMakerAccepteur) {
             throw new ForbiddenException("Seul le maker ayant l'offre acceptee peut modifier cette demande");
         }
-        if (demande.getEtat() != EtatDemande.RECHERCHE_MAKER) {
-            throw new BadRequestException("Transition impossible depuis l'etat " + demande.getEtat());
+        if (demande.getEtat() != EtatDemande.ATTENTE_IMPRESSION) {
+            throw new BadRequestException("La commande doit d'abord avoir une offre acceptée");
         }
         demande.setEtat(EtatDemande.EN_COURS_IMPRESSION);
-        return demandeRepository.save(demande);
+        Demande saved = demandeRepository.save(demande);
+        notificationService.envoyer(demande.getDemandeur(),
+                "Impression démarrée",
+                "Le maker a lancé l'impression de votre pièce « " + demande.getTitre() + " ».",
+                TypeNotification.INFO);
+        return saved;
     }
 
     @Transactional
@@ -226,7 +249,7 @@ public class DemandeService {
             offreMakerRepository.save(o);
         }
 
-        demande.setEtat(EtatDemande.EN_COURS_IMPRESSION);
+        demande.setEtat(EtatDemande.ATTENTE_IMPRESSION);
         Demande saved = demandeRepository.save(demande);
 
         Transaction transaction = new Transaction(offre, offre.getPrix());
@@ -235,9 +258,14 @@ public class DemandeService {
         transactionRepository.save(transaction);
 
         notificationService.envoyer(offre.getMaker(),
-                "Offre acceptee",
-                "Votre offre pour \"" + demande.getTitre() + "\" a ete acceptee",
+                "Offre acceptée",
+                "Votre offre pour « " + demande.getTitre() + " » a été acceptée. La commande attend le démarrage de l'impression.",
                 TypeNotification.SUCCESS);
+        notificationService.envoyer(demande.getDemandeur(),
+                "Offre sélectionnée",
+                "Vous avez accepté l'offre de " + offre.getMaker().getPrenom() + " " + offre.getMaker().getNom()
+                        + ". Le paiement est placé en séquestre; le maker doit démarrer l'impression.",
+                TypeNotification.INFO);
 
         return saved;
     }

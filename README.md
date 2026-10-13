@@ -5,7 +5,7 @@ Plateforme de réparation par impression 3D : Spring Boot, Java 17, MySQL et int
 ## 🎯 Fonctionnalités (Séances 3 et 4)
 
 ### Séance 3 — Modélisation JPA/Hibernate ✅
-- 22 entités JPA mappées (Utilisateur, Demande, OffreMaker, Transaction, Litige, Avis, Message, Notification, FichierStl, PhotoDemande, ProfilMaker, ProfilExpertCao, Role)
+- 13 entités JPA mappées (Utilisateur, Role, Demande, FichierStl, OffreMaker, Transaction, Litige, Avis, Message, Notification, PhotoDemande, ProfilMaker, ProfilExpertCao), plus les énumérations métier
 - Relations : @OneToOne, @ManyToOne, @OneToMany, @ManyToMany
 - Configuration Hibernate + MySQL fonctionnelle
 
@@ -35,17 +35,18 @@ Plateforme de réparation par impression 3D : Spring Boot, Java 17, MySQL et int
 - Reçoit des avis et développe sa réputation
 
 ### 🎨 EXPERT_CAO
-- Modélise les pièces en 3D à partir des demandes
-- Upload de fichiers STL/OBJ/3MF/STEP
-- Gestion du catalogue STL validé
-- Profil avec logiciels maîtrisés, portfolio
+- Traite les demandes réellement en attente de modélisation
+- Téléverse un fichier de fabrication STL/OBJ/3MF/STEP (50 Mo max)
+- Suit l'état de modération : en attente, validé ou rejeté
+- Une demande ne passe aux makers qu'après validation de l'admin
+- Gestion du catalogue STL validé et profil CAO
 
 ### 🛡️ ADMIN
-- Vue d'ensemble de la plateforme (statistiques)
-- Gestion des utilisateurs (activation, suspension, suppression)
-- Validation/rejet des fichiers STL soumis
-- Résolution des litiges
-- Accès à toutes les transactions
+- Statistiques et opérations réellement chargées depuis l'API
+- Active ou suspend les comptes (une suspension bloque aussi les sessions ouvertes)
+- Valide/rejette les fichiers CAO avec motif
+- Prend en charge et clôture les litiges avec libération ou remboursement
+- Consulte les transactions et montants en séquestre
 
 ## 🚀 Démarrage
 
@@ -90,18 +91,18 @@ Le serveur démarre sur le port **9090**.
 ## 📚 Documentation
 
 - [Documentation API REST complète](docs/API-REST-DOCUMENTATION.md) - Liste des endpoints, payloads, exemples Postman
-- [Prompts Tripo3D (existants)](docs/PROMPT-TRIPO3D.md) - Modèles 3D déjà en place
-- [Prompts Tripo3D manquants](docs/PROMPT-TRIPO3D-MANQUANTS.md) - **6 modèles 3D à générer sur Tripo3D**
+- [Diagramme de classes Mermaid](docs/DIAGRAMME-CLASSES-MERMAID.md) - PK, FK, cardinalités, agrégation/composition et explication
+- [Inventaire des modèles 3D](docs/PROMPT-TRIPO3D.md) - fichiers réellement présents et règles de placement par rôle
+- [Prompts Tripo3D complémentaires](docs/PROMPT-TRIPO3D-MANQUANTS.md) - modèles optionnels; le dépôt ne contient pas encore ces six fichiers
 
 ## 🧪 Tests
 
 ```sh
-# Tests unitaires (sans MySQL)
-bash mvnw -Dtest=DemandeServiceTest,AuthSessionTest test
-
-# Tests complets (nécessite MySQL)
+# Tests d'intégration (H2 en mémoire, sans MySQL)
 bash mvnw test
 ```
+
+Les tests automatisés vérifient le cycle de validation d'une modélisation CAO. Pour lancer l'application, la base MySQL configurée dans `application.properties` reste nécessaire.
 
 ## 🛠️ Stack technique
 

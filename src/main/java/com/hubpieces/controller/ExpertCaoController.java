@@ -1,11 +1,10 @@
 package com.hubpieces.controller;
 
 import com.hubpieces.dto.*;
-import com.hubpieces.exception.UnauthorizedException;
 import com.hubpieces.model.*;
-import com.hubpieces.repository.FichierStlRepository;
 import com.hubpieces.repository.ProfilExpertCaoRepository;
 import com.hubpieces.service.*;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
@@ -24,20 +23,17 @@ public class ExpertCaoController {
 
     private final DemandeService demandeService;
     private final FichierStlService fichierStlService;
-    private final FichierStlRepository fichierStlRepository;
     private final ProfilExpertCaoRepository profilExpertCaoRepository;
     private final NotificationService notificationService;
     private final SessionService sessionService;
 
     public ExpertCaoController(DemandeService demandeService,
                                 FichierStlService fichierStlService,
-                                FichierStlRepository fichierStlRepository,
                                 ProfilExpertCaoRepository profilExpertCaoRepository,
                                 NotificationService notificationService,
                                 SessionService sessionService) {
         this.demandeService = demandeService;
         this.fichierStlService = fichierStlService;
-        this.fichierStlRepository = fichierStlRepository;
         this.profilExpertCaoRepository = profilExpertCaoRepository;
         this.notificationService = notificationService;
         this.sessionService = sessionService;
@@ -54,21 +50,22 @@ public class ExpertCaoController {
     }
 
     @PostMapping("/demandes/{id}/modelisation")
+    @Operation(summary = "Soumettre une ressource 3D déjà présente sur le serveur",
+            description = "Crée une fiche de fichier en attente et l'associe à une demande CAO. Le chemin doit pointer vers une ressource existante sous images/ ou /uploads/stl/. Pour un fichier local, utilisez l'endpoint multipart /upload.")
     @Transactional
     public ResponseEntity<DemandeDTO> soumettreModelisation(@PathVariable Long id,
                                                              @RequestBody FichierStlCreateRequest req,
                                                              HttpSession session) {
         Utilisateur u = sessionService.requireRole(session, RoleNom.EXPERT_CAO);
-        // Creer le fichier STL
+        demandeService.verifierDemandeAModeliser(id);
         FichierStl fichier = fichierStlService.create(req, u);
-        // Lier a la demande
-        Demande demande = demandeService.findById(id);
-        demande.setFichierStl(fichier);
-        demande = demandeService.basculerEnRechercheMaker(id, u);
+        Demande demande = demandeService.soumettreModelisation(id, fichier, u);
         return ResponseEntity.ok(DemandeDTO.fromEntity(demande));
     }
 
     @PostMapping(value = "/demandes/{id}/modelisation/upload", consumes = "multipart/form-data")
+    @Operation(summary = "Transmettre un fichier CAO pour une demande",
+            description = "Envoie un STL, OBJ, 3MF ou STEP. Le fichier reste en attente tant que l'admin ne l'a pas validé. La demande ne passe en recherche de maker qu'après validation.")
     @Transactional
     public ResponseEntity<DemandeDTO> uploadModelisation(
             @PathVariable Long id,
@@ -83,11 +80,10 @@ public class ExpertCaoController {
             @RequestParam(value = "dimensions", required = false) String dimensions,
             HttpSession session) throws IOException {
         Utilisateur u = sessionService.requireRole(session, RoleNom.EXPERT_CAO);
+        demandeService.verifierDemandeAModeliser(id);
         FichierStl fichier = fichierStlService.uploadAndCreate(file, nom, description, categorie, tags,
                 marque, modeleAppareil, materiauRecommande, dimensions, u);
-        Demande demande = demandeService.findById(id);
-        demande.setFichierStl(fichier);
-        demande = demandeService.basculerEnRechercheMaker(id, u);
+        Demande demande = demandeService.soumettreModelisation(id, fichier, u);
         return ResponseEntity.ok(DemandeDTO.fromEntity(demande));
     }
 
@@ -177,9 +173,16 @@ public class ExpertCaoController {
     @GetMapping("/stats")
     public ResponseEntity<java.util.Map<String, Long>> stats(HttpSession session) {
         Utilisateur u = sessionService.requireRole(session, RoleNom.EXPERT_CAO);
+        List<FichierStl> fichiers = fichierStlService.findByUploadeur(u);
         java.util.Map<String, Long> s = new java.util.HashMap<>();
-        s.put("demandesA modeliser", demandeService.findAValiderParExpert().stream().count());
-        s.put("fichiersTotal", fichierStlService.findByUploadeur(u).stream().count());
+        s.put("demandesAModeliser", (long) demandeService.findAValiderParExpert().size());
+        s.put("fichiersTotal", (long) fichiers.size());
+        s.put("fichiersEnAttente", fichiers.stream()
+                .filter(f -> f.getEtatValidation() == EtatValidation.EN_ATTENTE).count());
+        s.put("fichiersValides", fichiers.stream()
+                .filter(f -> f.getEtatValidation() == EtatValidation.VALIDE).count());
+        s.put("telechargements", fichiers.stream()
+                .mapToLong(f -> f.getNombreTelechargements() == null ? 0 : f.getNombreTelechargements()).sum());
         s.put("notificationsNonLues", notificationService.countNonLues(u));
         return ResponseEntity.ok(s);
     }

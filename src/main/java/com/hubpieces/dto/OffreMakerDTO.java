@@ -1,5 +1,6 @@
 package com.hubpieces.dto;
 
+import com.hubpieces.model.EtatDemande;
 import com.hubpieces.model.EtatOffre;
 import com.hubpieces.model.ModeLivraison;
 import com.hubpieces.model.OffreMaker;
@@ -10,6 +11,7 @@ public class OffreMakerDTO {
     private Long id;
     private Long demandeId;
     private String demandeTitre;
+    private EtatDemande demandeEtat;
     private Long makerId;
     private String makerNom;
     private String makerPrenom;
@@ -28,6 +30,7 @@ public class OffreMakerDTO {
         if (o.getDemande() != null) {
             dto.demandeId = o.getDemande().getId();
             dto.demandeTitre = o.getDemande().getTitre();
+            dto.demandeEtat = o.getDemande().getEtat();
         }
         if (o.getMaker() != null) {
             dto.makerId = o.getMaker().getId();
@@ -49,6 +52,8 @@ public class OffreMakerDTO {
     public void setDemandeId(Long demandeId) { this.demandeId = demandeId; }
     public String getDemandeTitre() { return demandeTitre; }
     public void setDemandeTitre(String demandeTitre) { this.demandeTitre = demandeTitre; }
+    public EtatDemande getDemandeEtat() { return demandeEtat; }
+    public void setDemandeEtat(EtatDemande demandeEtat) { this.demandeEtat = demandeEtat; }
     public Long getMakerId() { return makerId; }
     public void setMakerId(Long makerId) { this.makerId = makerId; }
     public String getMakerNom() { return makerNom; }

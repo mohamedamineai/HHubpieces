@@ -1,7 +1,7 @@
 package com.hubpieces.controller;
 
 import com.hubpieces.dto.*;
-import com.hubpieces.exception.UnauthorizedException;
+import com.hubpieces.exception.ForbiddenException;
 import com.hubpieces.model.*;
 import com.hubpieces.repository.ProfilMakerRepository;
 import com.hubpieces.service.*;
@@ -101,7 +101,7 @@ public class MakerController {
         Utilisateur u = sessionService.requireRole(session, RoleNom.MAKER);
         OffreMaker o = offreMakerService.findById(offreId);
         if (!o.getMaker().getId().equals(u.getId())) {
-            throw new UnauthorizedException("Cette offre n'est pas la votre");
+            throw new ForbiddenException("Cette offre ne vous appartient pas");
         }
         Demande d = demandeService.marquerImpressionLancee(o.getDemande().getId(), u);
         return ResponseEntity.ok(DemandeDTO.fromEntity(d));
@@ -112,7 +112,7 @@ public class MakerController {
         Utilisateur u = sessionService.requireRole(session, RoleNom.MAKER);
         OffreMaker o = offreMakerService.findById(offreId);
         if (!o.getMaker().getId().equals(u.getId())) {
-            throw new UnauthorizedException("Cette offre n'est pas la votre");
+            throw new ForbiddenException("Cette offre ne vous appartient pas");
         }
         Demande d = demandeService.marquerEnAttenteValidation(o.getDemande().getId(), u);
         return ResponseEntity.ok(DemandeDTO.fromEntity(d));

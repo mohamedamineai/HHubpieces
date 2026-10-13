@@ -1,7 +1,7 @@
 package com.hubpieces.controller;
 
 import com.hubpieces.dto.*;
-import com.hubpieces.exception.UnauthorizedException;
+import com.hubpieces.exception.ForbiddenException;
 import com.hubpieces.model.*;
 import com.hubpieces.service.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -61,7 +61,7 @@ public class DemandeurController {
         Utilisateur u = sessionService.requireRole(session, RoleNom.DEMANDEUR);
         Demande d = demandeService.findById(id);
         if (!d.getDemandeur().getId().equals(u.getId())) {
-            throw new UnauthorizedException("Cette demande n'est pas la votre");
+            throw new ForbiddenException("Cette demande ne vous appartient pas");
         }
         return ResponseEntity.ok(DemandeDTO.fromEntity(d));
     }
@@ -96,7 +96,7 @@ public class DemandeurController {
         Utilisateur u = sessionService.requireRole(session, RoleNom.DEMANDEUR);
         Demande d = demandeService.findById(id);
         if (!d.getDemandeur().getId().equals(u.getId())) {
-            throw new UnauthorizedException("Cette demande n'est pas la votre");
+            throw new ForbiddenException("Cette demande ne vous appartient pas");
         }
         return ResponseEntity.ok(demandeService.getOffres(id).stream()
                 .map(OffreMakerDTO::fromEntity)
@@ -197,7 +197,9 @@ public class DemandeurController {
                         || d.getEtat() == EtatDemande.MODELISATION_REQUISE
                         || d.getEtat() == EtatDemande.RECHERCHE_MAKER).count());
         s.put("enCours", demandeService.findByDemandeur(u).stream()
-                .filter(d -> d.getEtat() == EtatDemande.EN_COURS_IMPRESSION).count());
+                .filter(d -> d.getEtat() == EtatDemande.ATTENTE_IMPRESSION
+                        || d.getEtat() == EtatDemande.EN_COURS_IMPRESSION
+                        || d.getEtat() == EtatDemande.ATTENTE_VALIDATION).count());
         s.put("cloturees", demandeService.findByDemandeur(u).stream()
                 .filter(d -> d.getEtat() == EtatDemande.CLOTUREE).count());
         s.put("notificationsNonLues", notificationService.countNonLues(u));

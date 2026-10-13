@@ -2,18 +2,26 @@
 
 ## 🌐 URLs
 
+Après le démarrage de Spring Boot sur le port 9090 :
+
 - **Application** : `http://localhost:9090`
 - **Swagger UI** : `http://localhost:9090/swagger-ui.html`
 - **OpenAPI JSON** : `http://localhost:9090/v3/api-docs`
+- **OpenAPI YAML** : `http://localhost:9090/v3/api-docs.yaml`
 - **Index** : `http://localhost:9090/index.html`
+
+Swagger utilise une URL de serveur relative : « Try it out » appelle le même hôte que l'interface (local ou prévisualisation), pas un `localhost` codé en dur.
 
 ## 🔐 Authentification
 
-L'API utilise une **session HTTP** (cookie `JSESSIONID`). Pour tester avec Postman :
+L'API utilise une **session HTTP** (cookie `JSESSIONID`), pas un jeton Bearer. Pour tester avec Swagger UI, exécutez d'abord `POST /api/auth/login`, puis continuez dans le même navigateur/hôte : le navigateur conserve le cookie de session. Pour Postman, activez la gestion des cookies (« Send cookies » / Cookie Jar), appelez le login du rôle souhaité, puis exécutez les requêtes de ce rôle avant de vous connecter avec un autre compte.
 
-1. Activez **"Send cookies"** dans Postman
-2. Appelez `POST /api/auth/login` pour obtenir la session
-3. Toutes les requêtes suivantes enverront automatiquement le cookie
+- **401** : aucune session valide (ou compte suspendu / en attente).
+- **403** : session valide, mais mauvais rôle ou ressource appartenant à un autre acteur.
+- **404** : ressource absente ou fichier non publié dans le catalogue public.
+- **400** : état métier ou payload invalide.
+
+Les comptes suspendus sont refusés au login et une suspension révoque leur accès dès la requête suivante.
 
 ### Comptes de test (créés automatiquement par DataLoader)
 
@@ -30,7 +38,7 @@ L'API utilise une **session HTTP** (cookie `JSESSIONID`). Pour tester avec Postm
 
 | Méthode | URL | Description |
 |---------|-----|-------------|
-| POST | `/api/auth/register` | Inscription (tous rôles) |
+| POST | `/api/auth/register` | Inscription DEMANDEUR, MAKER ou EXPERT_CAO (ADMIN non public) |
 | POST | `/api/auth/login` | Connexion |
 | POST | `/api/auth/logout` | Déconnexion |
 | GET | `/api/auth/me` | Infos utilisateur courant |
@@ -91,6 +99,7 @@ L'API utilise une **session HTTP** (cookie `JSESSIONID`). Pour tester avec Postm
 | GET | `/api/maker/messages` | Mes messages |
 | POST | `/api/maker/messages` | Envoyer message |
 | GET | `/api/maker/notifications` | Mes notifications |
+| POST | `/api/maker/notifications/{id}/lu` | Marquer une notification comme lue |
 | GET | `/api/maker/stats` | Stats |
 
 ### 🎨 Expert CAO (`/api/expert-cao`)
@@ -127,6 +136,8 @@ L'API utilise une **session HTTP** (cookie `JSESSIONID`). Pour tester avec Postm
 | PUT | `/api/admin/fichiers-stl/{id}/valider` | Valider un STL |
 | PUT | `/api/admin/fichiers-stl/{id}/rejeter?motif=...` | Rejeter un STL |
 | GET | `/api/admin/stats` | Statistiques globales |
+
+> La suppression physique d'un utilisateur est refusée en `409 Conflict` si l'historique métier le référence; dans ce cas, utilisez la suspension pour préserver commandes, avis, messages et transactions.
 
 ### 🌍 Public (`/api/public`)
 
@@ -203,56 +214,56 @@ POST /api/maker/offres
 
 ### Soumettre une modélisation CAO
 ```json
-POST /api/expert-cao/demandes/1/modelisation
+POST /api/expert-cao/demandes/{id}/modelisation
 {
-  "nom": "poignee-samsung-ecobubble-v2",
-  "description": "Poignée robuste renforcée",
-  "cheminFichier": "/uploads/stl/poignee-v2.stl",
+  "nom": "Engrenage denté précision",
+  "description": "Exemple de référence locale déjà présente dans le dépôt",
+  "cheminFichier": "images/model1.glb",
   "categorie": "electromenager",
-  "marque": "Samsung",
-  "modeleAppareil": "EcoBubble WW80J",
-  "materiauRecommande": "ABS",
-  "dimensions": "120x40x25mm"
+  "marque": "Moulinex",
+  "modeleAppareil": "Masterchef 5000",
+  "materiauRecommande": "PETG",
+  "dimensions": "À mesurer avant fabrication"
 }
 ```
 
+> Pour l'interface Expert CAO, utilisez de préférence `POST /api/expert-cao/demandes/{id}/modelisation/upload` avec un vrai fichier `multipart/form-data`. L'endpoint JSON ci-dessus ne téléverse pas le contenu local : il accepte seulement un chemin sous `images/` ou `/uploads/stl/` dont l'existence est vérifiée côté serveur.
+
 ## 🧪 Test avec Postman
 
-1. **Importer** la collection Swagger :
-   - Ouvrir Swagger UI : http://localhost:9090/swagger-ui.html
-   - Cliquer sur "Export" > "Download OpenAPI 3" (ou `/v3/api-docs`)
-   - Dans Postman : File > Import > coller le JSON
-
-2. **Tester manuellement** :
-   - Login : `POST /api/auth/login` avec email/motDePasse
-   - Postman conserve automatiquement le cookie JSESSIONID
-   - Toutes les requêtes suivantes sont authentifiées
-
+1. **Importer une collection** : dans Postman, faites `Import` et choisissez [`postman-collection.json`](./postman-collection.json). Vous pouvez aussi importer l'URL `http://localhost:9090/v3/api-docs` après démarrage pour générer des requêtes à partir de l'OpenAPI.
+2. **Tester manuellement** : appelez `POST /api/auth/login` avec `email` et `motDePasse`; gardez le Cookie Jar actif pour réutiliser `JSESSIONID`. Utilisez un compte par rôle et connectez-vous à nouveau pour tester un autre acteur.
 3. **Tests automatisés** :
    ```bash
    bash mvnw test
    ```
 
-## 🔄 Cycle de vie d'une demande
+## 🔄 Cycle de vie métier — entre les quatre acteurs
 
-```
-NOUVELLE / MODELISATION_REQUISE
-        ↓ (Expert CAO)
-RECHERCHE_MAKER
-        ↓ (Maker dépose offre)
-RECHERCHE_MAKER
-        ↓ (Demandeur accepte offre)
-EN_COURS_IMPRESSION
-        ↓ (Maker lance l'impression)
-EN_COURS_IMPRESSION
-        ↓ (Maker termine)
-ATTENTE_VALIDATION
-        ↓ (Demandeur valide)
-CLOTUREE
+```text
+Demandeur crée une demande sans modèle
+  → MODELISATION_REQUISE
+  → Expert CAO transmet un vrai fichier STL / OBJ / 3MF / STEP
+  → FichierStl = EN_ATTENTE, la demande reste MODELISATION_REQUISE
+  → Admin valide : FichierStl = VALIDE, demande = RECHERCHE_MAKER
+  → Maker(s) déposent une ou plusieurs offres
+  → Demandeur accepte une offre : offre = ACCEPTEE, les autres = REFUSEE
+  → Demande = ATTENTE_IMPRESSION + Transaction = EN_SEQUESTRE
+  → Maker lance : demande = EN_COURS_IMPRESSION
+  → Maker termine : demande = ATTENTE_VALIDATION
+  → Demandeur confirme la réception : demande = CLOTUREE, transaction = LIBERE
 ```
 
-À tout moment, le demandeur peut annuler (avant EN_COURS_IMPRESSION).
-Un litige peut être ouvert par le demandeur.
+Si l'admin rejette le fichier, la demande reste `MODELISATION_REQUISE`, le fichier rejeté est détaché et la demande retourne à la file de l'expert. Un maker ne peut faire une offre qu'en `RECHERCHE_MAKER`; seule l'offre acceptée peut faire avancer la commande. Une annulation est possible avant acceptation d'une offre. Après acceptation, l'annulation passe par le traitement d'un litige afin de ne pas laisser un paiement en séquestre sans décision.
+
+### Vérification manuelle du flux Expert CAO → Admin
+
+1. Connectez-vous comme `expert@hubpieces.fr` et appelez `GET /api/expert-cao/demandes-a-modeliser`.
+2. Choisissez l'ID retourné, puis envoyez un fichier via `POST /api/expert-cao/demandes/{id}/modelisation/upload` (`multipart/form-data`, champ `file` obligatoire; métadonnées `nom`, `description`, `categorie`, `tags`, `marque`, `modeleAppareil`, `materiauRecommande`, `dimensions` facultatives).
+3. Vérifiez que le fichier apparaît dans `GET /api/expert-cao/fichiers-stl` avec `etatValidation=EN_ATTENTE`. La demande ne doit pas apparaître à nouveau dans la file CAO et n'est pas encore proposée aux makers.
+4. Connectez-vous comme `admin@hubpieces.fr`, ouvrez `GET /api/admin/fichiers-stl/en-attente`, puis appelez `PUT /api/admin/fichiers-stl/{id}/valider`.
+5. La réponse de la demande passe à `RECHERCHE_MAKER`; vérifiez avec `GET /api/admin/demandes` (ou l'écran maker). En cas de `.../rejeter?motif=...`, la demande reste en CAO et l'expert reçoit le motif par notification.
+6. Testez `PUT /api/admin/utilisateurs/{id}/statut?statut=SUSPENDU`: l'utilisateur suspendu ne peut plus se connecter ni utiliser une session déjà ouverte.
 
 ## 💰 Système de paiement (séquestre)
 
@@ -270,3 +281,75 @@ Quand une offre est acceptée :
 Les fichiers STL uploadés sont stockés dans `uploads/stl/`.
 Formats acceptés : `.stl`, `.obj`, `.3mf`, `.step`, `.stp`
 Taille max : 50 MB
+
+## 🧪 Smoke tests (Swagger, curl et tests automatisés)
+
+### Swagger UI
+
+Ouvrez **http://localhost:9090/swagger-ui.html**. Dans la section `Authentification`, faites `Try it out` sur `POST /api/auth/login` avec un des comptes ci-dessus. Le cookie de session est ensuite utilisé automatiquement pour les requêtes lancées depuis ce même navigateur. Essayez notamment les sections **Expert CAO** et **Administrateur**. Le JSON brut est disponible sur **http://localhost:9090/v3/api-docs**.
+
+### Séquence curl — expert puis admin
+
+Les IDs de demandes/fichiers sont générés par la base : récupérez-les dans les listes, ne supposez pas qu'ils valent 1 ou 4.
+
+```bash
+# 1. Session de l'expert
+curl -i -c /tmp/hubpieces-expert.cookies \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"expert@hubpieces.fr","motDePasse":"demo1234"}' \
+  http://localhost:9090/api/auth/login
+
+# 2. File CAO (repérer l'id d'une demande MODELISATION_REQUISE)
+curl -b /tmp/hubpieces-expert.cookies \
+  http://localhost:9090/api/expert-cao/demandes-a-modeliser
+
+# 3. Téléverser un fichier réel (remplacer 42 et le chemin du fichier)
+curl -b /tmp/hubpieces-expert.cookies -X POST \
+  -F 'file=@./modele.stl' \
+  -F 'nom=Support de remplacement' \
+  -F 'categorie=electromenager' \
+  -F 'description=Modèle CAO avec tolérances vérifiées' \
+  -F 'marque=Dyson' \
+  -F 'modeleAppareil=V8 Absolute' \
+  -F 'materiauRecommande=PETG' \
+  -F 'dimensions=80x40x12mm' \
+  http://localhost:9090/api/expert-cao/demandes/42/modelisation/upload
+
+# 4. Contrôler que le fichier est EN_ATTENTE côté expert
+curl -b /tmp/hubpieces-expert.cookies http://localhost:9090/api/expert-cao/fichiers-stl
+
+# 5. Nouvelle session d'admin (cookie séparé)
+curl -i -c /tmp/hubpieces-admin.cookies \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"admin@hubpieces.fr","motDePasse":"admin123"}' \
+  http://localhost:9090/api/auth/login
+
+# 6. Récupérer l'id du fichier en attente, puis valider (remplacer 17)
+curl -b /tmp/hubpieces-admin.cookies http://localhost:9090/api/admin/fichiers-stl/en-attente
+curl -b /tmp/hubpieces-admin.cookies -X PUT \
+  http://localhost:9090/api/admin/fichiers-stl/17/valider
+```
+
+Le téléversement utilise `multipart/form-data`; **ne fixez pas vous-même l'en-tête `Content-Type`** car curl/Postman doit y ajouter la frontière multipart. Les mêmes opérations sont directement testables dans Swagger UI.
+
+### Collection Postman
+
+Importez [`postman-collection.json`](./postman-collection.json), changez `baseUrl` si nécessaire, et gardez l'option de cookie activée. La collection contient les dossiers par acteur; exécutez le login de l'acteur concerné avant ses opérations. Pour l'upload, ajoutez un vrai fichier `.stl`, `.obj`, `.3mf`, `.step` ou `.stp` dans le champ `file` de type *form-data*.
+
+### Tests automatisés
+
+```bash
+# Tests d'intégration sur H2 en mémoire, sans serveur MySQL
+bash mvnw test
+```
+
+Les tests automatisés vérifient le démarrage avec les comptes de démonstration, le stockage multipart d'un fichier, la mise en attente de validation du modèle CAO, le passage à la recherche maker après validation admin, le retour dans la file CAO après rejet et le séquestre lors de l'acceptation d'une offre. Ils utilisent H2 en mémoire; le serveur de l'application utilise toujours la configuration MySQL de `application.properties`. L'exécution reste à confirmer sur un environnement disposant d'un JDK et de Maven.
+
+> **Migration base déjà créée** : le statut `ATTENTE_IMPRESSION` a été ajouté pour séparer « offre acceptée / paiement en séquestre » de « impression réellement démarrée ». Sur une base MySQL existante dont `demande.etat` est un `ENUM`, exécutez une fois :
+> ```sql
+> ALTER TABLE demande MODIFY etat ENUM(
+>   'NOUVELLE','MODELISATION_REQUISE','RECHERCHE_MAKER','ATTENTE_IMPRESSION',
+>   'EN_COURS_IMPRESSION','ATTENTE_VALIDATION','ANNULEE','CLOTUREE'
+> ) DEFAULT 'NOUVELLE';
+> ```
+> Sur une base neuve, le schéma fourni dans `src/main/resources/static/DB/hubpieces_db.sql` inclut déjà cette valeur.

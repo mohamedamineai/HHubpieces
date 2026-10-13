@@ -3,7 +3,10 @@ package com.hubpieces.controller;
 import com.hubpieces.dto.AuthResponse;
 import com.hubpieces.dto.LoginRequest;
 import com.hubpieces.dto.RegisterRequest;
+import com.hubpieces.model.RoleNom;
+import com.hubpieces.model.Utilisateur;
 import com.hubpieces.service.AuthService;
+import com.hubpieces.service.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
@@ -19,15 +22,16 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final SessionService sessionService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, SessionService sessionService) {
         this.authService = authService;
+        this.sessionService = sessionService;
     }
 
     @PostMapping("/register")
     @Operation(summary = "Inscription d'un nouvel utilisateur",
-               description = "Permet de creer un compte DEMANDEUR, MAKER, EXPERT_CAO ou ADMIN. " +
-                       "Les champs specifiques (rayon, materiaux, etc.) dependent du role choisi.")
+               description = "Permet de créer un compte DEMANDEUR, MAKER ou EXPERT_CAO. La création d'un compte ADMIN n'est pas publique. Les champs spécifiques (rayon, matériaux, logiciels CAO, etc.) dépendent du rôle choisi.")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request, HttpSession session) {
         AuthResponse response = authService.register(request);
         if (response.isSuccess()) {
@@ -57,16 +61,17 @@ public class AuthController {
     @GetMapping("/me")
     @Operation(summary = "Utilisateur courant", description = "Retourne les informations de l'utilisateur connecte")
     public ResponseEntity<?> me(HttpSession session) {
-        Object userId = session.getAttribute("userId");
-        if (userId == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Non connecte"));
-        }
+        Utilisateur utilisateur = sessionService.requireUser(session);
+        String role = RoleNom.principal(utilisateur.getRoles().stream()
+                .map(r -> r.getNom())
+                .collect(java.util.stream.Collectors.toSet()))
+                .name();
         Map<String, Object> body = new HashMap<>();
-        body.put("userId", userId);
-        body.put("nom", session.getAttribute("nom"));
-        body.put("prenom", session.getAttribute("prenom"));
-        body.put("email", session.getAttribute("email"));
-        body.put("role", session.getAttribute("role"));
+        body.put("userId", utilisateur.getId());
+        body.put("nom", utilisateur.getNom());
+        body.put("prenom", utilisateur.getPrenom());
+        body.put("email", utilisateur.getEmail());
+        body.put("role", role);
         return ResponseEntity.ok(body);
     }
 

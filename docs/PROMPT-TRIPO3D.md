@@ -1,6 +1,6 @@
 # 🎨 Prompts Tripo3D Hubpieces
 
-> **🎯 Voir aussi** : [PROMPT-TRIPO3D-MANQUANTS.md](./PROMPT-TRIPO3D-MANQUANTS.md) pour les **6 modèles 3D à générer** (les seuls qui manquent au projet).
+> **État vérifié du checkout** : les 7 fichiers listés ci-dessous sont présents dans `src/main/resources/static/images/`. Les six modèles décrits dans [PROMPT-TRIPO3D-MANQUANTS.md](./PROMPT-TRIPO3D-MANQUANTS.md) ne sont pas présents dans ce dépôt : ce sont des visuels optionnels à ajouter seulement si les fichiers GLB réels ont été générés. Aucun faux modèle n’est créé ou renommé automatiquement.
 
 ---
 
@@ -35,31 +35,34 @@
 
 ---
 
-## ✅ Modèles EXISTANTS (déjà dans le projet)
+## ✅ Modèles EXISTANTS (inventaire vérifié)
 
-Ces 7 modèles sont déjà en place dans `src/main/resources/static/images/` :
+Les sept fichiers suivants sont présents dans `src/main/resources/static/images/` :
 
-| Fichier | Utilisation |
-|---------|-------------|
-| `printer_logo.glb` | Hero page d'accueil (rotation auto) |
-| `logo_hub_3d.glb` | Logo flottant + sections |
-| `auth_blob.glb` | Login & Register (panneau droit) |
-| `model1.glb` à `model4.glb` | Catalogue STL + sections makers/experts |
+| Fichier réel | Rôle actuel dans le site |
+|---|---|
+| `printer_logo.glb` | Hero de la page d'accueil |
+| `logo_hub_3d.glb` | Identité/branding Hubpieces sur la page d'accueil |
+| `auth_blob.glb` | Visuel commun aux pages connexion et inscription |
+| `model1.glb` | Entrée catalogue « Engrenage denté précision » (Moulinex) |
+| `model2.glb` | Entrée catalogue « Support articulé multi-axe » |
+| `model3.glb` | Entrée catalogue « Molette crantée de réglage » |
+| `model4.glb` | Entrée catalogue « Embout adaptateur turbine » (Dyson) |
 
----
+Ces modèles n'ont pas été renommés en faux fichiers `repair-gear.glb`, `cao-model.glb` ou `admin-shield.glb`. Les pages CAO et admin utilisent les données de leurs rôles; un GLB de rôle ne sera branché que lorsque son vrai fichier sera ajouté.
 
-## 🆕 Modèles MANQUANTS (6 à générer)
+## 🆕 Visuels de rôle optionnels décrits par les prompts
 
-Voir [PROMPT-TRIPO3D-MANQUANTS.md](./PROMPT-TRIPO3D-MANQUANTS.md) pour les prompts détaillés.
+Voir [PROMPT-TRIPO3D-MANQUANTS.md](./PROMPT-TRIPO3D-MANQUANTS.md) pour les prompts. Ces chemins sont **optionnels et absents** du checkout vérifié; ne les référencez pas dans une page tant que le fichier correspondant n'existe pas.
 
-| # | Fichier | Page cible | Prompt # |
-|---|---------|-----------|----------|
-| 1 | `repair-gear.glb` | dashboard-demandeur | Prompt 1 |
-| 2 | `printed-piece.glb` | dashboard-maker | Prompt 2 |
-| 3 | `cao-model.glb` | dashboard-expertcao | Prompt 3 |
-| 4 | `circuit-board.glb` | catalogue hero | Prompt 4 |
-| 5 | `admin-shield.glb` | dashboard-admin | Prompt 5 |
-| 6 | `eco-recycle.glb` | profil-public | Prompt 6 |
+| # | Nom exact attendu | Rôle/page prévue | Prompt |
+|---|---|---|---|
+| 1 | `repair-gear.glb` | Demandeur | 1 |
+| 2 | `printed-piece.glb` | Maker | 2 |
+| 3 | `cao-model.glb` | Expert CAO | 3 |
+| 4 | `circuit-board.glb` | Catalogue | 4 |
+| 5 | `admin-shield.glb` | Admin | 5 |
+| 6 | `eco-recycle.glb` | Profil public | 6 |
 
 ---
 
@@ -93,4 +96,6 @@ Voir [PROMPT-TRIPO3D-MANQUANTS.md](./PROMPT-TRIPO3D-MANQUANTS.md) pour les promp
 
 ## 📂 Où placer les fichiers
 
-Tous dans : `src/main/resources/static/images/`
+Tous les GLB existants et futurs sont à placer dans : `src/main/resources/static/images/`.
+
+Avant d'ajouter une référence, lancer `bash scripts/check-3d-models.sh`. Le script échoue si une page pointe vers un fichier absent. Un nom de prompt ne prouve pas que le GLB correspondant a été généré.

@@ -1,7 +1,9 @@
 package com.hubpieces.service;
 
+import com.hubpieces.exception.ForbiddenException;
 import com.hubpieces.exception.UnauthorizedException;
 import com.hubpieces.model.RoleNom;
+import com.hubpieces.model.StatutUtilisateur;
 import com.hubpieces.model.Utilisateur;
 import com.hubpieces.repository.UtilisateurRepository;
 import jakarta.servlet.http.HttpSession;
@@ -23,8 +25,13 @@ public class SessionService {
         if (userId == null) {
             throw new UnauthorizedException("Vous devez etre connecte");
         }
-        return utilisateurRepository.findById((Long) userId)
+        Utilisateur utilisateur = utilisateurRepository.findById((Long) userId)
                 .orElseThrow(() -> new UnauthorizedException("Session invalide"));
+        if (utilisateur.getStatut() != StatutUtilisateur.ACTIF) {
+            session.invalidate();
+            throw new UnauthorizedException("Votre compte est suspendu ou en attente d'activation");
+        }
+        return utilisateur;
     }
 
     public Utilisateur requireRole(HttpSession session, RoleNom... roles) {
@@ -35,7 +42,7 @@ public class SessionService {
         for (RoleNom r : roles) {
             if (userRoles.contains(r)) return u;
         }
-        throw new UnauthorizedException("Acces reserve au role " + java.util.Arrays.toString(roles));
+        throw new ForbiddenException("Accès réservé au rôle " + java.util.Arrays.toString(roles));
     }
 
     public Utilisateur getOptionalUser(HttpSession session) {

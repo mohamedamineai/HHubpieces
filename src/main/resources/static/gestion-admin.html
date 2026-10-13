@@ -3,231 +3,267 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Administration - hubpieces</title>
+<title>Administration Hubpieces</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 <link href="css/style.css" rel="stylesheet">
 <link href="css/header.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <style>
-.tab-pill {
-    padding: 10px 22px;
-    border-radius: 30px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    display: inline-block;
-    font-weight: 500;
-}
-.tab-pill.active {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff5eae 100%);
-    color: #fff;
-    border-color: transparent;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.35);
-}
-.admin-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 16px;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(14px);
-}
-.admin-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 107, 53, 0.4);
-}
-.stat-big {
-    text-align: center;
-    padding: 24px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    backdrop-filter: blur(14px);
-}
-.stat-big-num { font-size: 2.2rem; font-weight: 800; color: #fff; }
-.stat-big-label { color: rgba(255, 255, 255, 0.6); font-size: 0.85rem; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.btn-neon{background:linear-gradient(135deg,#9d4edd,#ff5eae);border:0;color:#fff;padding:10px 18px;border-radius:11px;font-weight:650}.btn-neon:hover{color:#fff;transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;border-radius:10px}.btn-ghost:hover{background:rgba(255,255,255,.08);color:#fff}
+.btn-danger-soft{background:rgba(255,99,132,.12);border:1px solid rgba(255,99,132,.3);color:#ff9aaa;border-radius:9px;padding:7px 11px}.btn-success-soft{background:rgba(110,231,183,.12);border:1px solid rgba(110,231,183,.3);color:#6ee7b7;border-radius:9px;padding:7px 11px}
+.tab-pill{padding:10px 19px;border-radius:30px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.72);cursor:pointer;margin:0 8px 8px 0;font-weight:600}.tab-pill.active{background:linear-gradient(135deg,#9d4edd,#ff5eae);color:#fff;border-color:transparent}
+.admin-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:20px;margin-bottom:14px}
+.stat-big{text-align:center;padding:20px 12px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);border-radius:16px;height:100%}.stat-big-num{font-size:1.9rem;font-weight:800;color:#fff}.stat-big-label{color:rgba(255,255,255,.6);font-size:.78rem;margin-top:4px;text-transform:uppercase;letter-spacing:.4px}
+.table-wrap{overflow-x:auto}.admin-table{width:100%;border-collapse:collapse;min-width:720px}.admin-table th{color:rgba(255,255,255,.5);font-size:.76rem;text-transform:uppercase;letter-spacing:.5px;padding:13px;border-bottom:1px solid rgba(255,255,255,.1)}.admin-table td{padding:14px 13px;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.78);vertical-align:middle}.admin-table tr:last-child td{border-bottom:0}.status{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.08);white-space:nowrap}.status-actif,.status-valide,.status-resolu,.status-ferme,.status-libere{color:#6ee7b7;background:rgba(110,231,183,.12)}.status-suspendu,.status-rejete,.status-rembourse{color:#ff879e;background:rgba(255,99,132,.13)}.status-attente,.status-ouvert,.status-en_cours,.status-en_sequestre,.status-litige{color:#ffd76a;background:rgba(255,193,7,.13)}
+.empty-state,.loading-state{text-align:center;padding:38px 22px;color:rgba(255,255,255,.65)}.empty-state i{font-size:2.4rem;color:#6ee7b7;margin-bottom:12px}.error-state{padding:22px;color:#ff9aaa}
+#feedback{display:none}.search-input{max-width:340px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:10px;padding:9px 12px}.search-input::placeholder{color:rgba(255,255,255,.45)}
+.file-link{color:#dda8ff;text-decoration:none}.file-link:hover{color:#fff;text-decoration:underline}
+dialog{width:min(560px,calc(100% - 28px));border:1px solid rgba(255,255,255,.15);border-radius:18px;background:#170d25;color:#fff;padding:0;box-shadow:0 24px 80px rgba(0,0,0,.55)}dialog::backdrop{background:rgba(4,1,10,.75);backdrop-filter:blur(4px)}.dialog-inner{padding:22px}.dialog-inner textarea,.dialog-inner select{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:9px;padding:10px}.dialog-inner select option{background:#170d25}
 </style>
 </head>
 <body class="dashboard-body">
-
-<div class="db-particles">
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-</div>
-<div class="db-watermark">
-    <img src="images/logo_hub.png" alt="">
-    <img src="images/logo_hub.png" alt="">
-    <img src="images/logo_hub.png" alt="">
-</div>
-
+<div class="db-particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="db-watermark"><img src="images/logo_hub.png" alt=""><img src="images/logo_hub.png" alt=""><img src="images/logo_hub.png" alt=""></div>
 <div id="navbar-placeholder"></div>
 
-<div class="dashboard-container" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;">
+<main class="dashboard-container" style="max-width:1220px;margin:0 auto;position:relative;z-index:2">
+    <section class="dashboard-welcome">
+        <div class="dashboard-welcome-text"><h1>Administration Hubpieces</h1><p>Contrôlez les comptes, validez les modèles CAO et traitez les litiges avec l'historique réel de la plateforme.</p></div>
+        <span class="dashboard-role-pill"><i class="fas fa-shield-halved me-1"></i>Administrateur</span>
+    </section>
+    <div id="feedback" class="alert" role="status"></div>
 
-    <div class="dashboard-welcome">
-        <div class="dashboard-welcome-text">
-            <h1>Administration Hubpieces</h1>
-            <p>Gestion globale des utilisateurs, modération des fichiers STL, résolution des litiges et trésorerie</p>
+    <section class="row g-3 mb-4" aria-label="Indicateurs de la plateforme">
+        <div class="col-6 col-lg-3"><div class="stat-big"><i class="fas fa-users mb-2" style="color:#ff5eae;font-size:1.35rem"></i><div class="stat-big-num" id="statUsers">—</div><div class="stat-big-label">Comptes utilisateurs</div></div></div>
+        <div class="col-6 col-lg-3"><div class="stat-big"><i class="fas fa-cube mb-2" style="color:#ffc107;font-size:1.35rem"></i><div class="stat-big-num" id="statFiles">—</div><div class="stat-big-label">Modèles à modérer</div></div></div>
+        <div class="col-6 col-lg-3"><div class="stat-big"><i class="fas fa-gavel mb-2" style="color:#ffc107;font-size:1.35rem"></i><div class="stat-big-num" id="statLitiges">—</div><div class="stat-big-label">Litiges ouverts / en cours</div></div></div>
+        <div class="col-6 col-lg-3"><div class="stat-big"><i class="fas fa-vault mb-2" style="color:#6ee7b7;font-size:1.35rem"></i><div class="stat-big-num" id="statEscrow">—</div><div class="stat-big-label">Montant en séquestre (EUR)</div></div></div>
+    </section>
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <div role="tablist" aria-label="Sections d'administration">
+            <button type="button" class="tab-pill active" data-tab="utilisateurs">Comptes</button>
+            <button type="button" class="tab-pill" data-tab="validation">Validation 3D</button>
+            <button type="button" class="tab-pill" data-tab="litiges">Litiges</button>
+            <button type="button" class="tab-pill" data-tab="transactions">Transactions</button>
         </div>
-        <span class="role-pill"><i class="fas fa-shield-alt me-1"></i>Super Admin</span>
+        <button id="refreshButton" type="button" class="btn btn-ghost"><i class="fas fa-rotate me-2"></i>Actualiser</button>
     </div>
+    <section id="contenu" aria-live="polite"><div class="loading-state"><i class="fas fa-spinner fa-spin me-2"></i>Chargement des données…</div></section>
+</main>
 
-    <!-- Stats rapides -->
-    <div class="row g-3 mb-4">
-        <div class="col-md-3 col-6">
-            <div class="stat-big">
-                <i class="fas fa-users" style="color: var(--neon-pink); font-size: 1.5rem;"></i>
-                <div class="stat-big-num">4</div>
-                <div class="stat-big-label">Utilisateurs inscrits</div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-big">
-                <i class="fas fa-cubes" style="color: #00bcd4; font-size: 1.5rem;"></i>
-                <div class="stat-big-num">4</div>
-                <div class="stat-big-label">Fichiers STL validés</div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-big">
-                <i class="fas fa-gavel" style="color: #ffc107; font-size: 1.5rem;"></i>
-                <div class="stat-big-num">0</div>
-                <div class="stat-big-label">Litiges en attente</div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-big">
-                <i class="fas fa-coins" style="color: #6ee7b7; font-size: 1.5rem;"></i>
-                <div class="stat-big-num">124.50 €</div>
-                <div class="stat-big-label">Volume d'affaires</div>
-            </div>
-        </div>
+<dialog id="resolutionDialog" aria-labelledby="resolutionTitle">
+    <form id="resolutionForm" class="dialog-inner">
+        <h2 class="h5 mb-2" id="resolutionTitle"><i class="fas fa-gavel me-2" style="color:#ff5eae"></i>Décision du litige</h2>
+        <p class="text-white-50 small mb-3" id="resolutionContext"></p>
+        <input type="hidden" id="resolutionLitigeId">
+        <label for="resolutionOutcome" class="form-label">Décision financière</label>
+        <select id="resolutionOutcome" required><option value="LIBERER">Libérer le séquestre au maker</option><option value="REMBOURSER">Rembourser le demandeur</option></select>
+        <label for="resolutionDecision" class="form-label mt-3">Explication communiquée aux acteurs</label>
+        <textarea id="resolutionDecision" rows="4" maxlength="2000" required placeholder="Expliquez les éléments vérifiés et la décision…"></textarea>
+        <div class="d-flex justify-content-end gap-2 mt-4"><button type="button" class="btn btn-ghost" id="cancelResolution">Annuler</button><button type="submit" class="btn btn-neon" id="confirmResolution"><i class="fas fa-check me-2"></i>Enregistrer</button></div>
+    </form>
+</dialog>
+
+<dialog id="userDetailsDialog" aria-labelledby="userDetailsTitle">
+    <div class="dialog-inner">
+        <div class="d-flex justify-content-between align-items-start"><h2 class="h5" id="userDetailsTitle"><i class="fas fa-user me-2" style="color:#ff5eae"></i>Détails du compte</h2><button type="button" id="closeUserDetails" class="btn btn-ghost btn-sm">Fermer</button></div>
+        <div id="userDetailsContent" class="text-white-50 mt-3">Chargement…</div>
     </div>
+</dialog>
 
-    <!-- Onglets -->
-    <div class="mb-4">
-        <div class="tab-pill active" data-tab="utilisateurs">Comptes utilisateurs</div>
-        <div class="tab-pill" data-tab="validation">Modération STL</div>
-        <div class="tab-pill" data-tab="litiges">Gestion des litiges</div>
-        <div class="tab-pill" data-tab="transactions">Trésorerie & Séquestre</div>
-    </div>
-
-    <div id="contenu">
-        <div style="text-align:center; padding: 40px;">
-            <i class="fas fa-spinner fa-spin" style="font-size:2rem; color: var(--neon-pink);"></i>
-        </div>
-    </div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/header.js"></script>
 <script src="js/auth-guard.js"></script>
 <script>
-const DEMO_USERS = [
-    { id: 1, prenom: 'Hubpieces', nom: 'Admin', email: 'admin@hubpieces.fr', role: 'ADMIN', ville: 'Paris', statut: 'ACTIF' },
-    { id: 2, prenom: 'Jean', nom: 'Dupont', email: 'demandeur@hubpieces.fr', role: 'DEMANDEUR', ville: 'Lyon', statut: 'ACTIF' },
-    { id: 3, prenom: 'Ahmed', nom: 'Benali', email: 'maker@hubpieces.fr', role: 'MAKER', ville: 'Marseille', statut: 'ACTIF' },
-    { id: 4, prenom: 'Sophie', nom: 'Martin', email: 'expert@hubpieces.fr', role: 'EXPERT_CAO', ville: 'Bordeaux', statut: 'ACTIF' }
-];
+const API = '/api/admin';
+const contenu = document.getElementById('contenu');
+let activeTab = 'utilisateurs';
+let usersCache = [];
+let searchTerm = '';
 
-let tabActif = 'utilisateurs';
-
-async function load() {
-    render();
+function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
-function render() {
-    const el = document.getElementById('contenu');
-    if (tabActif === 'utilisateurs') {
-        el.innerHTML = `
-            <div class="dashboard-table-wrap">
-                <table class="dashboard-table">
-                    <thead>
-                        <tr>
-                            <th>Nom complet</th>
-                            <th>Email</th>
-                            <th>Rôle</th>
-                            <th>Ville</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${DEMO_USERS.map(u => `
-                            <tr>
-                                <td><strong style="color: #fff;">${escapeHtml(u.prenom)} ${escapeHtml(u.nom)}</strong></td>
-                                <td>${escapeHtml(u.email)}</td>
-                                <td><span class="role-badge-nav">${u.role}</span></td>
-                                <td>${escapeHtml(u.ville || '-')}</td>
-                                <td><span class="badge" style="background: rgba(76,175,80,0.2); color: #6ee7b7;">${u.statut}</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-ghost" onclick="alert('Compte vérifié')">
-                                        <i class="fas fa-user-check me-1"></i>Détails
-                                    </button>
-                                </td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-        `;
-    } else if (tabActif === 'validation') {
-        el.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-check-circle" style="color: #6ee7b7;"></i>
-                <p>Tous les modèles 3D téléversés ont été inspectés et validés par l'équipe technique.</p>
-                <a href="catalogue.html" class="btn btn-neon mt-3">Consulter le catalogue STL</a>
-            </div>
-        `;
-    } else if (tabActif === 'litiges') {
-        el.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-shield-alt" style="color: #6ee7b7;"></i>
-                <p>Aucun litige ouvert. La satisfaction globale de la plateforme s'élève à 98.4%.</p>
-            </div>
-        `;
-    } else {
-        el.innerHTML = `
-            <div class="admin-card">
-                <h5 style="color: #fff; margin-bottom: 16px;"><i class="fas fa-vault me-2" style="color: #6ee7b7;"></i>Séquestre des paiements</h5>
-                <p style="color: rgba(255,255,255,0.7);">
-                    Les fonds des demandeurs sont conservés en compte séquestre sécurisé jusqu'à validation de la réception des pièces imprimées.
-                    Répartition standard : <strong>84%</strong> pour le Maker, <strong>8%</strong> pour l'Expert CAO, <strong>8%</strong> pour Hubpieces.
-                </p>
-                <div class="d-flex gap-3 mt-3">
-                    <span class="badge p-2 px-3" style="background: rgba(255,107,53,0.15); color:#ff8c5a;">Total séquestré : 43.50 €</span>
-                    <span class="badge p-2 px-3" style="background: rgba(76,175,80,0.15); color:#6ee7b7;">Total libéré : 81.00 €</span>
-                </div>
-            </div>
-        `;
+function money(value) {
+    return new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(value)||0);
+}
+function date(value) {
+    if (!value) return '—';
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? '—' : parsed.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
+}
+function badge(value) {
+    const normalized = String(value || 'inconnu').toLowerCase();
+    return `<span class="status status-${escapeHtml(normalized)}">${escapeHtml(String(value || 'Inconnu').replaceAll('_',' '))}</span>`;
+}
+function feedback(message, type='info') {
+    const el = document.getElementById('feedback');
+    el.textContent = message;
+    el.className = 'alert alert-' + type;
+    el.style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+async function api(path, options={}) {
+    const response = await fetch(path,{credentials:'same-origin',...options});
+    if (response.status === 401) { location.href='login.html'; throw new Error('Session expirée.'); }
+    const type = response.headers.get('content-type') || '';
+    const body = type.includes('application/json') ? await response.json() : null;
+    if (!response.ok) throw new Error(body?.message || (response.status === 403 ? 'Accès réservé au rôle Administrateur.' : `Erreur ${response.status} de l’API.`));
+    return body;
+}
+async function loadStats() {
+    const [stats, transactions] = await Promise.all([api(API+'/stats'),api(API+'/transactions')]);
+    document.getElementById('statUsers').textContent = stats.totalUtilisateurs ?? 0;
+    document.getElementById('statFiles').textContent = stats.fichiersEnAttente ?? 0;
+    document.getElementById('statLitiges').textContent = stats.litigesOuverts ?? 0;
+    const escrow = (transactions || []).filter(t => ['EN_SEQUESTRE','LITIGE'].includes(t.etatPaiement))
+        .reduce((sum,t) => sum + (Number(t.montantTotal)||0),0);
+    document.getElementById('statEscrow').textContent = money(escrow);
+}
+async function loadTab() {
+    contenu.innerHTML = '<div class="loading-state"><i class="fas fa-spinner fa-spin me-2"></i>Chargement…</div>';
+    try {
+        if (activeTab === 'utilisateurs') {
+            usersCache = await api(API+'/utilisateurs') || [];
+            renderUsers();
+        } else if (activeTab === 'validation') {
+            renderFiles(await api(API+'/fichiers-stl/en-attente') || []);
+        } else if (activeTab === 'litiges') {
+            renderLitiges(await api(API+'/litiges') || []);
+        } else {
+            renderTransactions(await api(API+'/transactions') || []);
+        }
+    } catch (error) {
+        contenu.innerHTML = `<div class="error-state"><i class="fas fa-triangle-exclamation me-2"></i>${escapeHtml(error.message)} <button type="button" class="btn btn-ghost btn-sm ms-2" onclick="refreshAll()">Réessayer</button></div>`;
     }
 }
-
-document.querySelectorAll('.tab-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-        document.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        tabActif = pill.dataset.tab;
-        render();
+async function refreshAll() {
+    try { await loadStats(); } catch (error) { feedback(error.message,'danger'); }
+    await loadTab();
+}
+function setActiveTab(tab) {
+    activeTab = tab;
+    document.querySelectorAll('.tab-pill').forEach(button => {
+        const selected = button.dataset.tab === tab;
+        button.classList.toggle('active',selected);
+        button.setAttribute('aria-selected',String(selected));
     });
-});
-
-function escapeHtml(s) {
-    if (s == null) return '';
-    return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+    loadTab();
+}
+function renderUsers() {
+    const term = searchTerm.trim().toLocaleLowerCase('fr');
+    const filtered = usersCache.filter(user => `${user.prenom||''} ${user.nom||''} ${user.email||''} ${user.rolePrincipal||''} ${(user.roles||[]).join(' ')} ${user.ville||''}`.toLocaleLowerCase('fr').includes(term));
+    if (!filtered.length) {
+        contenu.innerHTML = `<div class="admin-card"><div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"><h2 class="h5 mb-0">Comptes utilisateurs</h2><input id="searchUsers" class="search-input" type="search" placeholder="Rechercher un compte…" value="${escapeHtml(searchTerm)}"></div><div class="empty-state"><i class="fas fa-users d-block"></i><p>Aucun utilisateur ne correspond à cette recherche.</p></div></div>`;
+        bindSearch(); return;
+    }
+    contenu.innerHTML = `<div class="admin-card"><div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"><div><h2 class="h5 mb-1">Comptes utilisateurs</h2><div class="small text-white-50">${filtered.length} compte(s) affiché(s) · une suspension bloque immédiatement les prochaines requêtes</div></div><input id="searchUsers" class="search-input" type="search" placeholder="Rechercher un compte…" value="${escapeHtml(searchTerm)}"></div>
+        <div class="table-wrap"><table class="admin-table"><thead><tr><th>Nom</th><th>Email</th><th>Rôle(s)</th><th>Ville</th><th>Statut</th><th>Inscription</th><th>Actions</th></tr></thead><tbody>
+        ${filtered.map(user => {
+            const fullName = `${user.prenom||''} ${user.nom||''}`.trim();
+            const roles = Array.isArray(user.roles) ? user.roles.join(', ') : (user.rolePrincipal||'—');
+            const nextStatus = user.statut === 'ACTIF' ? 'SUSPENDU' : 'ACTIF';
+            return `<tr><td><strong class="text-white">${escapeHtml(fullName||'Sans nom')}</strong></td><td>${escapeHtml(user.email||'—')}</td><td>${escapeHtml(roles)}</td><td>${escapeHtml(user.ville||'—')}</td><td>${badge(user.statut)}</td><td>${date(user.dateInscription)}</td><td><div class="d-flex gap-2"><button class="btn btn-ghost btn-sm" type="button" data-action="user-details" data-id="${Number(user.id)}"><i class="fas fa-eye"></i><span class="visually-hidden">Détails</span></button><button class="${nextStatus==='SUSPENDU'?'btn-danger-soft':'btn-success-soft'}" type="button" data-action="toggle-user" data-id="${Number(user.id)}" data-next="${nextStatus}">${nextStatus==='SUSPENDU'?'Suspendre':'Activer'}</button></div></td></tr>`;
+        }).join('')}
+        </tbody></table></div></div>`;
+    bindSearch();
+}
+function bindSearch() {
+    const input = document.getElementById('searchUsers');
+    if (input) input.addEventListener('input',event => { searchTerm=event.target.value; renderUsers(); const next=document.getElementById('searchUsers'); next?.focus(); next?.setSelectionRange(searchTerm.length,searchTerm.length); });
+}
+function safeFileUrl(value) {
+    if (!value || typeof value!=='string' || !/^\/?(?:uploads\/stl|images)\/[A-Za-z0-9._/-]+\.(?:stl|obj|3mf|step|stp|glb|gltf)$/i.test(value) || value.split('/').includes('..')) return null;
+    const url=new URL(value.startsWith('/')?value:'/'+value,location.origin);
+    return url.origin===location.origin?url.pathname:null;
+}
+function renderFiles(files) {
+    if (!files.length) { contenu.innerHTML='<div class="empty-state"><i class="fas fa-circle-check d-block"></i><p>Aucun modèle en attente de modération.</p><p class="small">Les demandes CAO ne passent aux makers qu’après validation.</p></div>'; return; }
+    contenu.innerHTML=`<div class="admin-card"><div class="mb-3"><h2 class="h5 mb-1">Fichiers en attente de validation</h2><p class="small text-white-50 mb-0">Vérifiez le fichier, sa description et ses métadonnées avant de le publier.</p></div>${files.map(file=>{
+        const url=safeFileUrl(file.cheminFichier);
+        return `<article class="admin-card mb-3"><div class="d-flex justify-content-between align-items-start gap-3 flex-wrap"><div class="flex-grow-1"><div class="d-flex gap-2 align-items-center flex-wrap"><h3 class="h6 text-white mb-0">${escapeHtml(file.nom)}</h3>${badge(file.etatValidation)}</div><p class="text-white-50 mt-2 mb-2">${escapeHtml(file.description||'Aucune description technique.')}</p><div class="small text-white-50">Expert : ${escapeHtml(file.uploadeurNom||'Inconnu')} · ${escapeHtml(file.categorie||'Sans catégorie')} · ${escapeHtml(file.marque||'Marque non précisée')} ${escapeHtml(file.modeleAppareil||'')} · ${escapeHtml(file.materiauRecommande||'Matériau non précisé')} · transmis le ${date(file.dateUpload)}</div>${url?`<a class="file-link d-inline-block mt-2" href="${escapeHtml(url)}" target="_blank" rel="noopener"><i class="fas fa-download me-1"></i>Consulter le fichier</a>`:'<div class="small text-warning mt-2">Fichier sans chemin reconnu ; validez seulement après vérification manuelle.</div>'}</div><div class="d-flex gap-2"><button class="btn btn-success-soft" type="button" data-action="validate-file" data-id="${Number(file.id)}"><i class="fas fa-check me-1"></i>Valider</button><button class="btn-danger-soft" type="button" data-action="reject-file" data-id="${Number(file.id)}"><i class="fas fa-xmark me-1"></i>Rejeter</button></div></div></article>`;
+    }).join('')}</div>`;
+}
+function renderLitiges(litiges) {
+    if (!litiges.length) { contenu.innerHTML='<div class="empty-state"><i class="fas fa-shield-heart d-block"></i><p>Aucun litige enregistré.</p></div>'; return; }
+    contenu.innerHTML=`<div class="admin-card"><div class="mb-3"><h2 class="h5 mb-1">Dossiers de litige</h2><p class="small text-white-50 mb-0">Un litige ouvert bloque le paiement. Le choix final détermine le remboursement ou la libération du séquestre.</p></div>${litiges.map(item=>{
+        const active=['OUVERT','EN_COURS'].includes(item.etat);
+        return `<article class="admin-card mb-3"><div class="d-flex justify-content-between align-items-start gap-3 flex-wrap"><div class="flex-grow-1"><div class="d-flex align-items-center gap-2 flex-wrap"><h3 class="h6 text-white mb-0">${escapeHtml(item.demandeTitre||'Demande liée au litige')} · #${Number(item.id)}</h3>${badge(item.etat)}</div><p class="mt-2 mb-1"><strong class="text-white-50">Demandeur :</strong> ${escapeHtml(item.demandeurNom||'Inconnu')} · <strong class="text-white-50">Transaction :</strong> #${Number(item.transactionId)||'—'}</p><p class="mb-1">${escapeHtml(item.raison||'Aucune raison fournie.')}</p><div class="small text-white-50">Ouvert le ${date(item.dateOuverture)}${item.adminNom?` · Pris en charge par ${escapeHtml(item.adminNom)}`:''}</div>${item.decision?`<div class="small mt-2"><strong>Décision / suivi :</strong> ${escapeHtml(item.decision)}</div>`:''}</div><div class="d-flex gap-2 flex-wrap">${active&&item.etat==='OUVERT'?`<button class="btn btn-ghost" type="button" data-action="claim-dispute" data-id="${Number(item.id)}">Prendre en charge</button>`:''}${active?`<button class="btn btn-neon" type="button" data-action="resolve-dispute" data-id="${Number(item.id)}" data-title="${escapeHtml(item.demandeTitre||'Litige #'+item.id)}"><i class="fas fa-gavel me-1"></i>Décider</button>`:''}</div></div></article>`;
+    }).join('')}</div>`;
+}
+function renderTransactions(transactions) {
+    if (!transactions.length) { contenu.innerHTML='<div class="empty-state"><i class="fas fa-receipt d-block"></i><p>Aucune transaction enregistrée.</p></div>'; return; }
+    const held=transactions.filter(t=>['EN_SEQUESTRE','LITIGE'].includes(t.etatPaiement)).reduce((sum,t)=>sum+(Number(t.montantTotal)||0),0);
+    const released=transactions.filter(t=>t.etatPaiement==='LIBERE').reduce((sum,t)=>sum+(Number(t.montantTotal)||0),0);
+    contenu.innerHTML=`<div class="admin-card"><div class="row g-3 mb-3"><div class="col-md-6"><div class="admin-card mb-0"><div class="small text-white-50">Total encore bloqué</div><strong class="fs-4 text-warning">${money(held)} €</strong></div></div><div class="col-md-6"><div class="admin-card mb-0"><div class="small text-white-50">Total libéré</div><strong class="fs-4" style="color:#6ee7b7">${money(released)} €</strong></div></div></div><div class="table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Demande</th><th>Demandeur</th><th>Maker</th><th>Total</th><th>Commission</th><th>Part Maker</th><th>Part Expert CAO</th><th>État</th><th>Créée le</th></tr></thead><tbody>${transactions.map(t=>`<tr><td>#${Number(t.id)}</td><td>${escapeHtml(t.demandeTitre||'—')}</td><td>${escapeHtml(t.demandeurNom||'—')}</td><td>${escapeHtml(t.makerNom||'—')}</td><td><strong class="text-white">${money(t.montantTotal)} €</strong></td><td>${money(t.commissionPlateforme)} €</td><td>${money(t.montantMaker)} €</td><td>${money(t.montantExpertCao)} €</td><td>${badge(t.etatPaiement)}</td><td>${date(t.dateCreation)}</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+async function changeUserStatus(id,next) {
+    if (!confirm(`${next==='SUSPENDU'?'Suspendre':'Activer'} le compte #${id} ?`)) return;
+    try { await api(`${API}/utilisateurs/${id}/statut?statut=${encodeURIComponent(next)}`,{method:'PUT'}); feedback(`Compte #${id} ${next==='SUSPENDU'?'suspendu':'activé'} correctement.`, 'success'); await refreshAll(); }
+    catch(error){feedback(error.message,'danger');}
+}
+async function moderateFile(id,action) {
+    let path=`${API}/fichiers-stl/${id}/valider`;
+    if(action==='reject-file') {
+        const motif=prompt('Indiquez le motif du rejet (il sera communiqué à l’expert CAO) :');
+        if(motif===null) return;
+        path=`${API}/fichiers-stl/${id}/rejeter?motif=${encodeURIComponent(motif.trim()||'Non conforme')}`;
+    } else if(!confirm(`Valider le fichier 3D #${id} ? La demande liée sera transmise aux makers.`)) return;
+    try { await api(path,{method:'PUT'}); feedback(action==='reject-file'?'Fichier rejeté. La demande est replacée dans la file de modélisation CAO.':'Fichier validé. La demande passe dans la file des makers.','success'); await refreshAll(); }
+    catch(error){feedback(error.message,'danger');}
+}
+async function claimDispute(id) {
+    try { await api(`${API}/litiges/${id}/resoudre`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({etat:'EN_COURS',decision:'Dossier pris en charge par l’administrateur.'})}); feedback(`Litige #${id} pris en charge. Le paiement reste bloqué pendant l’instruction.`,'success'); await refreshAll(); }
+    catch(error){feedback(error.message,'danger');}
+}
+function openResolution(id,title) {
+    document.getElementById('resolutionLitigeId').value=id;
+    document.getElementById('resolutionContext').textContent=`${title} · choix du sort du paiement et justification envoyée au demandeur et au maker.`;
+    document.getElementById('resolutionOutcome').value='LIBERER';
+    document.getElementById('resolutionDecision').value='';
+    document.getElementById('resolutionDialog').showModal();
+}
+async function showUserDetails(id) {
+    const dialog=document.getElementById('userDetailsDialog');
+    const content=document.getElementById('userDetailsContent');
+    content.textContent='Chargement…';
+    dialog.showModal();
+    try {
+        const user=await api(`${API}/utilisateurs/${id}`);
+        content.innerHTML=`<dl class="row mb-0"><dt class="col-sm-4">Nom</dt><dd class="col-sm-8">${escapeHtml((user.prenom||'')+' '+(user.nom||''))}</dd><dt class="col-sm-4">Email</dt><dd class="col-sm-8">${escapeHtml(user.email||'—')}</dd><dt class="col-sm-4">Téléphone</dt><dd class="col-sm-8">${escapeHtml(user.telephone||'—')}</dd><dt class="col-sm-4">Adresse</dt><dd class="col-sm-8">${escapeHtml([user.codePostal,user.ville].filter(Boolean).join(' ')||'—')}</dd><dt class="col-sm-4">Rôles</dt><dd class="col-sm-8">${escapeHtml((user.roles||[]).join(', ')||user.rolePrincipal||'—')}</dd><dt class="col-sm-4">Statut</dt><dd class="col-sm-8">${badge(user.statut)}</dd><dt class="col-sm-4">Inscription</dt><dd class="col-sm-8">${date(user.dateInscription)}</dd></dl>`;
+    } catch(error){content.textContent=error.message;}
 }
 
-load();
-</script>
+document.querySelectorAll('.tab-pill').forEach(button=>button.addEventListener('click',()=>setActiveTab(button.dataset.tab)));
+document.getElementById('refreshButton').addEventListener('click',refreshAll);
+contenu.addEventListener('click',event=>{
+    const button=event.target.closest('[data-action]'); if(!button) return;
+    const id=Number(button.dataset.id);
+    if(button.dataset.action==='toggle-user') changeUserStatus(id,button.dataset.next);
+    else if(button.dataset.action==='user-details') showUserDetails(id);
+    else if(button.dataset.action==='validate-file'||button.dataset.action==='reject-file') moderateFile(id,button.dataset.action);
+    else if(button.dataset.action==='claim-dispute') claimDispute(id);
+    else if(button.dataset.action==='resolve-dispute') openResolution(id,button.dataset.title);
+});
+document.getElementById('resolutionForm').addEventListener('submit',async event=>{
+    event.preventDefault();
+    const id=document.getElementById('resolutionLitigeId').value;
+    const outcome=document.getElementById('resolutionOutcome').value;
+    const explanation=document.getElementById('resolutionDecision').value.trim();
+    if(!explanation) return;
+    const decision=(outcome==='REMBOURSER'?'Remboursement accordé : ':'Paiement libéré : ')+explanation;
+    const button=document.getElementById('confirmResolution'); button.disabled=true;
+    try { await api(`${API}/litiges/${id}/resoudre`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({etat:'RESOLU',decision})}); document.getElementById('resolutionDialog').close(); feedback(`Litige #${id} résolu et notifications envoyées aux acteurs.`, 'success'); await refreshAll(); }
+    catch(error){feedback(error.message,'danger');}
+    finally{button.disabled=false;}
+});
+document.getElementById('cancelResolution').addEventListener('click',()=>document.getElementById('resolutionDialog').close());
+document.getElementById('closeUserDetails').addEventListener('click',()=>document.getElementById('userDetailsDialog').close());
 
+(async()=>{try{await loadStats();}catch(error){feedback(error.message,'danger');}await loadTab();})();
+</script>
 </body>
 </html>
